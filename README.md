@@ -31,7 +31,7 @@ Cronograma de actividades:
 - Clase ListaDobleCircular: Por definir
 - Clase NodoListaDobleCircular: Por definir
   
-- Módulo de Usuario:
+  Módulo de Usuario:
  Responsable: Brandon Vargas.
 
 - Este módulo permite la gestión de usuarios, incluyendo agregar, modificar y eliminar usuarios, así como establecer seguimientos hacia otros usuarios.
@@ -40,7 +40,7 @@ Cronograma de actividades:
 - Al modificar usuarios, se permitirá cambiar todos los campos excepto el correo electrónico. Por lo tanto, cada correo electrónico debe ser único.
 - La información de los usuarios, junto con sus seguimientos, se almacenará en archivos planos en formato CSV.
 
-- Módulo de Creación de Mensajes y Respuestas:
+  Módulo de Creación de Mensajes y Respuestas:
  Responsable: Jonathan López.
 
 - Este módulo se encarga de la creación de mensajes y la generación de respuestas a los mensajes existentes.
@@ -48,7 +48,7 @@ Cronograma de actividades:
 - También podrán generar respuestas a los mensajes previamente creados. Para propósitos del curso, se limitará a dos respuestas por mensaje. Cualquier intento de ingresar más de dos respuestas mostrará un mensaje de error.
 - Toda la información de los mensajes y respuestas se almacenará en un archivo plano en formato CSV.
 
-- Módulo de Visualización de Mensajes:
+  Módulo de Visualización de Mensajes:
  Responsable: Camerún Zuñiga.
 
 - Este módulo se encarga de presentar los mensajes en formato de "Feed".
