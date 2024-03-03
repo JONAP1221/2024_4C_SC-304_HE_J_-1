@@ -13,8 +13,26 @@ Este proyecto tiene como objetivo desarrollar una página web similar a Twitter,
 
 ## Plan de Proyecto
 
-Módulo de Usuario:
-Responsable: Brandon Vargas.
+Cronograma de actividades:
+
+- Clase UsuarioSimple: Por definir
+- Clase Usuario: Por definir
+- Clase Post: Por definir
+- Clase NodoArbol: Por definir
+- Clase Arbol: Por definir
+- Clase Cola: Por definir
+- Clase NodoCola: Por definir
+- Clase NodoPila: Por definir
+- Clase Pila: Por definir
+- Clase Grafo: Por definir
+- Clase NodoGrafo: Por definir
+- Clase ListaSimple: Por definir
+- Clase NodoListaSimple: Por definir
+- Clase ListaDobleCircular: Por definir
+- Clase NodoListaDobleCircular: Por definir
+  
+- Módulo de Usuario:
+ Responsable: Brandon Vargas.
 
 - Este módulo permite la gestión de usuarios, incluyendo agregar, modificar y eliminar usuarios, así como establecer seguimientos hacia otros usuarios.
 - Cada usuario debe proporcionar y almacenar su nombre, apellido, correo electrónico único y fecha de ingreso.
@@ -22,16 +40,16 @@ Responsable: Brandon Vargas.
 - Al modificar usuarios, se permitirá cambiar todos los campos excepto el correo electrónico. Por lo tanto, cada correo electrónico debe ser único.
 - La información de los usuarios, junto con sus seguimientos, se almacenará en archivos planos en formato CSV.
 
-Módulo de Creación de Mensajes y Respuestas:
-Responsable: Por definir.
+- Módulo de Creación de Mensajes y Respuestas:
+ Responsable: Jonathan López.
 
 - Este módulo se encarga de la creación de mensajes y la generación de respuestas a los mensajes existentes.
 - Los usuarios podrán crear nuevos mensajes.
 - También podrán generar respuestas a los mensajes previamente creados. Para propósitos del curso, se limitará a dos respuestas por mensaje. Cualquier intento de ingresar más de dos respuestas mostrará un mensaje de error.
 - Toda la información de los mensajes y respuestas se almacenará en un archivo plano en formato CSV.
 
-Módulo de Visualización de Mensajes:
-Responsable: Por definir.
+- Módulo de Visualización de Mensajes:
+ Responsable: Camerún Zuñiga.
 
 - Este módulo se encarga de presentar los mensajes en formato de "Feed".
 - Los usuarios podrán seleccionar un usuario específico para visualizar su "Feed".
