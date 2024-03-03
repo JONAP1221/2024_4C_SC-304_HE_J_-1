@@ -30,7 +30,8 @@ Cronograma de actividades:
 - Clase NodoListaSimple: Por definir
 - Clase ListaDobleCircular: Por definir
 - Clase NodoListaDobleCircular: Por definir
-  
+
+  ## Modulos
   Módulo de Usuario:
  Responsable: Brandon Vargas.
 
