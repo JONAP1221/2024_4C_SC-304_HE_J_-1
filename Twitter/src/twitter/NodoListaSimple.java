@@ -2,19 +2,19 @@
 package twitter;
 
 public class NodoListaSimple {
-    private Usuario dato;
+    private UsuarioSimple user;
     private NodoListaSimple siguiente;
 
-    public NodoListaSimple(Usuario dato) {
-        this.dato = dato;
+    public NodoListaSimple(UsuarioSimple dato) {
+        this.user = dato;
     }
 
-    public Usuario getDato() {
-        return dato;
+    public UsuarioSimple getDato() {
+        return user;
     }
 
-    public void setDato(Usuario dato) {
-        this.dato = dato;
+    public void setDato(UsuarioSimple dato) {
+        this.user = dato;
     }
 
     public NodoListaSimple getSiguiente() {
@@ -23,6 +23,11 @@ public class NodoListaSimple {
 
     public void setSiguiente(NodoListaSimple siguiente) {
         this.siguiente = siguiente;
+    }
+
+    @Override
+    public String toString() {
+        return "NodoListaSimple{" + "user=" + user + ", siguiente=" + siguiente + '}';
     }
     
     
