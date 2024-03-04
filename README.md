@@ -15,21 +15,21 @@ Este proyecto tiene como objetivo desarrollar una página web similar a Twitter,
 
 Cronograma de actividades:
 
-- Clase UsuarioSimple: Por definir
-- Clase Usuario: Por definir
-- Clase Post: Por definir
-- Clase NodoArbol: Por definir
-- Clase Arbol: Por definir
-- Clase Cola: Por definir
-- Clase NodoCola: Por definir
-- Clase NodoPila: Por definir
-- Clase Pila: Por definir
-- Clase Grafo: Por definir
-- Clase NodoGrafo: Por definir
-- Clase ListaSimple: Por definir
-- Clase NodoListaSimple: Por definir
-- Clase ListaDobleCircular: Por definir
-- Clase NodoListaDobleCircular: Por definir
+- Clase UsuarioSimple: Brandon Vargas
+- Clase Usuario: Brandon Vargas
+- Clase Post: Jonathan López
+- Clase NodoArbol: Jonathan López
+- Clase Arbol: Jonathan López
+- Clase Cola: Camerún Zuñiga
+- Clase NodoCola: Joshtine Masis
+- Clase NodoPila: Camerún Zuñiga
+- Clase Pila: Camerún Zuñiga
+- Clase Grafo: Camerún Zuñiga
+- Clase NodoGrafo: Brandon Vargas
+- Clase ListaSimple: Joshtine Masis
+- Clase NodoListaSimple: Joshtine Masis
+- Clase ListaDobleCircular: Joshtine Masis
+- Clase NodoListaDobleCircular: Jonathan López
 
   ## Modulos
   Módulo de Usuario:
