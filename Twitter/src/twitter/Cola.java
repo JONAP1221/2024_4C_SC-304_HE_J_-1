@@ -42,10 +42,13 @@ public class Cola {
             actual.setSiguiente(null);
         }
         
+        
+        
         return actual;
     }//final del metodo desencolar
     
     public void showFeed(){
+        
         
         //mostrar la visualizacion de mensajes
         
