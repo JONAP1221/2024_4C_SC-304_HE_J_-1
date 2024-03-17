@@ -1,26 +1,23 @@
+
 package twitter;
 
 /**
  *
  * @author Jonathan
  */
-
 public class NodoArbol {
     //atributos de la clase
-    private Post mensaje;
+    private Post mensaje; //el mensaje principal
     private NodoArbol izquierdo; //estos son
     private NodoArbol derecho;   //las respuestas
  
-    public NodoArbol() {
+    public NodoArbol(Post mensaje) {
+        this.mensaje = mensaje;
         this.izquierdo = null;
         this.derecho = null;
     }//final constructor vacio
     
     //hay que ver
-    
-    
-    }
-
     public Post getMensaje() {
         return mensaje;
     }
@@ -45,4 +42,8 @@ public class NodoArbol {
         this.derecho = derecho;
     }
 
+    @Override
+    public String toString() {
+        return "Mensaje=" + mensaje;
+    }
 }//final de la clase

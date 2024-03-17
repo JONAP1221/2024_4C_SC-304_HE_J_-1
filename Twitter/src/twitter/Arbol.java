@@ -1,5 +1,7 @@
 package twitter;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
 /**
@@ -7,53 +9,52 @@ import javax.swing.JOptionPane;
  * @author Jonathan
  */
 public class Arbol {
-    //atributos de la clase
 
-    private NodoArbol root;
-    
-    //hay que ver
-    
+    //atributos de la clase
+    private NodoArbol root; //crea el nodo root de arbol
 
     public Arbol() {
-        this.root = null;
+        this.root = null;//inicializa el nodo creado como nulo
+    }
+
+    public NodoArbol getRoot() {
+        return root;
+    }
+
+    public void setRoot(NodoArbol root) {
+        this.root = root;
     }
 
     public boolean esVacio() {
-        if (root == null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+        return root == null;//metodo para saber si el arbol está vacío
+    }//Final metodo esVacio
 
-    public void agregar() {
-        Post d = new Post();
-        d.setMsj((JOptionPane.
-                showInputDialog(null, "Digite el mensaje:")));
-        NodoArbol nuevo = new NodoArbol();
-        nuevo.setMensaje(d);
+    public void agregar(Post mensaje) {
+        NodoArbol nuevo = new NodoArbol(mensaje);
         if (esVacio()) {
             root = nuevo;
-        } else {
-            agregarNuevo(root, nuevo);
-        }
-    }
-
-    public void agregarNuevo(NodoArbol raiz, NodoArbol nuevo) {
-        if (nuevo.getMensaje().getFecha().equals(raiz.getMensaje().getFecha()) || nuevo.getMensaje().getFecha().isBefore(raiz.getMensaje().getFecha())) {
-            if (raiz.getIzquierdo() == null) {
-                raiz.setIzquierdo(nuevo);
-            } else {
-                agregarNuevo(raiz.getIzquierdo(), nuevo);
-            }
-        } else {
-            if (raiz.getDerecho() == null) {
-                raiz.setDerecho(nuevo);
-            } else {
-                agregarNuevo(raiz.getDerecho(), nuevo);
-            }
-        }
-    }
+        }//final if 
+        else {
+            NodoArbol aux = root;
+            NodoArbol padre;
+            while(true){
+              padre = aux;
+              if(padre.getIzquierdo() == null){
+                  aux = aux.getIzquierdo();
+                  if(aux == null){
+                      padre.setIzquierdo(nuevo);
+                      return;
+                  }
+              }else{
+                  aux = aux.getDerecho();
+                  if(aux == null){
+                      padre.setDerecho(nuevo);
+                      return;
+                  }
+              }
+          }
+        }//final else
+    }//final metodo agregar
 
     public void eliminarTodo() {
         if (!esVacio()) {
@@ -71,11 +72,17 @@ public class Arbol {
         }
     }
 
-    public void inOrdenR(NodoArbol raiz) {
-        if (raiz != null) {
-            inOrdenR(raiz.getIzquierdo());
-            System.out.print( raiz.getMensaje() + "  ");
-            inOrdenR(raiz.getDerecho());
-        }
-    }
+    public void inOrdenR(NodoArbol root) {
+        if (root != null) {
+            System.out.print(root.getMensaje());
+            if (root.getIzquierdo() != null || root.getDerecho() != null) {
+                System.out.print("-----");
+            }//final if
+            inOrdenR(root.getIzquierdo());
+            if (root.getIzquierdo() != null || root.getDerecho() != null) {
+                System.out.print("-----");
+            }//final if
+            inOrdenR(root.getDerecho());
+        }//final if
+    }//final del metodo inOrderR
 }//Final de la clase
