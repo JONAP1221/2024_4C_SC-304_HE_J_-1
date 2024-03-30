@@ -1,16 +1,12 @@
-
 package twitter;
 
-/**
- *
- * @author Jonathan
- */
 public class Cola {
+
     //atributos de la clase
     private NodoCola primero;
     private NodoCola ultimo;
     private Arbol dato;
-    
+
     public Cola() {
         this.primero = null;
         this.ultimo = null;
@@ -23,7 +19,7 @@ public class Cola {
     public void encolar(Usuario user) {
         NodoCola nuevoNodo = new NodoCola(user);
         if (esVacia()) {//si esta vacia se agrega
-            primero = nuevoNodo;
+            primero = nuevoNodo;// se crea un nuevo nodo con el valor de cabeza
             ultimo = nuevoNodo;
         }//final if 
         else {//si ya tenia un elemento antes lo pone de ultimo
@@ -31,27 +27,20 @@ public class Cola {
             ultimo = nuevoNodo;
         }//final else
     }//final metodo encolar
-    
-    public NodoCola desencolar()
-    {
+
+    public NodoCola desencolar() {
         NodoCola actual = primero;
-        
-        if(primero != null)
-        {
+        if (primero != null) {
             primero = primero.getSiguiente();
             actual.setSiguiente(null);
         }
-        
-        
-        
         return actual;
     }//final del metodo desencolar
-    
-    public void showFeed(){
-        
-        
+
+    //metodo que metas las pilas en un []
+    public void showFeed() {
+
         //mostrar la visualizacion de mensajes
-        
     }//Final del metodo showFeed
 
     @Override
@@ -60,11 +49,11 @@ public class Cola {
         if (!esVacia()) {
             NodoCola aux = primero;
             while (aux != null) {
-                s = s + aux.getUser()+ "\n";
+                s = s + aux.getUser() + "\n";
                 aux = aux.getSiguiente();
             }//Final while
         }//final if
         return s;
     }//final metodo toString
-    
+
 }//final de la clase
