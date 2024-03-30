@@ -14,16 +14,16 @@ public class Twitter {
                 String a;
                 a = JOptionPane.showInputDialog("Opciones de ingreso \n" + "1: agregar usuario \n" + "2: agregar seguidor \n" + "9: ver usuarios con los id \n" + "0: salir \n");
                 int numero = Integer.parseInt(a);
+                ListaSimple seguidores = new ListaSimple();
 
                 switch (numero) {
                     case 1:
                         usuarios.insertaMejorado(new Usuario(JOptionPane.showInputDialog("Ingrese su Correo"), JOptionPane.showInputDialog("Ingrese su nombre"), Integer.parseInt(JOptionPane.showInputDialog("Ingrese su edad"))));
                         break;
                     case 2:
-                        ListaSimple seguidores = new ListaSimple();
-                        String x = JOptionPane.showInputDialog("el correo de su usuario");
+                        String b = JOptionPane.showInputDialog("Ingrese el coreo del usuario base");
+                        String c = JOptionPane.showInputDialog("Ingrese el correo del ususario a seguir");
 
-                        //seguidores.insertarSeguidor(b);
                         break;
                     case 9:
                         System.out.println(usuarios);
