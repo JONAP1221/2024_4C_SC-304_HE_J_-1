@@ -17,7 +17,9 @@ public class Post {
         this.msj = msj;
         this.user = user;
         this.fecha = fecha;
-    }//final constructor lleno
+    }
+
+ 
 
     public Post() {
     }//Final constructor vacio
@@ -67,5 +69,10 @@ public class Post {
         //si ya hay 2 mostrar un mensaje de error
         
     }//Final del metodo replyPost
+
+    @Override
+    public String toString() {
+        return "Post{" + "msj=" + msj + ", Usuario=" + user + ", fecha=" + fecha + '}';
+    }
     
 }//final de la clase

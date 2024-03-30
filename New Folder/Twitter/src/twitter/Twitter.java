@@ -1,11 +1,13 @@
 package twitter;
 
+import java.time.LocalDate;
+import java.time.Month;
 import javax.swing.JOptionPane;
 
 public class Twitter {
 
     public static void main(String[] args) {
-
+        /*
         boolean continuar = true;
         ListaDobleCircular usuarios = new ListaDobleCircular();
 
@@ -40,5 +42,11 @@ public class Twitter {
             System.out.println("Error" + e.getMessage());
         }
     }
-
+         */
+        
+        Pila apilarpo = new Pila();
+        apilarpo.apilarpost(new Post("Balato", "Chayanne", LocalDate.EPOCH.of(4, Month.MARCH, 2000)));
+        
+        
+    }
 }

@@ -15,10 +15,38 @@ public class Pila {
         this.cima = null;
     }//final constructor
 
+ 
     public boolean esVacia() {
-        return cima == null;
-    }//final metodo esVacia
+        if (cima == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    public void apilarpost(Post fecha) {
+        
+        NodoPila nuevo = new NodoPila();
+        if (esVacia()) {
+            cima = nuevo;
+        } else {
+            nuevo.setSiguiente(cima);
+            cima = nuevo;
+        }
+    }
+
+    public void desapilar() {
+        if (!esVacia()) {
+            cima = cima.getSiguiente();
+            JOptionPane.showMessageDialog(null, "Elemento ectraido");
+        } else {
+            JOptionPane.showMessageDialog(null, "Elementos no encontrados");
+
+        }
+    }
+
+  
+/*
     public void apilar(Arbol x) {
         //Arbol x = new Arbol();
         NodoPila nuevo = new NodoPila();
@@ -41,7 +69,7 @@ public class Pila {
             JOptionPane.showMessageDialog(null, "No se puede extraer, la pila está vacía.");
         }//final else
     }//final metodo desapilar
-
+*/
     @Override
     public String toString() {
         String s = "";
