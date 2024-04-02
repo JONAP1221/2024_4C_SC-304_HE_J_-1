@@ -1,5 +1,6 @@
 package twitter;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -62,6 +63,21 @@ public class Pila {
             return null;
         }
     }
+
+    public ArrayList<Post> obtener(ArrayList<Post> allPosts) {
+        NodoPila aux = cima;
+        if (!esVacia()) {
+            while (aux != null) {
+                Post post = aux.getPost();
+                allPosts.add(post);
+                aux = aux.getSiguiente();
+            }//final del while
+        } else {
+            JOptionPane.showMessageDialog(null, "La pila está vacía");
+
+        }//final else
+        return allPosts;// se anade el post a el array;
+    }//final del metodo obtener
 
     @Override
     public String toString() {
