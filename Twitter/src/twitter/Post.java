@@ -1,27 +1,24 @@
 package twitter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
 
+/**
+ *
+ * @author Jonathan
+ */
 public class Post {
 
     //atributos de la clase
     private String msj;
     private Usuario user;
-    private LocalDate fecha;
-    private String mensaje;
+    private String fecha;
 
-    private Usuario autor;
-
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public Post(String msj, Usuario user, LocalDate fecha) {
+    public Post(String msj, Usuario user) {
         this.msj = msj;
         this.user = user;
-        this.fecha = fecha;
-        this.mensaje = mensaje;
-
+        this.fecha = obtenerFecha();
     }//final constructor lleno
 
     public Post() {
@@ -30,10 +27,6 @@ public class Post {
     //gets y sets
     public String getMsj() {
         return msj;
-    }
-
-    public String getMensaje() {
-        return mensaje;
     }
 
     public void setMsj(String msj) {
@@ -48,39 +41,41 @@ public class Post {
         this.user = user;
     }
 
-    public Usuario getAutor() {
-        return autor;
+    public String getFecha() {
+        return fecha;
     }
 
-    public void setAutor(Usuario autor) {
-        this.autor = autor;
-    }
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }//final gets y sets
 
-    public void newPost() {
-
-        //Lo demás para crear un nuevo post 
-        //y asignarselo al usuario correspondiente
+    public static Post newPost(Usuario user) {//pasar a usuario?
+        return new Post(JOptionPane.showInputDialog("Qué estás pensando,"+user.getName()+"?"), user);
+        //le pide al usuario lo necesario para hacer el Post y lo devuelve
     }//final del metodo newPost
 
-    public void deletePost(Post post) {
-
-        //lo necesario para eliminar el post
+    public void deletePost(Usuario user, Post post) {
+        
+        //user.getListaPost.eliminar(post);
+        
     }//final del metodo deletePost
 
     public void replyPost() {
 
-        //lo necesario para responder a un post
-        //recordar que solo se pueden hacer 2 respuestas por post
-        //si ya hay 2 mostrar un mensaje de error
+        //Este metodo esta ya implementado en la clase Arbol
+        
     }//Final del metodo replyPost
+
+    public static String obtenerFecha() {
+        LocalDateTime fecha = LocalDateTime.now(); //la variable fecha tiene la fecha actual
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"); //formato contiene el formato en el que se representara la fecha
+        String fechaHora = fecha.format(formato); // fechaHora es la fecha actual con el formato establecido arriba
+        return fechaHora; // devuelve la fecha formateada
+    }//Final del metodo obtenerFecha
 
     @Override
     public String toString() {
-        return "Post{" + "msj=" + msj + ", user=" + user + ", fecha=" + fecha + '}';
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
-    }
+        return user.getName() + "          " + fecha + "\n" + msj + "\n\n";
+    }//final metodo toString
 
 }//final de la clase

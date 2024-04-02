@@ -37,7 +37,7 @@ public class Pila {
         NodoPila nodoActual = cima;
         while (nodoActual != null) {
             if (nodoActual.getPost() != null) {
-                System.out.println(nodoActual.getPost().getMensaje()); // Mostrar el mensaje del post
+                System.out.println(nodoActual.getPost().getMsj()); // Mostrar el mensaje del post
             }
             nodoActual = nodoActual.getSiguiente();
         }
