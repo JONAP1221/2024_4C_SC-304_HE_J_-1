@@ -74,7 +74,6 @@ public class Pila {
             }//final del while
         } else {
             JOptionPane.showMessageDialog(null, "La pila está vacía");
-
         }//final else
         return allPosts;// se anade el post a el array;
     }//final del metodo obtener

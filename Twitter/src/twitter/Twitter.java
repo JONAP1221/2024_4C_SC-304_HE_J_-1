@@ -117,7 +117,7 @@ public class Twitter {
                                 ArrayList<Post> allPosts = new ArrayList<>();// se crea un array vacio 
                                 // se crea una "pila/nodo" en el cual se almacena el post del ususario base 
                                 Pila pilaPostsUsuario = usuarioConsulta.getPilaPosts();
-                                allPosts = pilaPostsUsuario.obtener(allPosts);
+                                allPosts = pilaPostsUsuario.obtener(allPosts);//se agregan los Post de la pila al array
                                 ListaSimple seguidoresUsuarioConsulta = usuarioConsulta.getSeguidores();// de la lista simple del ussuario se saca un seguidor 
                                 if (seguidoresUsuarioConsulta != null) {// en caso de haberlos y no estar vacia 
                                     NodoListaSimple nodoSeguidor = seguidoresUsuarioConsulta.getCabeza();
