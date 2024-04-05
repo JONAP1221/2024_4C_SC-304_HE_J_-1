@@ -86,10 +86,10 @@ public class Arbol {
 
     public void mostrar(Arbol arbol) {
         if (!esVacio()) { //si no es vacio
-            int opcion = Integer.parseInt(JOptionPane.showInputDialog(inOrdenR(root)+ "\n 1- Responder     2- Siguiente"));//mostrar el inOrder Recursivo
+            int opcion = Integer.parseInt(JOptionPane.showInputDialog(inOrdenR(root)+ "\n\n 1- Responder     2- Siguiente"));//mostrar el inOrder Recursivo
             switch (opcion) {
                 case 1:
-                    String correoUsuarioa = JOptionPane.showInputDialog("Ingrese el correo del usuario del cual desea ver los posts:");// se pide el correo del ususario 
+                    String correoUsuarioa = JOptionPane.showInputDialog("Ingrese el correo del usuario que esta respondiendo:");// se pide el correo del ususario 
                     Usuario usuarioa = Twitter.usuarios.buscarUsuarioPorCorreo(correoUsuarioa);// se busca el ususario en la lista doble
                     if (usuarioa != null) {// de haberlo
                         arbol.responder(usuarioa, arbol.getRoot().getMensaje().getUser(), root);
