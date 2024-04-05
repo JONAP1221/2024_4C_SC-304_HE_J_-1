@@ -6,10 +6,12 @@ import java.util.ArrayList;
 
 public class Twitter {
 
+    public static ListaDobleCircular usuarios = new ListaDobleCircular();
+
     public static void main(String[] args) {
 
         boolean continuar = true;
-        ListaDobleCircular usuarios = new ListaDobleCircular();
+
         usuarios.insertaMejorado(new Usuario("aaa", "Aaa", 14));
         usuarios.insertaMejorado(new Usuario("bbb", "Bbb", 12));
         usuarios.insertaMejorado(new Usuario("ccc", "Ccc", 1416));
@@ -85,11 +87,11 @@ public class Twitter {
                         case 4:
                             String correoDestino = JOptionPane.showInputDialog("Ingrese el correo del usuario bajo el cual desea subir un post:");// se pide el ususario
                             Usuario usuarioDestino = usuarios.buscarUsuarioPorCorreo(correoDestino);// se busca por correo 
-                            if (usuarioDestino != null) {// si el ususario existe 
-                                String mensajePost = JOptionPane.showInputDialog("Ingrese el mensaje del post:");// se pide el texto del post 
-                                LocalDate fechaActual = LocalDate.now();// se toma la fecha del momento a la hora de publicar el post 
-                                Post nuevoPost = new Post(mensajePost, usuarioDestino);// se crea un nuevo post
-                                usuarioDestino.getPilaPosts().apilar(nuevoPost, mensajePost);// se apila el post 
+                            if (usuarioDestino != null) {// si el ususario existe  
+                                Arbol nuevoArbol = new Arbol();
+                                Post x = Post.newPost(usuarioDestino);
+                                nuevoArbol.agregar(x);
+                                usuarioDestino.getPilaPosts().apilar(nuevoArbol);// se apila el post 
                                 JOptionPane.showMessageDialog(null, "Post creado y publicado bajo el correo: " + correoDestino);// se muetra que se creo el post bajo el destino 
                             } else {// en caso de no haber ningun correo 
                                 JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el correo electrónico " + correoDestino);
@@ -114,7 +116,7 @@ public class Twitter {
                             String correoUsuarioConsulta = JOptionPane.showInputDialog("Ingrese el correo del usuario para consultar sus posts:");// se crea una variable tipo string para pedir informacion por medio de un joptions
                             Usuario usuarioConsulta = usuarios.buscarUsuarioPorCorreo(correoUsuarioConsulta);// se crea una variable tipo usuario para usar la varable anterior para buscar este correo en los nodos de la ldb 
                             if (usuarioConsulta != null) {// si es distinto a null 
-                                ArrayList<Post> allPosts = new ArrayList<>();// se crea un array vacio 
+                                ArrayList<Arbol> allPosts = new ArrayList<>();// se crea un array vacio 
                                 // se crea una "pila/nodo" en el cual se almacena el post del ususario base 
                                 Pila pilaPostsUsuario = usuarioConsulta.getPilaPosts();
                                 allPosts = pilaPostsUsuario.obtener(allPosts);//se agregan los Post de la pila al array
@@ -124,8 +126,8 @@ public class Twitter {
                                     while (nodoSeguidor != null) {// se crea un siclo que recorre hasta estar vacia 
                                         Usuario seguidor = nodoSeguidor.getUsuario();// se crea una variale tipo ususario apra almacenar el seguidor 
                                         Pila pilaPostsSeguidor = seguidor.getPilaPosts();// de la pila de ese usuario sacamos los post
-                                        while (!pilaPostsSeguidor.esVacia()) {// si la pila de este ususario no esa vacia 
-                                            Post postSeguidor = pilaPostsSeguidor.desapilar();// se desapila 
+                                        while (!pilaPostsSeguidor.esVacia()) {// si la pila de este usuario no esa vacia 
+                                            Arbol postSeguidor = pilaPostsSeguidor.desapilar();// se desapila 
                                             allPosts.add(postSeguidor);// se anade al aaray 
                                         }
                                         nodoSeguidor = nodoSeguidor.getSiguiente();// se vanza al sigueinte seguidor 
@@ -133,7 +135,7 @@ public class Twitter {
                                 }
                                 if (!allPosts.isEmpty()) {// si el array no esta vacio 
                                     JOptionPane.showMessageDialog(null, "Posts de " + usuarioConsulta.getName() + " y usuarios seguidos:");// el feed del ususario 
-                                    for (Post post : allPosts) {// se recorren el array
+                                    for (Arbol post : allPosts) {// se recorren el array
                                         JOptionPane.showMessageDialog(null, post);// se imprime
                                     }
                                 } else {// en caso de que no hayan post en el array 

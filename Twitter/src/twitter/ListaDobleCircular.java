@@ -42,6 +42,7 @@ public class ListaDobleCircular {
         }
     }
 
+    /*
    public void mostrarPilasDeUsuarios(ListaDobleCircular usuarios) {
     NodoListaDobleCircular actual = usuarios.getCabeza();
     StringBuilder resultado = new StringBuilder();
@@ -55,7 +56,7 @@ public class ListaDobleCircular {
             resultado.append("Posts:\n");
             NodoPila nodoPost = pilaPosts.getCima();
             while (nodoPost != null) {
-                Post post = nodoPost.getPost(); // Asumiendo que tienes un método getPost() en tu clase NodoPila para obtener el post
+                Post post = nodoPost.get; // Asumiendo que tienes un método getPost() en tu clase NodoPila para obtener el post
                 resultado.append(post.toString()).append("\n");
                 nodoPost = nodoPost.getSiguiente();
             }
@@ -67,7 +68,7 @@ public class ListaDobleCircular {
     }
 
     System.out.println(resultado.toString());
-}
+}*/
 
 
     

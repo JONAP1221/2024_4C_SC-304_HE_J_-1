@@ -50,20 +50,23 @@ public class Post {
     }//final gets y sets
 
     public static Post newPost(Usuario user) {//pasar a usuario?
-        return new Post(JOptionPane.showInputDialog("Qué estás pensando,"+user.getName()+"?"), user);
+        return new Post(JOptionPane.showInputDialog("Qué estás pensando," + user.getName() + "?"), user);
+        //le pide al usuario lo necesario para hacer el Post y lo devuelve
+    }//final del metodo newPost
+
+    public static Post respuesta(Usuario user, Usuario original) {//pasar a usuario?
+        return new Post(JOptionPane.showInputDialog("Respondiendo al post de," + original.getName() + "."), user);
         //le pide al usuario lo necesario para hacer el Post y lo devuelve
     }//final del metodo newPost
 
     public void deletePost(Usuario user, Post post) {
-        
+
         //user.getListaPost.eliminar(post);
-        
     }//final del metodo deletePost
 
     public void replyPost() {
 
         //Este metodo esta ya implementado en la clase Arbol
-        
     }//Final del metodo replyPost
 
     public static String obtenerFecha() {

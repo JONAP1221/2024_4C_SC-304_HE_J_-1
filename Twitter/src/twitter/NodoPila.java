@@ -7,13 +7,12 @@ package twitter;
 // Clase NodoPila
 public class NodoPila {
 
-    private Post post;
+    private Arbol post;
     private String mensaje;
     private NodoPila siguiente;
 
-    public NodoPila(Post post, String mensaje) {
+    public NodoPila(Arbol post) {
         this.post = post;
-        this.mensaje = mensaje;
         this.siguiente = null;
     }
 
@@ -28,28 +27,20 @@ public class NodoPila {
         this.siguiente = siguiente;
     }
 
-    public Post getPost() {
+    public Arbol getArbol() {
         return post;
     }
 
-    public void setPost(Post post) {
+    public void setArbol(Arbol post) {
         this.post = post;
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
     }
 
     @Override
     public String toString() {
         if (post != null) {
-            return "Mensaje: " + mensaje + ", Post: " + post.toString();
+            return "Mensaje: " + mensaje + ", Arbol: " + post.toString();
         } else {
-            return "Mensaje: " + mensaje + ", Post: [null]";
+            return "Mensaje: " + mensaje + ", Arbol: [null]";
         }
     }
 }

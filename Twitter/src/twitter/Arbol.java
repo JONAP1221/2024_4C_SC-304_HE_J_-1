@@ -59,10 +59,11 @@ public class Arbol {
         }//final else
     }//final metodo agregar
 
-    public void responder(Post mensaje, Arbol post) {
+    public void responder(Usuario user, Usuario post, NodoArbol root) {
+        Post mensaje = Post.respuesta(user, root.getMensaje().getUser());
         NodoArbol nuevo = new NodoArbol(mensaje); //se establece una variable para la respuesta (Post)
         nuevo.getMensaje().setMsj("      " + nuevo.getMensaje().getMsj());
-        NodoArbol aux = post.getRoot(); //este esta conectado al mensaje principal
+        NodoArbol aux = root; //este esta conectado al mensaje principal
         NodoArbol padre; // otra variable de apoyo para la respuesta a la respuesta
         while (true) {
             padre = aux;  //igualamos ambas variables
@@ -83,27 +84,46 @@ public class Arbol {
         }//final while
     }//final else
 
-    public void mostrar() {
+    public void mostrar(Arbol arbol) {
         if (!esVacio()) { //si no es vacio
-            inOrdenR(root);//mostrar el inOrder Recursivo
+            int opcion = Integer.parseInt(JOptionPane.showInputDialog(inOrdenR(root)+ "\n 1- Responder     2- Siguiente"));//mostrar el inOrder Recursivo
+            switch (opcion) {
+                case 1:
+                    String correoUsuarioa = JOptionPane.showInputDialog("Ingrese el correo del usuario del cual desea ver los posts:");// se pide el correo del ususario 
+                    Usuario usuarioa = Twitter.usuarios.buscarUsuarioPorCorreo(correoUsuarioa);// se busca el ususario en la lista doble
+                    if (usuarioa != null) {// de haberlo
+                        arbol.responder(usuarioa, arbol.getRoot().getMensaje().getUser(), root);
+                        mostrar(arbol);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se ha encontrado al usuario");
+                    }
+                    break;
+                case 2:
+                    break;
+
+                default:
+                    throw new AssertionError();
+            }//final switch
         }//final if 
         else {
             JOptionPane.showMessageDialog(null, "El arbol está vacío");
         }//final else
     }//final del metodo mostrar
 
-    public void inOrdenR(NodoArbol root) {
-        //que despiche hice, al rato veo zzzz
+    public String inOrdenR(NodoArbol root) {
+        String resultado = "";
         if (root != null) {
-            System.out.print(root.getMensaje());
+            resultado += root.getMensaje();
             if (root.getIzquierdo() != null) {
-                System.out.print("------");
+                resultado += "------";
             }//final if
-            inOrdenR(root.getIzquierdo());
+            resultado += inOrdenR(root.getIzquierdo());
             if (root.getDerecho() != null) {
-                System.out.print("------");
-            }//final if
-            inOrdenR(root.getDerecho());
+                resultado += "------";
+            }//Final if
+            resultado += inOrdenR(root.getDerecho());
         }//final if
+        return resultado;
     }//final del metodo inOrderR
+
 }//Final de la clase

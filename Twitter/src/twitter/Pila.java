@@ -24,8 +24,8 @@ public class Pila {
         return cima;
     }
 
-    public void apilar(Post post, String mensaje) {
-        NodoPila nuevo = new NodoPila(post, mensaje);
+    public void apilar(Arbol post) {
+        NodoPila nuevo = new NodoPila(post);
         if (esVacia()) {
             cima = nuevo;
         } else {
@@ -37,8 +37,8 @@ public class Pila {
     public void mostrarPila() {
         NodoPila nodoActual = cima;
         while (nodoActual != null) {
-            if (nodoActual.getPost() != null) {
-                System.out.println(nodoActual.getPost().getMsj()); // Mostrar el mensaje del post
+            if (nodoActual.getArbol() != null) {
+                System.out.println(nodoActual.getArbol().getRoot().getMensaje()); // Mostrar el mensaje del post
             }
             nodoActual = nodoActual.getSiguiente();
         }
@@ -47,14 +47,14 @@ public class Pila {
     public void mostrarPilaConMensajes() {
         NodoPila nodoActual = cima;
         while (nodoActual != null) {
-            System.out.println(nodoActual.toString()); // Muestra el nodo completo (mensaje y post)
+            nodoActual.getArbol().mostrar(nodoActual.getArbol());
             nodoActual = nodoActual.getSiguiente();
         }
     }
 
-    public Post desapilar() {
+    public Arbol desapilar() {
         if (!esVacia()) {
-            Post postDesapilado = cima.getPost();
+            Arbol postDesapilado = cima.getArbol();
             cima = cima.getSiguiente();
             JOptionPane.showMessageDialog(null, "Elemento extraído");
             return postDesapilado;
@@ -64,18 +64,18 @@ public class Pila {
         }
     }
 
-    public ArrayList<Post> obtener(ArrayList<Post> allPosts) {
+    public ArrayList<Arbol> obtener(ArrayList<Arbol> allArbols) {
         NodoPila aux = cima;
         if (!esVacia()) {
             while (aux != null) {
-                Post post = aux.getPost();
-                allPosts.add(post);
+                Arbol post = aux.getArbol();
+                allArbols.add(post);
                 aux = aux.getSiguiente();
             }//final del while
         } else {
             JOptionPane.showMessageDialog(null, "La pila está vacía");
         }//final else
-        return allPosts;// se anade el post a el array;
+        return allArbols;// se anade el post a el array;
     }//final del metodo obtener
 
     @Override
