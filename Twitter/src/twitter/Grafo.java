@@ -13,14 +13,19 @@ public class Grafo {
         String correoUsuarioBase = JOptionPane.showInputDialog("Ingrese el correo de su usuario");
         Usuario usuarioBase = usuarios.buscarUsuarioPorCorreo(correoUsuarioBase);
 
-        
         if (usuarios.existe(usuarioBase)) {
             usuarios.eliminar(usuarioBase);
             JOptionPane.showMessageDialog(null, "El ususario con el correo: " + usuarioBase + "se ha eliminado.");
-
         } else {
             JOptionPane.showMessageDialog(null, "El ususario con el correo: " + usuarioBase + "no existe.");
 
         }
+    }
+
+    public void cambiarNombre() {
+        String correoUsuarioBase = JOptionPane.showInputDialog("Ingrese el correo de su usuario");
+        Usuario usuarioBase = usuarios.buscarUsuarioPorCorreo(correoUsuarioBase);
+        ListaDobleCircular l = new ListaDobleCircular();
+        l.modificaNombre(usuarioBase);
     }
 }

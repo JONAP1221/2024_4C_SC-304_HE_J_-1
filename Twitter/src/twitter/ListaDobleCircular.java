@@ -1,5 +1,7 @@
 package twitter;
 
+import javax.swing.JOptionPane;
+
 public class ListaDobleCircular {
 
     private NodoListaDobleCircular cabeza;
@@ -123,13 +125,29 @@ public class ListaDobleCircular {
         }
     }
 
-    public void modifica(Usuario u) {
+    public void modificaNombre(Usuario u) {
+        String newName = JOptionPane.showInputDialog("Ingrese el nuevo nombre del usuario con el correo: " + u.getEmail());
+        NodoListaDobleCircular n = cabeza;
+        do {
+            if (n.getDato().getHash() == u.getHash()) {
+                n.getDato().setName(newName);
+                JOptionPane.showMessageDialog(null, "El nuevo nombre del usuario " + u + " es: " + newName);
+                return;
+            } else {
+                n = n.getSiguiente();
+            }
+        } while (n != cabeza);
+
+        JOptionPane.showMessageDialog(null, "El usuario con el correo " + u.getEmail() + " no fue encontrado.");
+    }
+
+    public void modificaEdad(Usuario u) {
         NodoListaDobleCircular auxiliar = cabeza; // se empieza por a  cabeza
         while (auxiliar.getSiguiente() != cabeza)// se detiene cuando el siguiete sea cabeza es decir cuando de una vuelta
         {
             if (auxiliar.getDato().getHash() == u.getHash())// se eldato del aux y el id del aux es el mismo que el que se busca 
             {
-                auxiliar.getDato().setName(u.getName());// se cambia la informacion 
+                auxiliar.getDato().setAge(u.getAge());// se cambia la informacion 
                 break;
             } else {
                 auxiliar = auxiliar.getSiguiente();//de no ser el mismo id se pasa al sigueinte nodo en la lisa 

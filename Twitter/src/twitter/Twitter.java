@@ -9,12 +9,11 @@ public class Twitter {
     public static ListaDobleCircular usuarios = new ListaDobleCircular();
     public static Usuario user = new Usuario();
     public static Grafo g = new Grafo();
-
     public static void main(String[] args) {
 
         usuarios.insertaMejorado(new Usuario("aaa", "Aaa", 14));
         usuarios.insertaMejorado(new Usuario("bbb", "Bbb", 12));
-        usuarios.insertaMejorado(new Usuario("ccc", "Ccc", 1416));
+        usuarios.insertaMejorado(new Usuario("ccc", "Ccc", 20));
 
         boolean continuar = true;
         while (continuar) {
@@ -28,7 +27,8 @@ public class Twitter {
                         + "6: Mostrar el feed de un usuario \n"
                         + "7: Eliminar un usueario \n"
                         + "8: Eliminar un seguidor \n"
-                        + "9: ver usuarios con los id \n"
+                        + "9: Cambiar el nombre a un ususario \n"
+                        + "10: ver usuarios con los id \n"
                         + "0: salir \n");
                 if (a != null && !a.isEmpty()) { // Verificar si la cadena no está vacía
                     int numero = Integer.parseInt(a);
@@ -58,6 +58,9 @@ public class Twitter {
                             user.eliminarSeguidor();
                             break;
                         case 9:
+                            g.cambiarNombre();
+                            break;
+                        case 10:
                             JOptionPane.showConfirmDialog(null, usuarios);
                             break;
                         case 0:
