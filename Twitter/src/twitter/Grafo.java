@@ -27,4 +27,10 @@ public class Grafo {
         Usuario usuarioBase = usuarios.buscarUsuarioPorCorreo(correoUsuarioBase);
         usuarios.modificaNombre(usuarioBase);
     }
+
+    public void cambiarEdad() {
+        String correoUsuarioBase = JOptionPane.showInputDialog("Ingrese el correo de su usuario");
+        Usuario usuarioBase = usuarios.buscarUsuarioPorCorreo(correoUsuarioBase);
+        usuarios.modificaEdad(usuarioBase);
+    }
 }

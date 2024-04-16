@@ -125,34 +125,38 @@ public class ListaDobleCircular {
         }
     }
 
-    public void modificaNombre(Usuario u) {
-        String newName = JOptionPane.showInputDialog("Ingrese el nuevo nombre del usuario con el correo: " + u.getEmail());
-        NodoListaDobleCircular n = cabeza;
-        do {
-            if (n.getDato().getHash() == u.getHash()) {
-                n.getDato().setName(newName);
-                JOptionPane.showMessageDialog(null, "El nuevo nombre del usuario " + u + " es: " + newName);
-                return;
-            } else {
-                n = n.getSiguiente();
+    public void modificaNombre(Usuario u) {// funcino para modificar el nombre del ususario sin cambiar nada mas que el nombre 
+        String newName = JOptionPane.showInputDialog("Ingrese el nuevo nombre del usuario con el correo: " + u.getEmail()); // se pide el nuevo nombre
+        NodoListaDobleCircular n = cabeza;// se cre una variable para recorrer la lista doble circular en busca del ussuario 
+        do {// se realiza
+            if (n.getDato().getHash() == u.getHash()) {// se verifica que el hash osea el identificador del ususario sea el mismo del que estamos buscando para cmabiarle el nombre 
+                n.getDato().setName(newName);// se le cambia el nombre mediante el setNmae y la variable del nuevo nombre que hemos tomado al principio
+                JOptionPane.showMessageDialog(null, "El nuevo nombre del usuario " + u + " es: " + newName);// se muestra el mensaje de que se cambio el nombre 
+                return;// un return para salir del if 
+            } else {// en caso de no encontrar el nodo a modificar se avanza al asiguiente 
+                n = n.getSiguiente();// se avanza al siguiente nodo en busca del correcto 
             }
-        } while (n != cabeza);
+        } while (n != cabeza);// se hace mientras no se vuel a a cabeza
 
-        JOptionPane.showMessageDialog(null, "El usuario con el correo " + u.getEmail() + " no fue encontrado.");
+        JOptionPane.showMessageDialog(null, "El usuario con el correo " + u.getEmail() + " no fue encontrado.");// en dado caso de que el usuaro no exista se mostrara e error en pantalla
     }
 
     public void modificaEdad(Usuario u) {
-        NodoListaDobleCircular auxiliar = cabeza; // se empieza por a  cabeza
-        while (auxiliar.getSiguiente() != cabeza)// se detiene cuando el siguiete sea cabeza es decir cuando de una vuelta
-        {
-            if (auxiliar.getDato().getHash() == u.getHash())// se eldato del aux y el id del aux es el mismo que el que se busca 
-            {
-                auxiliar.getDato().setAge(u.getAge());// se cambia la informacion 
-                break;
-            } else {
-                auxiliar = auxiliar.getSiguiente();//de no ser el mismo id se pasa al sigueinte nodo en la lisa 
+        String aaa = JOptionPane.showInputDialog("Ingrese la nueva edad  del usuario con el correo: " + u.getEmail()); // se pide la nueva edad 
+        int newAge = Integer.parseInt(aaa);
+        NodoListaDobleCircular n = cabeza;// se cre una variable para recorrer la lista doble circular en busca del ussuario 
+        do {// se realiza
+            if (n.getDato().getHash() == u.getHash()) {// se verifica que el hash osea el identificador del ususario sea el mismo del que estamos buscando para cmabiarle el nombre 
+                n.getDato().setAge(newAge);// se le cambia el nombre mediante el setNmae y la variable del nuevo nombre que hemos tomado al principio
+                JOptionPane.showMessageDialog(null, "La nueva edad del ussuaro con el corre:  " + u + " es: " + newAge);// se muestra el mensaje de que se cambio el nombre 
+                return;// un return para salir del if 
+            } else {// en caso de no encontrar el nodo a modificar se avanza al asiguiente 
+                n = n.getSiguiente();// se avanza al siguiente nodo en busca del correcto 
             }
-        }
+        } while (n != cabeza);// se hace mientras no se vuel a a cabeza
+
+        JOptionPane.showMessageDialog(null, "El usuario con el correo " + u.getEmail() + " no fue encontrado.");// en dado caso de que el usuaro no exista se mostrara e error en pantalla
+
     }
 
     public NodoListaDobleCircular getCabeza() {

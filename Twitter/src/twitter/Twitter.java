@@ -9,6 +9,7 @@ public class Twitter {
     public static ListaDobleCircular usuarios = new ListaDobleCircular();
     public static Usuario user = new Usuario();
     public static Grafo g = new Grafo();
+
     public static void main(String[] args) {
 
         usuarios.insertaMejorado(new Usuario("aaa", "Aaa", 14));
@@ -19,49 +20,61 @@ public class Twitter {
         while (continuar) {
             try {
                 String a = JOptionPane.showInputDialog("Opciones de ingreso \n"
-                        + "1: agregar usuario \n"
-                        + "2: agregar seguidor \n"
-                        + "3: ver seguidores de un usuario \n"
-                        + "4: crear y enviar post \n"
-                        + "5: Mostrar post de usuario \n"
-                        + "6: Mostrar el feed de un usuario \n"
-                        + "7: Eliminar un usuario \n"
-                        + "8: Eliminar un seguidor \n"
-                        + "9: Cambiar el nombre a un ususario \n"
-                        + "10: ver usuarios con los id \n"
+                        + "1: Agregar usuario \n"
+                        + "2: Modificar nombre de un usuario \n"
+                        + "3: Modificar edad de un usuario \n"
+                        + "4: Eliminar un usuario \n"
+                        + "5: Mostrar usuarios  \n"
+                        + "1: Manejo de usuarios \n"
+                        + "6: Agregar seguidor \n"
+                        + "7: Eliminar un seguidor \n"
+                        + "8: Mostrar a quien sigue el usuario xxx \n"
+                        + "9: Publicar un post \n"
+                        + "10: Eliinar un post (pendiente) \n"
+                        + "11: Mostrar los post de un ususario \n"
+                        + "12: Mostrar el feed de un usuario \n"
                         + "0: salir \n");
                 if (a != null && !a.isEmpty()) { // Verificar si la cadena no está vacía
                     int numero = Integer.parseInt(a);
                     switch (numero) {
+
                         case 1:
                             g.agregarUsusario();
                             break;
                         case 2:
-                            user.insertarSeguidor();
+                            g.cambiarNombre();
+
                             break;
                         case 3:
-                            user.verSeguidores();
+                            g.cambiarEdad();
                             break;
                         case 4:
-                            user.crearPost();
-                            break;
-                        case 5:
-                            user.mostrarPost();
-                            break;
-                        case 6:
-                            user.mostrarFeed();
-                            break;
-                        case 7:// no funca 
                             g.eliminarUsuario();
                             break;
-                        case 8:
+                        case 5:
+                            JOptionPane.showConfirmDialog(null, usuarios);
+                            break;
+
+                        case 6:
+                            user.insertarSeguidor();
+                            break;
+                        case 7:
                             user.eliminarSeguidor();
                             break;
+                        case 8:// no funca 
+                            user.verSeguidores();
+                            break;
                         case 9:
-                            g.cambiarNombre();
+                            user.crearPost();
                             break;
                         case 10:
-                            JOptionPane.showConfirmDialog(null, usuarios);
+                            // user.eliminarPost();  //Pendinte realizar funcion
+                            break;
+                        case 11:
+                            user.mostrarPost();
+                            break;
+                        case 12:
+                            user.mostrarFeed();
                             break;
                         case 0:
                             continuar = false;// se sale del menu 
