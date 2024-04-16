@@ -24,23 +24,23 @@ public class Pila {
         return cima;
     }
 
-    public void apilar(Arbol post) {
-        NodoPila nuevo = new NodoPila(post);
-        if (esVacia()) {
-            cima = nuevo;
-        } else {
-            nuevo.setSiguiente(cima);
-            cima = nuevo;
+    public void apilar(Arbol post) {// funcino para apilar los post de los usuarios
+        NodoPila nuevo = new NodoPila(post);// se inicializa una variable tipo nodoPila 
+        if (esVacia()) {// si es vacia
+            cima = nuevo;// se pone en la cima
+        } else {// de no estar vacio 
+            nuevo.setSiguiente(cima);// se pone despues de la cima, osea sobre
+            cima = nuevo;// y se actiaza el valor de cima 
         }
     }
 
-    public void mostrarPila() {
-        NodoPila nodoActual = cima;
-        while (nodoActual != null) {
-            if (nodoActual.getArbol() != null) {
+    public void mostrarPila() {// para mostar la pila 
+        NodoPila nodoActual = cima;//  se crea una variable tipo nodo pila y se inicializa como la cabeza 
+        while (nodoActual != null) {// si la pila no esta vacia 
+            if (nodoActual.getArbol() != null) {//  si hay un post en la pila 
                 System.out.println(nodoActual.getArbol().getRoot().getMensaje()); // Mostrar el mensaje del post
             }
-            nodoActual = nodoActual.getSiguiente();
+            nodoActual = nodoActual.getSiguiente();// se actualiza la referencia al siguente nodo hasta llegar al final 
         }
     }
 
