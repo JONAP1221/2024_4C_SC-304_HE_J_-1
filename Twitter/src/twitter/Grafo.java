@@ -9,7 +9,7 @@ public class Grafo {
         usuarios.insertaMejorado(new Usuario(JOptionPane.showInputDialog("Ingrese su Correo"), JOptionPane.showInputDialog("Ingrese su nombre"), Integer.parseInt(JOptionPane.showInputDialog("Ingrese su edad"))));
     }
 
-    public void eilimiarUsuario() {
+    public void eliminarUsuario() {
         String correoUsuarioBase = JOptionPane.showInputDialog("Ingrese el correo de su usuario");
         Usuario usuarioBase = usuarios.buscarUsuarioPorCorreo(correoUsuarioBase);
 
@@ -25,7 +25,6 @@ public class Grafo {
     public void cambiarNombre() {
         String correoUsuarioBase = JOptionPane.showInputDialog("Ingrese el correo de su usuario");
         Usuario usuarioBase = usuarios.buscarUsuarioPorCorreo(correoUsuarioBase);
-        ListaDobleCircular l = new ListaDobleCircular();
-        l.modificaNombre(usuarioBase);
+        usuarios.modificaNombre(usuarioBase);
     }
 }

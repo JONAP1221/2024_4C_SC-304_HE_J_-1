@@ -25,7 +25,7 @@ public class Twitter {
                         + "4: crear y enviar post \n"
                         + "5: Mostrar post de usuario \n"
                         + "6: Mostrar el feed de un usuario \n"
-                        + "7: Eliminar un usueario \n"
+                        + "7: Eliminar un usuario \n"
                         + "8: Eliminar un seguidor \n"
                         + "9: Cambiar el nombre a un ususario \n"
                         + "10: ver usuarios con los id \n"
@@ -52,7 +52,7 @@ public class Twitter {
                             user.mostrarFeed();
                             break;
                         case 7:// no funca 
-                            g.eilimiarUsuario();
+                            g.eliminarUsuario();
                             break;
                         case 8:
                             user.eliminarSeguidor();

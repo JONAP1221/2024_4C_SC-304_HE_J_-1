@@ -102,7 +102,7 @@ public class Arbol {
                     break;
 
                 default:
-                    throw new AssertionError();
+                    JOptionPane.showMessageDialog(null, "Elija una opción valida.");
             }//final switch
         }//final if 
         else {
@@ -128,7 +128,7 @@ public class Arbol {
 
     @Override
     public String toString() {
-        return "Arbol{" + "root=" + root + '}';
+        return root.getMensaje().getUser().getName() + root;
     }
     
     

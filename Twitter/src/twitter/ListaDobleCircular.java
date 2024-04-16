@@ -28,7 +28,7 @@ public class ListaDobleCircular {
         NodoListaDobleCircular auxiliar = cabeza;// se define al auxiliar como la cabeza para iniciar 
 
         while (auxiliar != null) {// se verifica que no este vacia la fila
-            if (u.equals(auxiliar)) {// se compara el dato de la posicion de aux con el id ingresado
+            if (auxiliar.getDato() == u) {// se compara el dato de la posicion de aux con el id ingresado
                 respuesta = true;// si esto es verdaddero se cambia la variable respuesta a verdadera
                 break;
             } else {// de no cumplirse se avanza a la siguiente posicion
