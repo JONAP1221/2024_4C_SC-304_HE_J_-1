@@ -189,7 +189,7 @@ public class Usuario {
         Usuario usuarioConsulta = usuarios.buscarUsuarioPorCorreo(correoUsuarioConsulta);// se crea una variable tipo usuario para usar la varable anterior para buscar este correo en los nodos de la ldb 
         if (usuarioConsulta != null) {// si es distinto a null 
             ArrayList<Arbol> allPosts = new ArrayList<>();// se crea un array vacio 
-            // se crea una "pila/nodo" en el cual se almacena el post del ususario base 
+            // se crea una "pila/nodo" en el cual se almacena el post del usuario base 
             Pila pilaPostsUsuario = usuarioConsulta.getPilaPosts();
             allPosts = pilaPostsUsuario.obtener(allPosts);//se agregan los Post de la pila al array
             ListaSimple seguidoresUsuarioConsulta = usuarioConsulta.getSeguidores();// de la lista simple del ussuario se saca un seguidor 
@@ -200,13 +200,13 @@ public class Usuario {
                     Pila pilaPostsSeguidor = seguidor.getPilaPosts();// de la pila de ese usuario sacamos los post
                     allPosts = pilaPostsSeguidor.obtener(allPosts);
                     nodoSeguidor = nodoSeguidor.getSiguiente();// se vanza al sigueinte seguidor 
-                }
-            }
+                }//final while
+            }//final if
             if (!allPosts.isEmpty()) {// si el array no esta vacio 
                 JOptionPane.showMessageDialog(null, "Posts de " + usuarioConsulta.getName() + " y usuarios seguidos:");// el feed del ususario 
                 for (Arbol post : allPosts) {// se recorren el array
                     post.mostrar(post);
-                }
+                }//final for
             } else {// en caso de que no hayan post en el array 
                 JOptionPane.showMessageDialog(null, "No hay posts para mostrar.");// se notifica 
             }

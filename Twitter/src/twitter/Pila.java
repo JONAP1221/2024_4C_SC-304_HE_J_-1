@@ -72,9 +72,7 @@ public class Pila {
                 allArbols.add(post);
                 aux = aux.getSiguiente();
             }//final del while
-        } else {
-            JOptionPane.showMessageDialog(null, "La pila está vacía");
-        }//final else
+        }//final if
         return allArbols;// se anade el post a el array;
     }//final del metodo obtener
 
