@@ -126,4 +126,11 @@ public class Arbol {
         return resultado;
     }//final del metodo inOrderR
 
+    @Override
+    public String toString() {
+        return "Arbol{" + "root=" + root + '}';
+    }
+    
+    
+
 }//Final de la clase

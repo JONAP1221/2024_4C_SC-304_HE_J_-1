@@ -21,57 +21,22 @@ public class ListaDobleCircular {
         }
     }
 
-    public void mostrarSeguidoresDeUsuarioX(String correoUsuarioX) {
+    public boolean existe(Usuario u) {
+        boolean respuesta = false;// se setea la variable respuesta a falsa por defecto 
+        NodoListaDobleCircular auxiliar = cabeza;// se define al auxiliar como la cabeza para iniciar 
 
-        Usuario usuarioX = buscarUsuarioPorCorreo(correoUsuarioX);// se crea una nueva variable tipo para almacenar el usuario buscado por correo
-        if (usuarioX != null) {   // se verifica que el ususario que se agregar es diferente de null  
-            ListaSimple seguidoresUsuarioX = usuarioX.getSeguidores(); //se crea una lista simple para en la que se almacenan los seguidores del usuario
-            if (seguidoresUsuarioX != null) {   // se verifica que la lista de segudires no es  vacia
-                System.out.println("Seguidores de " + usuarioX.getName() + ":"); // se imprime los seguidores de los usuarios
-                NodoListaSimple nodoSeguidor = seguidoresUsuarioX.getCabeza();//se crea un nodo que almacena los seguidores de los usuarios
-                while (nodoSeguidor != null) {// se verifica que los seguidores es diferente de null porque de ejecuta simepre que el usuario tenga seguidores
-                    Usuario seguidor = nodoSeguidor.getUsuario(); // se  crea una variable tipo usuario llamada seguidor para mostrar el nombre de los seguidores 
-                    System.out.println("- " + seguidor.getName());// se muestra el nombre de los seguidores
-                    nodoSeguidor = nodoSeguidor.getSiguiente(); // se avanza al siguiente nodo
-                }
-            } else {
-                System.out.println(usuarioX.getName() + " no tiene seguidores.");// en caso de no tener seguidores se muestra este mensaje 
+        while (auxiliar != null) {// se verifica que no este vacia la fila
+            if (u.equals(auxiliar)) {// se compara el dato de la posicion de aux con el id ingresado
+                respuesta = true;// si esto es verdaddero se cambia la variable respuesta a verdadera
+                break;
+            } else {// de no cumplirse se avanza a la siguiente posicion
+                auxiliar = auxiliar.getSiguiente();
             }
-        } else {
-            System.out.println("No se encontró ningún usuario con el correo electrónico " + correoUsuarioX);// si no se encuentra algun usuario con ese tipo de correo tira ese mensaje
         }
+
+        return respuesta; // se decuelve la respuesta una vez terminada
     }
 
-    /*
-   public void mostrarPilasDeUsuarios(ListaDobleCircular usuarios) {
-    NodoListaDobleCircular actual = usuarios.getCabeza();
-    StringBuilder resultado = new StringBuilder();
-
-    while (actual != null) {
-        Usuario usuario = actual.getDato();
-        resultado.append("Usuario: ").append(usuario.getName()).append("\n");
-        Pila pilaPosts = usuario.getPilaPosts();
-        
-        if (!pilaPosts.esVacia()) {
-            resultado.append("Posts:\n");
-            NodoPila nodoPost = pilaPosts.getCima();
-            while (nodoPost != null) {
-                Post post = nodoPost.get; // Asumiendo que tienes un método getPost() en tu clase NodoPila para obtener el post
-                resultado.append(post.toString()).append("\n");
-                nodoPost = nodoPost.getSiguiente();
-            }
-        } else {
-            resultado.append("El usuario no tiene posts.\n");
-        }
-        
-        actual = actual.getSiguiente();
-    }
-
-    System.out.println(resultado.toString());
-}*/
-
-
-    
     public void insertaMejorado(Usuario u) {
         //Paso 1, de la presentación
         if (cabeza == null) { // en dado caso que la  este vacia 
@@ -187,7 +152,6 @@ public class ListaDobleCircular {
     public void setUltimo(NodoListaDobleCircular ultimo) {
         this.ultimo = ultimo;
     }
-    
 
     @Override
     public String toString() {

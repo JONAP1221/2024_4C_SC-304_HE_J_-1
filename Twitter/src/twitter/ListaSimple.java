@@ -35,11 +35,11 @@ public class ListaSimple {
         }
     }
 
-    public void eliminarSeguidor(int id) {
+    public void eliminarSeguidor(Usuario u) {
         NodoListaSimple actual = cabeza;
         NodoListaSimple anterior = null;
         while (actual != null) {
-            if (actual.getUsuario().getHash() == id) {
+            if (actual.getUsuario() == u) {
                 if (actual == cabeza) {
                     cabeza = cabeza.getSiguiente();
                     actual.setSiguiente(null);
@@ -66,6 +66,18 @@ public class ListaSimple {
         }
         return false; // El usuario no es seguidor
     }
+    
+    public boolean noExisteSeguidor(Usuario usuario) {
+        NodoListaSimple actual = cabeza;
+        while (actual != null) {
+            if (actual.getUsuario().getHash() == usuario.getHash()) {
+                return false; // El usuario es seguidor
+            }
+            actual = actual.getSiguiente();
+        }
+        return true; // El usuario no es seguidor
+    }
+    
 
     public NodoListaSimple getCabeza() {
         return cabeza;
