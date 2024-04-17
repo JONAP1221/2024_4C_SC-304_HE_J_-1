@@ -61,3 +61,6 @@ Cronograma de actividades:
 ## Librerias a Utilizar
 
 Se planea emplear las bibliotecas de Swing para facilitar la interacción con el usuario mediante la presentación de mensajes a través de JoptionPane. Además, se considera la inclusión de paneles (Panels) para una mayor versatilidad en la interfaz.
+java.util.ArrayList: Esta librería proporciona la implementación de la interfaz de lista en Java. La clase ArrayList es una implementación de la interfaz List que proporciona una estructura de datos dinámica para almacenar elementos en una secuencia ordenada. Permite agregar, eliminar, acceder y modificar elementos de la lista de manera eficiente.
+java.time.LocalDateTime: Esta librería proporciona la funcionalidad para representar una fecha y hora local sin referencia a una zona horaria específica. La clase LocalDateTime permite trabajar con fechas y horas en un contexto local, sin considerar los ajustes de zona horaria o los desplazamientos.
+java.time.format.DateTimeFormatter: Esta librería proporciona la funcionalidad para formatear y analizar fechas y horas en Java. La clase DateTimeFormatter permite crear objetos que definen patrones de formato para formatear instancias de LocalDateTime en cadenas de texto, así como analizar cadenas de texto en instancias de LocalDateTime.
