@@ -16,7 +16,7 @@ public class Cola {
         return primero == null;
     }//final metodo esVacia
 
-    public void encolar(Post p) {//funcion para conelar 
+    public void encolar(Usuario p) {//funcion para conelar 
         NodoCola nuevoNodo = new NodoCola(p);
         if (esVacia()) {//si esta vacia se agrega
             primero = nuevoNodo;// se crea un nuevo nodo con el valor de cabeza
