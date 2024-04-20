@@ -83,5 +83,14 @@ public class ListaSimple {
         this.cabeza = cabeza;
     }
     
-    
+    public String seguidoresToString() {
+    StringBuilder sb = new StringBuilder();
+    NodoListaSimple current = cabeza;
+    while (current != null) {
+        sb.append(current.getUsuario().toString()).append(" -> ");
+        current = current.getSiguiente();
+    }
+    return sb.toString();
+}
+
 }

@@ -9,7 +9,7 @@ public class NodoCola {
     //atributos de la clase
     private Usuario user;
     private NodoCola atras;
-    private Post post;
+    private Arbol post;
 
     public NodoCola getAtras() {
         return atras;
@@ -19,11 +19,11 @@ public class NodoCola {
         this.atras = atras;
     }
 
-    public Post getPost() {
+    public Arbol getPost() {
         return post;
     }
 
-    public void setPost(Post post) {
+    public void setPost(Arbol post) {
         this.post = post;
     }
     

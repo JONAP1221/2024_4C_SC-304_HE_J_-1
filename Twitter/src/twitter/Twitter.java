@@ -1,8 +1,6 @@
 package twitter;
 
 import javax.swing.JOptionPane;
-import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Twitter {
 
@@ -11,7 +9,8 @@ public class Twitter {
     public static Grafo g = new Grafo();
 
     public static void main(String[] args) {
-
+        //Grafo.cargarUsuariosDesdeCSV(usuarios, "data/UsuariosTwitter.csv");
+        
         usuarios.insertaMejorado(new Usuario("aaa", "Aaa", 14));
         usuarios.insertaMejorado(new Usuario("bbb", "Bbb", 12));
         usuarios.insertaMejorado(new Usuario("ccc", "Ccc", 20));
@@ -30,8 +29,8 @@ public class Twitter {
                         + "7: Eliminar un seguidor \n"
                         + "8: Mostrar a quien sigue el usuario xxx \n"
                         + "9: Publicar un post \n"
-                        + "10: Eliinar un post (pendiente) \n"
-                        + "11: Mostrar los post de un ususario \n"
+                        + "10: Eliminar un post \n"
+                        + "11: Mostrar los post de un usuario \n"
                         + "12: Mostrar el feed de un usuario \n"
                         + "0: salir \n");
                 if (a != null && !a.isEmpty()) { // Verificar si la cadena no está vacía
@@ -68,7 +67,7 @@ public class Twitter {
                             user.crearPost();
                             break;
                         case 10:
-                            // user.eliminarPost();  //Pendinte realizar funcion
+                            user.eliminarPost();  //Pendinte realizar funcion
                             break;
                         case 11:
                             user.mostrarPost();
@@ -89,5 +88,6 @@ public class Twitter {
                 System.out.println("Error capa 8: " + e.getMessage());
             }//final del catch
         }//final del while
+        //Grafo.guardarUsuariosCSV(usuarios, "data/UsuariosTwitter.csv");
     }//final del main
 }//final de la clase
