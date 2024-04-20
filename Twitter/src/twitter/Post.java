@@ -76,6 +76,13 @@ public class Post {
         return fechaHora; // devuelve la fecha formateada
     }//Final del metodo obtenerFecha
 
+    public static LocalDateTime compararFecha(String fechaTexto) {
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"); // Define el formato
+        LocalDateTime fecha = LocalDateTime.parse(fechaTexto, formato); // Convierte el String a LocalDateTime
+        System.out.println("Fecha parseada: " + fecha);
+        return fecha;
+    }//final del metodo comparar fecha
+
     @Override
     public String toString() {
         return user.getName() + "          " + fecha + "\n" + msj + "\n\n";

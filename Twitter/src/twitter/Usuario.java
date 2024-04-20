@@ -1,6 +1,6 @@
 package twitter;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import static twitter.Twitter.usuarios;
@@ -84,7 +84,6 @@ public class Usuario {
         } else {
             usuarioBase.getSeguidores().insertarSeguidor(usuarioSeguir);
             JOptionPane.showMessageDialog(null, "Usuario " + usuarioBase.getEmail() + " ahora sigue a " + usuarioSeguir.getEmail());
-            System.out.println(usuarioBase.getSeguidores().toString());
         }
     }
 
@@ -98,7 +97,6 @@ public class Usuario {
                 if (cabezaSeguidores != null) {
                     StringBuilder seguidoresTexto = new StringBuilder();
                     seguidoresTexto.append("El usuario ").append(usuario.getName()).append(" sigue a las personas:\n");
-                    System.out.println(seguidoresUsuario);
                     while (cabezaSeguidores != null) {
                         if (comparar(cabezaSeguidores)) {
                             Usuario seguidor = cabezaSeguidores.getUsuario();
@@ -201,7 +199,36 @@ public class Usuario {
         }
     }
 
-    public void mostrarFeed() {
+    public void mostrarFeedlista() {
+        JOptionPane.showMessageDialog(null, "A continuacion, seleccione un usuario para consultar sus posts.");
+        Usuario a = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion
+        ListaSimple listaFeed = new ListaSimple();
+        Pila pilaPostsUsuario = a.getPilaPosts();
+        listaFeed = pilaPostsUsuario.obtener(listaFeed);
+        ListaSimple seguidoresUsuarioConsulta = a.getSeguidores();
+        if (seguidoresUsuarioConsulta != null) {
+            NodoListaSimple nodoSeguidor = seguidoresUsuarioConsulta.getCabeza();
+            while (nodoSeguidor != null) {
+                Usuario seguidor = nodoSeguidor.getUsuario();
+                Pila pilaPostsSeguidor = seguidor.getPilaPosts();
+                listaFeed = pilaPostsSeguidor.obtener(listaFeed);
+                nodoSeguidor = nodoSeguidor.getSiguiente();
+            }
+        }
+        if (listaFeed.getCabeza() != null) {
+            JOptionPane.showMessageDialog(null, "Posts de " + a.getName() + " y usuarios seguidos:");
+            NodoListaSimple nodoActual = listaFeed.getCabeza(); // Declaración y asignación de nodoActual
+            while (nodoActual != null) {
+                Arbol post = nodoActual.getPost();
+                post.mostrar(post);
+                nodoActual = nodoActual.getSiguiente();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay posts para mostrar.");
+        }
+    }
+
+    /*public void mostrarFeed() {
         JOptionPane.showMessageDialog(null, "A continuacion, seleccione un usuario para consultar sus posts.");
         Usuario usuarioConsulta = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
         if (usuarioConsulta != null) {// si es distinto a null 
@@ -230,7 +257,7 @@ public class Usuario {
         } else {// no hay ningun usuario con ese correo 
             JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el correo electrónico " + usuarioConsulta.getEmail());
         }
-    }
+    }*/
 
     @Override
     public boolean equals(Object obj) {

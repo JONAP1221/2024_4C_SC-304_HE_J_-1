@@ -38,6 +38,7 @@ public class Twitter {
                     switch (numero) {
 
                         case 1:
+                            Post.compararFecha("14/04/2024 10:30:15");
                             g.agregarUsusario();
                             break;
                         case 2:
@@ -53,7 +54,6 @@ public class Twitter {
                         case 5:
                             JOptionPane.showConfirmDialog(null, usuarios);
                             break;
-
                         case 6:
                             user.insertarSeguidor();
                             break;
@@ -73,7 +73,7 @@ public class Twitter {
                             user.mostrarPost();
                             break;
                         case 12:
-                            user.mostrarFeed();
+                            user.mostrarFeedlista();
                             break;
                         case 0:
                             continuar = false;// se sale del menu 

@@ -113,6 +113,18 @@ public class Pila {
         return allArbols;// se anade el post a el array;
     }//final del metodo obtener
 
+    public ListaSimple obtener(ListaSimple allArbols) {
+        NodoPila aux = cima;
+        if (!esVacia()) {
+            while (aux != null) {
+                Arbol post = aux.getArbol();
+                allArbols.insertarPost(post);
+                aux = aux.getSiguiente();
+            }//final del while
+        }//final if
+        return allArbols;// se anade el post a el array;
+    }//final del metodo obtener
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -124,15 +136,15 @@ public class Pila {
         }
         return sb.toString();
     }
-    
+
     public String pilaPostsToString() {
-    StringBuilder sb = new StringBuilder();
-    NodoPila current = cima;
-    while (current != null) {
-        sb.append(current.getArbol().toString()).append("\n");
-        current = current.getSiguiente();
+        StringBuilder sb = new StringBuilder();
+        NodoPila current = cima;
+        while (current != null) {
+            sb.append(current.getArbol().toString()).append("\n");
+            current = current.getSiguiente();
+        }
+        return sb.toString();
     }
-    return sb.toString();
-}
 
 }
