@@ -86,11 +86,11 @@ public class Arbol {
 
     public void mostrar(Arbol arbol) {
         if (!esVacio()) { //si no es vacio
-            int opcion = Integer.parseInt(JOptionPane.showInputDialog(inOrdenR(root)+ "\n\n 1- Responder     2- Siguiente"));//mostrar el inOrder Recursivo
+            int opcion = Integer.parseInt(JOptionPane.showInputDialog(inOrdenR(root) + "\n\n 1- Responder     2- Siguiente"));//mostrar el inOrder Recursivo
             switch (opcion) {
                 case 1:
-                    String correoUsuarioa = JOptionPane.showInputDialog("Ingrese el correo del usuario que esta respondiendo:");// se pide el correo del ususario 
-                    Usuario usuarioa = Twitter.usuarios.buscarUsuarioPorCorreo(correoUsuarioa);// se busca el ususario en la lista doble
+                    JOptionPane.showMessageDialog(null, "A continuacion, seleccione el usuario que esta respondiendo.");
+                    Usuario usuarioa = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
                     if (usuarioa != null) {// de haberlo
                         arbol.responder(usuarioa, arbol.getRoot().getMensaje().getUser(), root);
                         mostrar(arbol);
@@ -108,6 +108,32 @@ public class Arbol {
         else {
             JOptionPane.showMessageDialog(null, "El arbol está vacío");
         }//final else
+    }//final del metodo mostrar
+
+    public Arbol eliminarPost(Arbol arbol, Usuario usuarioa) {
+        Arbol post = null;
+        if (!esVacio()) { //si no es vacio
+            int opcion = Integer.parseInt(JOptionPane.showInputDialog(inOrdenR(root) + "\n\n 1- Eliminar Post     2- Siguiente"));//mostrar el inOrder Recursivo
+            switch (opcion) {
+                case 1:
+                    if (usuarioa != null) {// de haberlo
+                        return arbol;
+                    }//final if 
+                    else {
+                        JOptionPane.showMessageDialog(null, "No se ha encontrado al usuario");
+                    }//final else
+                    break;
+                case 2:
+                    break;
+
+                default:
+                    JOptionPane.showMessageDialog(null, "Elija una opción valida.");
+            }//final switch
+        }//final if 
+        else {
+            JOptionPane.showMessageDialog(null, "El arbol está vacío");
+        }//final else
+        return post;
     }//final del metodo mostrar
 
     public String inOrdenR(NodoArbol root) {
@@ -130,7 +156,5 @@ public class Arbol {
     public String toString() {
         return root.getMensaje().getUser().getName() + root;
     }
-    
-    
 
 }//Final de la clase

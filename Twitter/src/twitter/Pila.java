@@ -52,6 +52,43 @@ public class Pila {
         }
     }
 
+    public void eliminarPilaConMensajes(Usuario a) {
+        NodoPila nodoActual = cima;
+        Arbol elimina = null;
+        while (nodoActual != null) {
+            elimina = nodoActual.getArbol().eliminarPost(nodoActual.getArbol(), a);
+            if (elimina != null) {
+                desapilar(elimina);
+            }//final if
+            nodoActual = nodoActual.getSiguiente();
+        }
+    }
+
+    public void desapilar(Arbol post) {
+        if (!esVacia()) {
+            NodoPila nodoActual = cima;
+            NodoPila nodoAnterior = null;
+            while (nodoActual != null) {
+                if (nodoActual.getArbol() == post) {
+                    if (nodoAnterior == null) { // Si el nodo a desapilar es el primero
+                        cima = nodoActual.getSiguiente();
+                    }//final if 
+                    else {
+                        nodoAnterior.setSiguiente(nodoActual.getSiguiente());
+                    }//final else
+                    JOptionPane.showMessageDialog(null, "Post eliminado correctamente.");
+                    return;
+                }//final if
+                nodoAnterior = nodoActual;
+                nodoActual = nodoActual.getSiguiente();
+            }//final while
+            JOptionPane.showMessageDialog(null, "El post no se encontró en la pila");
+        }//final if 
+        else {
+            JOptionPane.showMessageDialog(null, "La pila está vacía");
+        }//final else
+    }//final del metodo desapilar
+
     public Arbol desapilar() {
         if (!esVacia()) {
             Arbol postDesapilado = cima.getArbol();
@@ -87,4 +124,15 @@ public class Pila {
         }
         return sb.toString();
     }
+    
+    public String pilaPostsToString() {
+    StringBuilder sb = new StringBuilder();
+    NodoPila current = cima;
+    while (current != null) {
+        sb.append(current.getArbol().toString()).append("\n");
+        current = current.getSiguiente();
+    }
+    return sb.toString();
+}
+
 }
