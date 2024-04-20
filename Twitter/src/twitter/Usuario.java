@@ -1,8 +1,8 @@
 package twitter;
 
 import java.util.ArrayList;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import twitter.NodoListaDobleCircular;
 import static twitter.Twitter.usuarios;
 
 public class Usuario {
@@ -71,30 +71,28 @@ public class Usuario {
     }
 
     public void insertarSeguidor() {
-        String correoUsuarioBase = JOptionPane.showInputDialog("Ingrese el correo de su usuario");
-        String correoUsuarioSeguir = JOptionPane.showInputDialog("Ingrese el correo de a quien usted quiere seguir:");
-
-        Usuario usuarioBase = usuarios.buscarUsuarioPorCorreo(correoUsuarioBase);
-        Usuario usuarioSeguir = usuarios.buscarUsuarioPorCorreo(correoUsuarioSeguir);
-
+        JOptionPane.showMessageDialog(null, "A continuacion, seleccione su usuario.");
+        Usuario usuarioBase = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
+        JOptionPane.showMessageDialog(null, "A continuacion, seleccione el correo de a quien quiere seguir.");
+        Usuario usuarioSeguir = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
         if (usuarioBase == null || usuarioSeguir == null) {
             JOptionPane.showMessageDialog(null, "Uno o ambos usuarios no existen.");
         } else if (usuarioBase.getEmail().equals(usuarioSeguir.getEmail())) {
             JOptionPane.showMessageDialog(null, "No te puedes seguir a ti mismo.");
         } else if (usuarioBase.getSeguidores().existeSeguidor(usuarioSeguir)) {
-            JOptionPane.showMessageDialog(null, "Este usuario ya sigue a " + correoUsuarioSeguir);
+            JOptionPane.showMessageDialog(null, "Este usuario ya sigue a " + usuarioSeguir.getEmail());
         } else if (usuarioBase != null && usuarioSeguir != null) {
             usuarioBase.getSeguidores().insertarSeguidor(usuarioSeguir);
-            JOptionPane.showMessageDialog(null, "Usuario " + correoUsuarioBase + " ahora sigue a " + correoUsuarioSeguir);
+            JOptionPane.showMessageDialog(null, "Usuario " + usuarioBase.getEmail() + " ahora sigue a " + usuarioSeguir.getEmail());
         } else {
             JOptionPane.showMessageDialog(null, "Uno o ambos usuarios no existen.");
         }
     }
 
     public void verSeguidores() {
-        String correoUsuario = JOptionPane.showInputDialog("Ingrese el correo del usuario del cual desea ver los seguidores:");
-        Usuario usuario = usuarios.buscarUsuarioPorCorreo(correoUsuario);
-        if (usuario != null) {
+        JOptionPane.showMessageDialog(null, "A continuacion, seleccione un usuario para ver sus seguidores.");
+        Usuario usuario = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
+       if (usuario != null) {
             ListaSimple seguidoresUsuario = usuario.getSeguidores();
             if (seguidoresUsuario != null) {
                 NodoListaSimple cabezaSeguidores = seguidoresUsuario.getCabeza();
@@ -107,6 +105,9 @@ public class Usuario {
                             Usuario seguidor = nodoSeguidor.getUsuario();
                             seguidoresTexto.append("- ").append(seguidor.getName()).append("\n");
                         }//final if
+                        else {
+                            usuario.getSeguidores().eliminarSeguidor(nodoSeguidor.getUsuario());
+                        }//final else
                         nodoSeguidor = nodoSeguidor.getSiguiente();
                     }
                     JOptionPane.showMessageDialog(null, seguidoresTexto.toString());
@@ -117,7 +118,7 @@ public class Usuario {
                 JOptionPane.showMessageDialog(null, usuario.getName() + " no tiene seguidores.");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el correo electrónico " + correoUsuario);
+            JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el correo electrónico " + usuario.getEmail());
         }
     }//final del emtodo verSeguidores
 
@@ -138,12 +139,10 @@ public class Usuario {
     }//final del metodo actualizarListaSeguidores
 
     public void eliminarSeguidor() {
-        String correoUsuarioBase = JOptionPane.showInputDialog("Ingrese el correo de su usuario");
-        String correoUsuarioEliminar = JOptionPane.showInputDialog("Ingrese el correo del usuasrio que desea dejar de seguir:");
-
-        Usuario usuarioBase = usuarios.buscarUsuarioPorCorreo(correoUsuarioBase);
-        Usuario usuarioEliminar = usuarios.buscarUsuarioPorCorreo(correoUsuarioEliminar);
-
+        JOptionPane.showMessageDialog(null, "A continuacion, seleccione su usuario.");
+        Usuario usuarioBase = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
+        JOptionPane.showMessageDialog(null, "A continuacion, seleccione al usuario que desea dejar de seguir.");
+        Usuario usuarioEliminar = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
         if (usuarioBase.getEmail().equals(usuarioEliminar.getEmail())) {
             JOptionPane.showMessageDialog(null, "no te sigues a ti mismo por lo tanto no te puedes eliminar");
         } else if (usuarioBase.getSeguidores().noExisteSeguidor(usuarioEliminar)) {
@@ -155,38 +154,54 @@ public class Usuario {
     }//final del metodo actualizarListaSeguidores
 
     public void crearPost() {
-        String correoDestino = JOptionPane.showInputDialog("Ingrese el correo del usuario bajo el cual desea subir un post:");// se pide el ususario
-        Usuario usuarioDestino = usuarios.buscarUsuarioPorCorreo(correoDestino);// se busca por correo 
+        JOptionPane.showMessageDialog(null, "A continuacion, seleccione un usuario para subir el Post.");
+        Usuario usuarioDestino = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
         if (usuarioDestino != null) {// si el ususario existe  
             Arbol nuevoArbol = new Arbol();
             Post x = Post.newPost(usuarioDestino);
             nuevoArbol.agregar(x);
             usuarioDestino.getPilaPosts().apilar(nuevoArbol);// se apila el post 
-            JOptionPane.showMessageDialog(null, "Post creado y publicado bajo el correo: " + correoDestino);// se muetra que se creo el post bajo el destino 
+            JOptionPane.showMessageDialog(null, "Post creado y publicado bajo el correo: " + usuarioDestino.getEmail());// se muetra que se creo el post bajo el destino 
         } else {// en caso de no haber ningun correo 
-            JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el correo electrónico " + correoDestino);
+            JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el correo electrónico. ");
         }
     }
 
     public void mostrarPost() {
-        String correoUsuarioa = JOptionPane.showInputDialog("Ingrese el correo del usuario del cual desea ver los posts:");// se pide el correo del ususario 
-        Usuario usuarioa = usuarios.buscarUsuarioPorCorreo(correoUsuarioa);// se busca el ususario en la lista doble
+        JOptionPane.showMessageDialog(null, "A continuacion, seleccione un usuario para ver sus Posts.");
+        Usuario usuarioa = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
         if (usuarioa != null) {// de haberlo
-            Pila pilaPosts = usuarioa.getPilaPosts();// de la pila se saca un post
-            if (!pilaPosts.esVacia()) {// si hay algo en ese nodo // es un tipo de metodo recursivo
+            Pila pilaPostUsuario = usuarioa.getPilaPosts();// de la pila se saca un post
+            if (!pilaPostUsuario.esVacia()) {// si hay algo en ese nodo // es un tipo de metodo recursivo
                 JOptionPane.showMessageDialog(null, "Posts de " + usuarioa.getName() + ":");//se muestran los post
-                pilaPosts.mostrarPilaConMensajes(); // se muestran los post 
+                pilaPostUsuario.mostrarPilaConMensajes(); // se muestran los post 
             } else {
                 JOptionPane.showMessageDialog(null, "El usuario no tiene posts.");// en caso de == null ser verdad se notifica 
             }
         } else {// en caso de que no se encontrase un correo 
-            JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el correo electrónico " + correoUsuarioa);
+            JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el correo electrónico ");
+        }
+    }
+
+    public void eliminarPost() {
+        JOptionPane.showMessageDialog(null, "A continuacion, seleccione un usuario para eliminar un Post.");
+        Usuario usuarioa = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
+        if (usuarioa != null) {// de haberlo
+            Pila pilaPosts = usuarioa.getPilaPosts();// de la pila se saca un post
+            if (!pilaPosts.esVacia()) {// si hay algo en ese nodo // es un tipo de metodo recursivo
+                JOptionPane.showMessageDialog(null, "Cargando post de " + usuarioa.getName() + "...");//se muestran los post
+                pilaPosts.eliminarPilaConMensajes(usuarioa);// se muestran los post 
+            } else {
+                JOptionPane.showMessageDialog(null, "El usuario no tiene posts.");// en caso de == null ser verdad se notifica 
+            }
+        } else {// en caso de que no se encontrase un correo 
+            JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el correo electrónico ");
         }
     }
 
     public void mostrarFeed() {
-        String correoUsuarioConsulta = JOptionPane.showInputDialog("Ingrese el correo del usuario para consultar sus posts:");// se crea una variable tipo string para pedir informacion por medio de un joptions
-        Usuario usuarioConsulta = usuarios.buscarUsuarioPorCorreo(correoUsuarioConsulta);// se crea una variable tipo usuario para usar la varable anterior para buscar este correo en los nodos de la ldb 
+        JOptionPane.showMessageDialog(null, "A continuacion, seleccione un usuario para consultar sus posts.");
+        Usuario usuarioConsulta = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
         if (usuarioConsulta != null) {// si es distinto a null 
             ArrayList<Arbol> allPosts = new ArrayList<>();// se crea un array vacio 
             // se crea una "pila/nodo" en el cual se almacena el post del usuario base 
@@ -211,7 +226,7 @@ public class Usuario {
                 JOptionPane.showMessageDialog(null, "No hay posts para mostrar.");// se notifica 
             }
         } else {// no hay ningun usuario con ese correo 
-            JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el correo electrónico " + correoUsuarioConsulta);
+            JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el correo electrónico " + usuarioConsulta.getEmail());
         }
     }
 
@@ -229,4 +244,22 @@ public class Usuario {
         return " El usuario con el correo :" + email + ", se llama:" + name + ", y tiene una edad de:" + age + ", el id del usuario es:" + hash;
     }
 
-}
+    public static String dropdown() { //para seleccionar a un usuario
+        JComboBox<String> usuariosDropdown = new JComboBox<>(); //el JComboBox nos permite agupar valores y mostrarlos en el JoptionPane
+        NodoListaDobleCircular auxiliar = usuarios.getCabeza(); //se recorre la lista de usuarios
+        Usuario usuario = auxiliar.getDato(); // un obtenemos el usuario del nodo aux
+        usuariosDropdown.addItem(usuario.getEmail()); //agregamos al dropdown unicamente el correo del usuario
+        auxiliar = auxiliar.getSiguiente(); //vamos al siguiente nodo
+        // Agregar el correo de cada usuario al JComboBox
+        while (auxiliar != usuarios.getCabeza()) { //mientras sea diferente de cabeza (ya que es circular)
+            usuario = auxiliar.getDato(); //lo mismo que la cabeza, obtenemos el dato
+            usuariosDropdown.addItem(usuario.getEmail()); //insertamos el emaiñ
+            auxiliar = auxiliar.getSiguiente(); //avanzamos
+        }//final while
+
+        JOptionPane.showMessageDialog(null, usuariosDropdown, "Seleccione un usuario", JOptionPane.QUESTION_MESSAGE); // se muestra el JComboBox con los correos
+        String correoSeleccionado = (String) usuariosDropdown.getSelectedItem(); //cuando se da a Ok, se obtiene el correo
+        return correoSeleccionado; //se devuelve el correo para hacer las otras opciones
+    }//final del metodo dropdown
+
+}//final de la clase
