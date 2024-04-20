@@ -142,8 +142,8 @@
         }
 
         public void modificaEdad(Usuario u) {
-            String aaa = JOptionPane.showInputDialog("Ingrese la nueva edad  del usuario con el correo: " + u.getEmail()); // se pide la nueva edad 
-            int newAge = Integer.parseInt(aaa);
+            String edad = JOptionPane.showInputDialog("Ingrese la nueva edad  del usuario con el correo: " + u.getEmail()); // se pide la nueva edad 
+            int newAge = Integer.parseInt(edad);
             NodoListaDobleCircular n = cabeza;// se cre una variable para recorrer la lista doble circular en busca del ussuario 
             do {// se realiza
                 if (n.getDato().getHash() == u.getHash()) {// se verifica que el hash osea el identificador del ususario sea el mismo del que estamos buscando para cmabiarle el nombre 

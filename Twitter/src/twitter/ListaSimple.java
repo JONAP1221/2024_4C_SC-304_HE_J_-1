@@ -4,8 +4,6 @@ public class ListaSimple {
 
     private NodoListaSimple cabeza;
 
-   
-
     public void insertarSeguidor(Usuario u) {
         if (cabeza == null) {// en caos de que la lista esta vacia 
             cabeza = new NodoListaSimple(u);//se crea el primer nodo como la cabeza
@@ -62,7 +60,7 @@ public class ListaSimple {
         }
         return false; // en caso de llegar al final de la lista y no encontrar al ussuario se regresa 0 o false 
     }
-    
+
     public boolean noExisteSeguidor(Usuario usuario) {// funcino que verifica que el seguidor no este 
         NodoListaSimple actual = cabeza;//se empiza por la cabeza mediante un puntero tipo nodo 
         while (actual != null) {// si hay informacino y no esta vacia 
@@ -73,7 +71,6 @@ public class ListaSimple {
         }
         return true; // en caso de que n olo siga osea que no se encunentre en la lista se devuelve true que es lo que se busca como un 1
     }
-    
 
     public NodoListaSimple getCabeza() {
         return cabeza;
@@ -82,15 +79,25 @@ public class ListaSimple {
     public void setCabeza(NodoListaSimple cabeza) {
         this.cabeza = cabeza;
     }
-    
-    public String seguidoresToString() {
-    StringBuilder sb = new StringBuilder();
-    NodoListaSimple current = cabeza;
-    while (current != null) {
-        sb.append(current.getUsuario().toString()).append(" -> ");
-        current = current.getSiguiente();
-    }
-    return sb.toString();
-}
 
+    public String seguidoresToString() {
+        StringBuilder sb = new StringBuilder();
+        NodoListaSimple current = cabeza;
+        while (current != null) {
+            sb.append(current.getUsuario().toString()).append(" -> ");
+            current = current.getSiguiente();
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public String toString() { //simplemente recorre la lista
+        NodoListaSimple aux = cabeza;
+        String s = "";
+        while (aux != null) {
+            s = s + aux.getUsuario().getEmail()+ "\n";
+            aux = aux.getSiguiente();
+        }//final while
+        return s;
+    }
 }

@@ -81,34 +81,33 @@ public class Usuario {
             JOptionPane.showMessageDialog(null, "No te puedes seguir a ti mismo.");
         } else if (usuarioBase.getSeguidores().existeSeguidor(usuarioSeguir)) {
             JOptionPane.showMessageDialog(null, "Este usuario ya sigue a " + usuarioSeguir.getEmail());
-        } else if (usuarioBase != null && usuarioSeguir != null) {
+        } else {
             usuarioBase.getSeguidores().insertarSeguidor(usuarioSeguir);
             JOptionPane.showMessageDialog(null, "Usuario " + usuarioBase.getEmail() + " ahora sigue a " + usuarioSeguir.getEmail());
-        } else {
-            JOptionPane.showMessageDialog(null, "Uno o ambos usuarios no existen.");
+            System.out.println(usuarioBase.getSeguidores().toString());
         }
     }
 
     public void verSeguidores() {
         JOptionPane.showMessageDialog(null, "A continuacion, seleccione un usuario para ver sus seguidores.");
         Usuario usuario = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
-       if (usuario != null) {
+        if (usuario != null) {
             ListaSimple seguidoresUsuario = usuario.getSeguidores();
             if (seguidoresUsuario != null) {
                 NodoListaSimple cabezaSeguidores = seguidoresUsuario.getCabeza();
                 if (cabezaSeguidores != null) {
                     StringBuilder seguidoresTexto = new StringBuilder();
                     seguidoresTexto.append("El usuario ").append(usuario.getName()).append(" sigue a las personas:\n");
-                    NodoListaSimple nodoSeguidor = cabezaSeguidores;
-                    while (nodoSeguidor != null) {
-                        if (comparar(nodoSeguidor)) {
-                            Usuario seguidor = nodoSeguidor.getUsuario();
+                    System.out.println(seguidoresUsuario);
+                    while (cabezaSeguidores != null) {
+                        if (comparar(cabezaSeguidores)) {
+                            Usuario seguidor = cabezaSeguidores.getUsuario();
                             seguidoresTexto.append("- ").append(seguidor.getName()).append("\n");
                         }//final if
                         else {
-                            usuario.getSeguidores().eliminarSeguidor(nodoSeguidor.getUsuario());
+                            usuario.getSeguidores().eliminarSeguidor(cabezaSeguidores.getUsuario());
                         }//final else
-                        nodoSeguidor = nodoSeguidor.getSiguiente();
+                        cabezaSeguidores = cabezaSeguidores.getSiguiente();
                     }
                     JOptionPane.showMessageDialog(null, seguidoresTexto.toString());
                 } else {
@@ -118,7 +117,7 @@ public class Usuario {
                 JOptionPane.showMessageDialog(null, usuario.getName() + " no tiene seguidores.");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el correo electrónico " + usuario.getEmail());
+            JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el correo electrónico ");
         }
     }//final del emtodo verSeguidores
 
@@ -127,6 +126,9 @@ public class Usuario {
         NodoListaDobleCircular cabeza = usuarios.getCabeza();
         if (cabeza != null) {
             NodoListaDobleCircular aux = cabeza;
+            if (aux.getDato() == nodoSeguidor.getUsuario()) {
+                x = true;
+            }//final if
             aux = aux.getSiguiente();
             while (aux != cabeza) {
                 if (aux.getDato() == nodoSeguidor.getUsuario()) {

@@ -9,7 +9,7 @@ public class Twitter {
     public static Grafo g = new Grafo();
 
     public static void main(String[] args) {
-        //Grafo.cargarUsuariosDesdeCSV(usuarios, "data/UsuariosTwitter.csv");
+        Grafo.cargarUsuariosDesdeCSV(usuarios, "data/UsuariosTwitter.csv");
         
         usuarios.insertaMejorado(new Usuario("aaa", "Aaa", 14));
         usuarios.insertaMejorado(new Usuario("bbb", "Bbb", 12));
@@ -88,6 +88,6 @@ public class Twitter {
                 System.out.println("Error capa 8: " + e.getMessage());
             }//final del catch
         }//final del while
-        //Grafo.guardarUsuariosCSV(usuarios, "data/UsuariosTwitter.csv");
+        Grafo.guardarUsuariosCSV(usuarios, "data/UsuariosTwitter.csv");
     }//final del main
 }//final de la clase
