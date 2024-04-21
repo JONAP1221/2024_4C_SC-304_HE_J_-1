@@ -15,6 +15,11 @@ public class NodoCola {
         return atras;
     }
 
+    public NodoCola(Arbol post) {
+        this.post = post;
+    }
+
+    
     public void setAtras(NodoCola atras) {
         this.atras = atras;
     }

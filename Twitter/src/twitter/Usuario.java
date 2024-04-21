@@ -70,19 +70,6 @@ public class Usuario {
         this.seguidores = seguidores;
     }
 
-    /*
-    public Usuario usuarioBase(Usuario u) {
-        JOptionPane.showMessageDialog(null, "A continuacion, seleccione su usuario.");
-        Usuario usuarioBase = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
-        return u;
-    }
-
-    public Usuario ususarioDestino(Usuario u) {
-        JOptionPane.showMessageDialog(null, "A continuacion, seleccione el correo del ususario destino.");
-        Usuario usuarioSeguir = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
-        return u;
-    }
-*/
     public void insertarSeguidor(Usuario base, Usuario destino) {
         if (base == null || destino == null) {
             JOptionPane.showMessageDialog(null, "Uno o ambos usuarios no existen.");
@@ -91,11 +78,16 @@ public class Usuario {
         } else if (base.getSeguidores().existeSeguidor(destino)) {
             JOptionPane.showMessageDialog(null, "Este usuario ya sigue a " + destino.getEmail());
         } else {
-            base.getSeguidores().insertarSeguidor(destino);
-            JOptionPane.showMessageDialog(null, "Usuario " + base.getEmail() + " ahora sigue a " + destino.getEmail());
+
+            if (!destino.getPilaPosts().esVacia()) {
+                base.getSeguidores().insertarSeguidor(destino);
+                JOptionPane.showMessageDialog(null, "Usuario " + base.getEmail() + " ahora sigue a " + destino.getEmail());
+            } else {
+                JOptionPane.showMessageDialog(null, "No puedes seguir a un usuario si no tiene post. ");
+            }
+
         }
     }
-
 
     public void verSeguidores(Usuario base) {
         if (base != null) {
@@ -158,12 +150,14 @@ public class Usuario {
     }//final del metodo actualizarListaSeguidores
 
     public void crearPost(Usuario base) {
-         if (base != null) {// si el ususario existe  
+        if (base != null) {// si el ususario existe  
             Arbol nuevoArbol = new Arbol();
             Post x = Post.newPost(base);
-            nuevoArbol.agregar(x);
-            base.getPilaPosts().apilar(nuevoArbol);// se apila el post 
-            JOptionPane.showMessageDialog(null, "Post creado y publicado bajo el correo: " + base.getEmail());// se muetra que se creo el post bajo el destino 
+            if (x != null) {
+                nuevoArbol.agregar(x);
+                base.getPilaPosts().apilar(nuevoArbol);// se apila el post 
+                JOptionPane.showMessageDialog(null, "Post creado y publicado bajo el correo: " + base.getEmail());// se muetra que se creo el post bajo el destino 
+            }
         } else {// en caso de no haber ningun correo 
             JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el correo electrónico. ");
         }
@@ -198,7 +192,40 @@ public class Usuario {
     }
 
     public void mostrarFeedlista(Usuario base) {
+        Cola colaPost = new Cola();
         ListaSimple listaFeed = new ListaSimple();
+        Pila pilaPostsUsuario = base.getPilaPosts();
+        listaFeed = pilaPostsUsuario.obtener(listaFeed);
+        ListaSimple seguidoresUsuarioConsulta = base.getSeguidores();
+        if (seguidoresUsuarioConsulta != null) {
+            NodoListaSimple nodoSeguidor = seguidoresUsuarioConsulta.getCabeza();
+            while (nodoSeguidor != null) {
+                Usuario seguidor = nodoSeguidor.getUsuario();
+                Pila pilaPostsSeguidor = seguidor.getPilaPosts();
+                listaFeed = pilaPostsSeguidor.obtener(listaFeed);
+                nodoSeguidor = nodoSeguidor.getSiguiente();
+            }
+            if (listaFeed.getCabeza() != null) {
+                NodoListaSimple aux = listaFeed.getCabeza();
+                while (aux != null) {
+                    colaPost.encolar(aux.getPost());
+                    
+                    aux = aux.getSiguiente();
+                    
+                }
+
+            }
+        }
+
+        if (!colaPost.esVacia()) {
+            JOptionPane.showMessageDialog(null, "Posts de " + base.getName() + " y usuarios seguidos:");
+            colaPost.desencolar();
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay posts para mostrar.");
+        }
+    }/*
+    public void mostrarFeedlista(Usuario base) {
+        Cola colaFeed = new Cola();
         Pila pilaPostsUsuario = base.getPilaPosts();
         listaFeed = pilaPostsUsuario.obtener(listaFeed);
         ListaSimple seguidoresUsuarioConsulta = base.getSeguidores();
@@ -223,6 +250,8 @@ public class Usuario {
             JOptionPane.showMessageDialog(null, "No hay posts para mostrar.");
         }
     }
+     */
+
 
     @Override
     public boolean equals(Object obj) {

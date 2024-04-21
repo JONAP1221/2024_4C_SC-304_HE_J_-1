@@ -1,5 +1,7 @@
 package twitter;
 
+import javax.swing.JOptionPane;
+
 public class Cola {
 
     //atributos de la clase
@@ -16,7 +18,7 @@ public class Cola {
         return primero == null;
     }//final metodo esVacia
 
-    public void encolar(Usuario p) {//funcion para conelar 
+    public void encolar(Arbol p) {//funcion para conelar 
         NodoCola nuevoNodo = new NodoCola(p);
         if (esVacia()) {//si esta vacia se agrega
             primero = nuevoNodo;// se crea un nuevo nodo con el valor de cabeza
@@ -28,20 +30,14 @@ public class Cola {
         }//final else
     }//final metodo encolar
 
-    public NodoCola desencolar() {
-        NodoCola actual = primero;
-        if (primero != null) {
-            primero = primero.getSiguiente();
-            actual.setSiguiente(null);
-        }
-        return actual;
+    public void desencolar() {
+        if (!esVacia()) {
+            while (primero != null) {
+                primero.getPost().mostrar(primero.getPost());
+                primero = primero.getSiguiente();
+            }//final while
+        }//final if 
     }//final del metodo desencolar
-
-    //metodo que metas las pilas en un []
-    public void showFeed() {
-
-        //mostrar la visualizacion de mensajes
-    }//Final del metodo showFeed
 
     @Override
     public String toString() {

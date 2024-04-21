@@ -49,21 +49,12 @@ public class Post {
         this.fecha = fecha;
     }//final gets y sets
 
-    /*public static Post newPost(Usuario user) {//pasar a usuario?
-        return new Post(JOptionPane.showInputDialog("Qué estás pensando," + user.getName() + "?"), user);
-
-    }//final del metodo newPost*/
     public static Post newPost(Usuario user) {
         String userInput = JOptionPane.showInputDialog("Qué estás pensando, " + user.getName() + "?");
-        String[] words = userInput.split("\\s+");
-        int wordCount = 0;
-        for (String word : words) {
-            if (!word.isEmpty()) {
-                wordCount++;
-            }
-        }
-        if (wordCount > 3) {
-            JOptionPane.showMessageDialog(null, "Has excedido el límite de 100 palabras.");
+        int charCount = userInput.replaceAll("\\s", "").length(); // Contar caracteres excluyendo los espacios
+
+        if (charCount > 5) {
+            JOptionPane.showMessageDialog(null, "Has excedido el límite de 100 caracteres.");
             return null; // Retorna null para indicar que no se creó el post
         } else {
             return new Post(userInput, user);
@@ -72,16 +63,15 @@ public class Post {
 
     public static Post respuesta(Usuario user, Usuario original) {
         String respuesta = JOptionPane.showInputDialog("Respondiendo al post de " + original.getName() + ".");
+        int charCount = respuesta.replaceAll("\\s", "").length(); // Contar caracteres excluyendo los espacios
 
-        // Verificar si la longitud de la respuesta es mayor a 100 caracteres
-        if (respuesta.length() > 100) {
-            // Si la respuesta excede los 100 caracteres, truncarla a 100 caracteres
-            respuesta = respuesta.substring(0, 100);
+        if (charCount > 5) {
+            JOptionPane.showMessageDialog(null, "Has excedido el límite de 100 caracteres.");
+            return null; // Retorna null para indicar que no se creó el post
+        } else {
+            return new Post(respuesta, user);
         }
 
-        return new Post(respuesta, user);
-
-        // Otras partes de tu clase
     }//final del metodo newPost
 
     public void deletePost(Usuario user, Post post) {
