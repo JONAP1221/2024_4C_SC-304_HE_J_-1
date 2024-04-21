@@ -49,14 +49,39 @@ public class Post {
         this.fecha = fecha;
     }//final gets y sets
 
-    public static Post newPost(Usuario user) {//pasar a usuario?
+    /*public static Post newPost(Usuario user) {//pasar a usuario?
         return new Post(JOptionPane.showInputDialog("Qué estás pensando," + user.getName() + "?"), user);
-        //le pide al usuario lo necesario para hacer el Post y lo devuelve
-    }//final del metodo newPost
 
-    public static Post respuesta(Usuario user, Usuario original) {//pasar a usuario?
-        return new Post(JOptionPane.showInputDialog("Respondiendo al post de," + original.getName() + "."), user);
-        //le pide al usuario lo necesario para hacer el Post y lo devuelve
+    }//final del metodo newPost*/
+    public static Post newPost(Usuario user) {
+        String userInput = JOptionPane.showInputDialog("Qué estás pensando, " + user.getName() + "?");
+        String[] words = userInput.split("\\s+");
+        int wordCount = 0;
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                wordCount++;
+            }
+        }
+        if (wordCount > 3) {
+            JOptionPane.showMessageDialog(null, "Has excedido el límite de 100 palabras.");
+            return null; // Retorna null para indicar que no se creó el post
+        } else {
+            return new Post(userInput, user);
+        }
+    }
+
+    public static Post respuesta(Usuario user, Usuario original) {
+        String respuesta = JOptionPane.showInputDialog("Respondiendo al post de " + original.getName() + ".");
+
+        // Verificar si la longitud de la respuesta es mayor a 100 caracteres
+        if (respuesta.length() > 100) {
+            // Si la respuesta excede los 100 caracteres, truncarla a 100 caracteres
+            respuesta = respuesta.substring(0, 100);
+        }
+
+        return new Post(respuesta, user);
+
+        // Otras partes de tu clase
     }//final del metodo newPost
 
     public void deletePost(Usuario user, Post post) {

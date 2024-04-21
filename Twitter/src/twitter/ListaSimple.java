@@ -33,32 +33,6 @@ public class ListaSimple {
         }
     }
 
-    /*   public void insertarPost(Arbol u) {
-        if (cabeza == null) {// en caos de que la lista esta vacia 
-            cabeza = new NodoListaSimple(u);//se crea el primer nodo como la cabeza
-        } else {// en caso de querer meter algo antes que la cabeza
-            LocalDateTime nuevoPost = Post.compararFecha(u.getRoot().getMensaje().getFecha());
-            LocalDateTime cabezaPost = Post.compararFecha(cabeza.getPost().getRoot().getMensaje().getFecha());
-            if (nuevoPost.isAfter(cabezaPost)) {// se verifica que sea el caso mediante la comparacion de lo hash
-                NodoListaSimple nuevoNodo = new NodoListaSimple(u);// se settea que el nuevo nodo pasa a aser la cabeza 
-                nuevoNodo.setSiguiente(cabeza);// se rfresca la referencia del nodo
-                cabeza = nuevoNodo;
-            } else {// en caso de inssertar despues de la cabeza
-                if (cabeza.getSiguiente() == null) {// en caso de que solo este la cabeza
-                    NodoListaSimple nuevo = new NodoListaSimple(u);// se crea la referencia del nodo
-                    cabeza.setSiguiente(nuevo);// se coloca el nuevo nodo justo despues de la cabeza
-                } else {// en caos de necesitar insertar en el centro 
-                    NodoListaSimple actual = cabeza;// se crea un nodo para empezar por la cabeza 
-                    while (actual.getSiguiente() != null && cabezaPost.isBefore(nuevoPost)) {// si se esta en la posicion corecta 
-                        actual = actual.getSiguiente();// se pide la referencia del actual al siguiente 
-                    }
-                    NodoListaSimple nuevoNodo = new NodoListaSimple(u);// se cre un nuevo nodo 
-                    nuevoNodo.setSiguiente(actual.getSiguiente());//se actualiza la informacino del nuevo nodo a la nueva informacion 
-                    actual.setSiguiente(nuevoNodo);// se setea como el nuevo siguiente del nodo menor a donde queremos insertarlo 
-                }
-            }
-        }
-    }*/
     public void insertarPost(Arbol p) {
         if (cabeza == null) {
             cabeza = new NodoListaSimple(p);

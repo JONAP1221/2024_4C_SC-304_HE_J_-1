@@ -15,27 +15,21 @@ public class Grafo {
         usuarios.insertaMejorado(new Usuario(JOptionPane.showInputDialog("Ingrese su Correo"), JOptionPane.showInputDialog("Ingrese su nombre"), Integer.parseInt(JOptionPane.showInputDialog("Ingrese su edad"))));
     }
 
-    public void eliminarUsuario() {// para eiliminar un ususario de la lista doble circ 
-        JOptionPane.showMessageDialog(null, "A continuacion, seleccione un usuario para eliminar.");
-        Usuario usuarioBase = seleccionarUsuario();// se busca en la lista doble mediante la funcion 
-        if (usuarios.existe(usuarioBase)) {// si el usuario existe en la lista doble 
-            usuarios.eliminar(usuarioBase);// se elimina el usuario de la lista doble 
-            JOptionPane.showMessageDialog(null, "El ususario con el correo: " + usuarioBase + "se ha eliminado.");// se muestra el mensaje que el ussuario ha sido eilimnado nunto a el usuario 
+    public void eliminarUsuario(Usuario u) {// para eiliminar un ususario de la lista doble circ 
+        if (usuarios.existe(u)) {// si el usuario existe en la lista doble 
+            usuarios.eliminar(u);// se elimina el usuario de la lista doble 
+            JOptionPane.showMessageDialog(null, "El ususario con el correo: " + u + "se ha eliminado.");// se muestra el mensaje que el ussuario ha sido eilimnado nunto a el usuario 
         } else {// de no encontrarse al ussuario
-            JOptionPane.showMessageDialog(null, "El ususario con el correo: " + usuarioBase + "no existe.");// se miestra que el ususario no exitse junto a dicho ususario 
+            JOptionPane.showMessageDialog(null, "El ususario con el correo: " + u + "no existe.");// se miestra que el ususario no exitse junto a dicho ususario 
         }
     }
 
-    public void cambiarNombre() {// funcion para cambiar nombre
-        JOptionPane.showMessageDialog(null, "A continuacion, seleccione un usuario para cambiarle el nombre.");
-        Usuario usuarioBase = seleccionarUsuario();// se busca en la lista doble mediante la funcion 
-        usuarios.modificaNombre(usuarioBase);// se modifica el nombre
+    public void cambiarNombre(Usuario u) {// funcion para cambiar nombre
+        usuarios.modificaNombre(u);// se modifica el nombre
     }
 
-    public void cambiarEdad() {// funcino para cambiar la edad
-        JOptionPane.showMessageDialog(null, "A continuacion, seleccione un usuario para cambiarle la edad.");
-        Usuario usuarioBase = seleccionarUsuario();// se busca en la lista doble mediante la funcion 
-        usuarios.modificaEdad(usuarioBase);// se modifica la edad
+    public void cambiarEdad(Usuario u) {// funcino para cambiar la edad
+       usuarios.modificaEdad(u);// se modifica la edad
     }
 
     public static Usuario seleccionarUsuario() {

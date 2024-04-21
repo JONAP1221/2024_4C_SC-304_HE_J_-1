@@ -10,7 +10,7 @@ public class Twitter {
 
     public static void main(String[] args) {
         Grafo.cargarUsuariosDesdeCSV(usuarios, "data/UsuariosTwitter.csv");
-        
+
         usuarios.insertaMejorado(new Usuario("aaa", "Aaa", 14));
         usuarios.insertaMejorado(new Usuario("bbb", "Bbb", 12));
         usuarios.insertaMejorado(new Usuario("ccc", "Ccc", 20));
@@ -24,7 +24,6 @@ public class Twitter {
                         + "3: Modificar edad de un usuario \n"
                         + "4: Eliminar un usuario \n"
                         + "5: Mostrar usuarios  \n"
-                        + "1: Manejo de usuarios \n"
                         + "6: Agregar seguidor \n"
                         + "7: Eliminar un seguidor \n"
                         + "8: Mostrar a quien sigue el usuario xxx \n"
@@ -36,58 +35,65 @@ public class Twitter {
                 if (a != null && !a.isEmpty()) { // Verificar si la cadena no está vacía
                     int numero = Integer.parseInt(a);
                     switch (numero) {
-
                         case 1:
                             Post.compararFecha("14/04/2024 10:30:15");
                             g.agregarUsusario();
                             break;
                         case 2:
-                            g.cambiarNombre();
-
+                            g.cambiarNombre(usuarioBase());
                             break;
                         case 3:
-                            g.cambiarEdad();
+                            g.cambiarEdad(usuarioBase());
                             break;
                         case 4:
-                            g.eliminarUsuario();
+                            g.eliminarUsuario(usuarioBase());
                             break;
                         case 5:
-                            JOptionPane.showConfirmDialog(null, usuarios);
+                            JOptionPane.showMessageDialog(null, usuarios);
                             break;
                         case 6:
-                            user.insertarSeguidor();
+                            user.insertarSeguidor(usuarioBase(), ususarioDestino());
                             break;
                         case 7:
-                            user.eliminarSeguidor();
+                            user.eliminarSeguidor(usuarioBase(), ususarioDestino());
                             break;
-                        case 8:// no funca 
-                            user.verSeguidores();
+                        case 8:
+                            user.verSeguidores(usuarioBase());
                             break;
                         case 9:
-                            user.crearPost();
+                            user.crearPost(usuarioBase());
                             break;
                         case 10:
-                            user.eliminarPost();  //Pendinte realizar funcion
+                            user.eliminarPost(usuarioBase());
                             break;
                         case 11:
-                            user.mostrarPost();
+                            user.mostrarPost(usuarioBase());
                             break;
                         case 12:
-                            user.mostrarFeedlista();
+                            user.mostrarFeedlista(usuarioBase());
                             break;
                         case 0:
-                            continuar = false;// se sale del menu 
+                            continuar = false;
                             break;
                         default:
                             JOptionPane.showMessageDialog(null, "Opción inválida. Por favor, seleccione una opción válida.");
                             break;
-                    }//final switch
+                    }
                 }
-            }//Final del try
-            catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("Error capa 8: " + e.getMessage());
-            }//final del catch
-        }//final del while
+            }
+        }
         Grafo.guardarUsuariosCSV(usuarios, "data/UsuariosTwitter.csv");
-    }//final del main
-}//final de la clase
+    }
+
+    public  static Usuario usuarioBase() {
+        JOptionPane.showMessageDialog(null, "A continuacion, seleccione su usuario.");
+        return Grafo.seleccionarUsuario();
+    }
+
+    public static Usuario ususarioDestino() {
+        JOptionPane.showMessageDialog(null, "A continuacion, seleccione el correo del ususario destino.");
+        return Grafo.seleccionarUsuario();
+    }
+}
