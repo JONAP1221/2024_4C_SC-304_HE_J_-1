@@ -11,7 +11,7 @@ public class Usuario {
     private String name;
     private int age;
     private int hash;
-    private ListaSimple seguidores;
+    private AuxiliarListaSimple seguidores;
     private Pila pilaPosts; // Agregar atributo para la pila de posts
 
     public Usuario(String email, String name, int age) {
@@ -19,7 +19,7 @@ public class Usuario {
         this.name = name;
         this.age = age;
         this.hash = Math.abs(this.email.hashCode());
-        this.seguidores = new ListaSimple(); // Inicializamos la lista de seguidores
+        this.seguidores = new AuxiliarListaSimple(); // Inicializamos la lista de seguidores
         this.pilaPosts = new Pila(); // Inicializamos la pila de posts
     }
 
@@ -59,14 +59,14 @@ public class Usuario {
         this.hash = hash;
     }
 
-    public ListaSimple getSeguidores() {
+    public AuxiliarListaSimple getSeguidores() {
         return seguidores;
     }
 
     public Usuario() {
     }
 
-    public void setSeguidores(ListaSimple seguidores) {
+    public void setSeguidores(AuxiliarListaSimple seguidores) {
         this.seguidores = seguidores;
     }
 
@@ -91,19 +91,19 @@ public class Usuario {
 
     public void verSeguidores(Usuario base) {
         if (base != null) {
-            ListaSimple seguidoresUsuario = base.getSeguidores();
+            AuxiliarListaSimple seguidoresUsuario = base.getSeguidores();
             if (seguidoresUsuario != null) {
-                NodoListaSimple cabezaSeguidores = seguidoresUsuario.getCabeza();
+                AuxiliarNodoListaSimple cabezaSeguidores = seguidoresUsuario.getCabeza();
                 if (cabezaSeguidores != null) {
                     StringBuilder seguidoresTexto = new StringBuilder();
                     seguidoresTexto.append("El usuario ").append(base.getName()).append(" sigue a las personas:\n");
                     while (cabezaSeguidores != null) {
                         if (comparar(cabezaSeguidores)) {
-                            Usuario seguidor = cabezaSeguidores.getUsuario();
+                            Usuario seguidor = usuarios.buscarUsuarioPorCorreo(cabezaSeguidores.getCorreo());
                             seguidoresTexto.append("- ").append(seguidor.getName()).append("\n");
                         }//final if
                         else {
-                            base.getSeguidores().eliminarSeguidor(cabezaSeguidores.getUsuario());
+                            base.getSeguidores().eliminarSeguidor(cabezaSeguidores.getCorreo());
                         }//final else
                         cabezaSeguidores = cabezaSeguidores.getSiguiente();
                     }
@@ -119,17 +119,17 @@ public class Usuario {
         }
     }//final del emtodo verSeguidores
 
-    private boolean comparar(NodoListaSimple nodoSeguidor) {
+    private boolean comparar(AuxiliarNodoListaSimple nodoSeguidor) {
         boolean x = false;
         NodoListaDobleCircular cabeza = usuarios.getCabeza();
         if (cabeza != null) {
             NodoListaDobleCircular aux = cabeza;
-            if (aux.getDato() == nodoSeguidor.getUsuario()) {
+            if (aux.getDato().getEmail().equals(nodoSeguidor.getCorreo())) {
                 x = true;
             }//final if
             aux = aux.getSiguiente();
             while (aux != cabeza) {
-                if (aux.getDato() == nodoSeguidor.getUsuario()) {
+                if (aux.getDato().getEmail().equals(nodoSeguidor.getCorreo())) {
                     x = true;
                 }//final if
                 aux = aux.getSiguiente();
@@ -144,7 +144,7 @@ public class Usuario {
         } else if (base.getSeguidores().noExisteSeguidor(destino)) {
             JOptionPane.showMessageDialog(null, "No sigues a este usuario");
         } else if (base.getSeguidores().existeSeguidor(destino)) {
-            base.getSeguidores().eliminarSeguidor(destino);
+            base.getSeguidores().eliminarSeguidor(destino.getEmail());
             JOptionPane.showMessageDialog(null, "Ya no sigues al usuario" + destino.getEmail());
         }
     }//final del metodo actualizarListaSeguidores
@@ -196,11 +196,11 @@ public class Usuario {
         ListaSimple listaFeed = new ListaSimple();
         Pila pilaPostsUsuario = base.getPilaPosts();
         listaFeed = pilaPostsUsuario.obtener(listaFeed);
-        ListaSimple seguidoresUsuarioConsulta = base.getSeguidores();
+        AuxiliarListaSimple seguidoresUsuarioConsulta = base.getSeguidores();
         if (seguidoresUsuarioConsulta != null) {
-            NodoListaSimple nodoSeguidor = seguidoresUsuarioConsulta.getCabeza();
+            AuxiliarNodoListaSimple nodoSeguidor = seguidoresUsuarioConsulta.getCabeza();
             while (nodoSeguidor != null) {
-                Usuario seguidor = nodoSeguidor.getUsuario();
+                Usuario seguidor = Twitter.usuarios.buscarUsuarioPorCorreo(nodoSeguidor.getCorreo());
                 Pila pilaPostsSeguidor = seguidor.getPilaPosts();
                 listaFeed = pilaPostsSeguidor.obtener(listaFeed);
                 nodoSeguidor = nodoSeguidor.getSiguiente();
@@ -228,9 +228,9 @@ public class Usuario {
         Cola colaFeed = new Cola();
         Pila pilaPostsUsuario = base.getPilaPosts();
         listaFeed = pilaPostsUsuario.obtener(listaFeed);
-        ListaSimple seguidoresUsuarioConsulta = base.getSeguidores();
+        AuxiliarListaSimple seguidoresUsuarioConsulta = base.getSeguidores();
         if (seguidoresUsuarioConsulta != null) {
-            NodoListaSimple nodoSeguidor = seguidoresUsuarioConsulta.getCabeza();
+            NodoAuxiliarListaSimple nodoSeguidor = seguidoresUsuarioConsulta.getCabeza();
             while (nodoSeguidor != null) {
                 Usuario seguidor = nodoSeguidor.getUsuario();
                 Pila pilaPostsSeguidor = seguidor.getPilaPosts();
@@ -240,7 +240,7 @@ public class Usuario {
         }
         if (listaFeed.getCabeza() != null) {
             JOptionPane.showMessageDialog(null, "Posts de " + base.getName() + " y usuarios seguidos:");
-            NodoListaSimple nodoActual = listaFeed.getCabeza(); // Declaración y asignación de nodoActual
+            NodoAuxiliarListaSimple nodoActual = listaFeed.getCabeza(); // Declaración y asignación de nodoActual
             while (nodoActual != null) {
                 Arbol post = nodoActual.getPost();
                 post.mostrar(post);

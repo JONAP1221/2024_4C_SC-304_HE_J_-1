@@ -35,28 +35,6 @@ public class Arbol {
         if (esVacio()) {//si el arbol esta vacio
             root = nuevo; // se crea el Mensaje principal
         }//final if 
-        else { // si no (Estas son las respuestas)
-            nuevo.getMensaje().setMsj("      " + nuevo.getMensaje().getMsj());
-            NodoArbol aux = root; //este esta conectado al mensaje principal
-            NodoArbol padre; // otra variable de apoyo para la respuesta a la respuesta
-            while (true) {
-                padre = aux;  //igualamos ambas variables
-                if (padre.getIzquierdo() == null) {
-                    aux = aux.getIzquierdo();
-                    if (aux == null) {
-                        padre.setIzquierdo(nuevo);
-                        return;
-                    }//Final if
-                }//final if
-                else {
-                    aux = aux.getDerecho();
-                    if (aux == null) {
-                        padre.setDerecho(nuevo);
-                        return;
-                    }//final if
-                }//final else
-            }//final while
-        }//final else
     }//final metodo agregar
 
     public void responder(Usuario user, Usuario post, NodoArbol root) {
@@ -91,23 +69,28 @@ public class Arbol {
                 int opcion = Integer.parseInt(JOptionPane.showInputDialog(post + "\n\n 1- Responder     2- Siguiente"));//mostrar el inOrder Recursivo
                 switch (opcion) {
                     case 1:
-                        JOptionPane.showMessageDialog(null, "A continuacion, seleccione el usuario que esta respondiendo.");
-                        Usuario usuarioa = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
-                        if (usuarioa != null) {// de haberlo
-                            arbol.responder(usuarioa, arbol.getRoot().getMensaje().getUser(), root);
+                        if (root.getDerecho() != null && root.getIzquierdo() != null) {
+                            JOptionPane.showMessageDialog(null, "Se ha alcanzado el numero de respuestas máximo");
                             mostrar(arbol);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "No se ha encontrado al usuario");
-                        }
+                        }//final if
+                        else {
+                            JOptionPane.showMessageDialog(null, "A continuacion, seleccione el usuario que esta respondiendo.");
+                            Usuario usuarioa = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
+                            if (usuarioa != null) {// de haberlo
+                                arbol.responder(usuarioa, arbol.getRoot().getMensaje().getUser(), root);
+                                mostrar(arbol);
+                            }//final if
+                            else {
+                                JOptionPane.showMessageDialog(null, "No se ha encontrado al usuario");
+                            }//final else
+                        }//final else
                         break;
                     case 2:
                         break;
-
                     default:
                         JOptionPane.showMessageDialog(null, "Elija una opción valida.");
                 }//final switch
             }//final if 
-
         }//final if
         else {
             JOptionPane.showMessageDialog(null, "El arbol está vacío");
