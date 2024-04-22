@@ -12,227 +12,274 @@ import static twitter.Twitter.usuarios;
 public class Grafo {
 
     public void agregarUsusario() {// se se desea crear un ususario se instacia el mismo medinate preguntas para obtener los datos 
-        usuarios.insertaMejorado(new Usuario(JOptionPane.showInputDialog("Ingrese su Correo"), JOptionPane.showInputDialog("Ingrese su nombre"), Integer.parseInt(JOptionPane.showInputDialog("Ingrese su edad"))));
-    }
+        usuarios.insertaMejorado(new Usuario(JOptionPane.showInputDialog("Ingrese su Correo"),
+                JOptionPane.showInputDialog("Ingrese su nombre"),
+                Integer.parseInt(JOptionPane.showInputDialog("Ingrese su edad"))));
+    }//final del metodo agregarUsuario
 
     public void eliminarUsuario(Usuario u) {// para eiliminar un ususario de la lista doble circ 
         if (usuarios.existe(u)) {// si el usuario existe en la lista doble 
             usuarios.eliminar(u);// se elimina el usuario de la lista doble 
-            JOptionPane.showMessageDialog(null, "El ususario con el correo: " + u + "se ha eliminado.");// se muestra el mensaje que el ussuario ha sido eilimnado nunto a el usuario 
+            JOptionPane.showMessageDialog(null, "El ususario con el correo: "
+                    + u + "se ha eliminado.");// se muestra el mensaje que el ussuario ha sido eilimnado nunto a el usuario 
         } else {// de no encontrarse al ussuario
-            JOptionPane.showMessageDialog(null, "El ususario con el correo: " + u + "no existe.");// se miestra que el ususario no exitse junto a dicho ususario 
-        }
-    }
+            JOptionPane.showMessageDialog(null, "El ususario con el correo: "
+                    + u + "no existe.");// se miestra que el ususario no exitse junto a dicho ususario 
+        }//final else
+    }//final del metofo eliminarUsuario
 
     public void cambiarNombre(Usuario u) {// funcion para cambiar nombre
         usuarios.modificaNombre(u);// se modifica el nombre
-    }
+    }//final del metodo cambiarNombre
 
     public void cambiarEdad(Usuario u) {// funcino para cambiar la edad
         usuarios.modificaEdad(u);// se modifica la edad
-    }
+    }//final del metodo cambiarEdad
 
-    public static Usuario seleccionarUsuario() {
-        return usuarios.buscarUsuarioPorCorreo(Usuario.dropdown());
+    public static Usuario seleccionarUsuario() { //se muestra un dropdown con los usuario
+        return usuarios.buscarUsuarioPorCorreo(Usuario.dropdown()); //de la lista circularDoble
     }//final del metodo seleccionarUsuario
 
     private static void guardarUsuariosCSV(ListaDobleCircular usuarios, String nombreArchivo) {
+        //Obtiene la listaDobleCircular con los usuarios para almacennar la info de estos y guardarlos
+        //en el documento (la ruta es "data/nombreArchivo.csv")
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo))) {
-            NodoListaDobleCircular auxiliar = usuarios.getCabeza();
-            Usuario usuario = auxiliar.getDato();
-            String linea = usuario.getEmail() + "," + usuario.getName() + "," + usuario.getAge() + "," + usuario.getHash();
-            writer.write(linea);
-            writer.newLine();
-            auxiliar = auxiliar.getSiguiente();
-            while (auxiliar != usuarios.getCabeza()) {
-                usuario = auxiliar.getDato();
-                linea = usuario.getEmail() + "," + usuario.getName() + "," + usuario.getAge() + "," + usuario.getHash();
+            //en caso de que no exista el archivo este se crea, de existir se modifica
+            //este crea el BufferedWriter que es para una escritura más eficiente en el archivo
+            NodoListaDobleCircular auxiliar = usuarios.getCabeza(); //se obtiene laa cabeza de la lista
+            Usuario usuario = auxiliar.getDato(); //obtenemos el usuario
+            String linea = usuario.getEmail() + "," + usuario.getName() //y la linea sera
+                    + "," + usuario.getAge() + "," + usuario.getHash(); //a info del usuario
+            writer.write(linea); //se escribe la linea en el archivo
+            writer.newLine(); //se salta de linea para dividir la info del siguiente usuario
+            auxiliar = auxiliar.getSiguiente(); //se obtiene el siguiente usuario
+            while (auxiliar != usuarios.getCabeza()) { //ahora recorremos la lista doble completa
+                usuario = auxiliar.getDato(); //y obtenemos lo mismo que con cabeza
+                linea = usuario.getEmail() + "," + usuario.getName() //para el resto de los nodos de la lista
+                        + "," + usuario.getAge() + "," + usuario.getHash();
                 writer.write(linea);
                 writer.newLine();
                 auxiliar = auxiliar.getSiguiente();
-            }
+            }//final while
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+            e.printStackTrace(); //en caso de un error
+        }//final catch
+    }//final del metodo guardarUsuariosCSV
 
     private static void cargarUsuariosDesdeCSV(ListaDobleCircular usuarios, String nombreArchivo) {
+        //se obtiene la listaCircularDoble con los usuarios y se da la ruta del archivo
+        //para cargar los datos y guardarlos en la lista
         try (BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo))) {
-            String linea;
-            while ((linea = reader.readLine()) != null) {
-                String[] campos = linea.split(",");
-                if (campos.length == 4) {
-                    String email = campos[0];
-                    String nombre = campos[1];
-                    int edad = Integer.parseInt(campos[2]);
-                    int hash = Integer.parseInt(campos[3]);
-                    Usuario usuario = new Usuario(email, nombre, edad);
-                    usuario.setHash(hash);
-                    usuarios.insertaMejorado(usuario);
-                }
-            }
+            //este instancia el BufferedReader para mayor eficiencia a la hora de leer el archivo
+            String linea; //definimos linea como String, esta contiene la info en formato de texto de los usuarios
+            while ((linea = reader.readLine()) != null) { //mientras que la linea no sea null
+                String[] campos = linea.split(","); //los campos se dividen por las comas ",", ya definidas 
+                //a la hora de guardar la informacion de los usuarios
+                if (campos.length == 4) { //mientras que los campos esten completamente llenos
+                    String email = campos[0]; //el primer valor de el campo es el email
+                    String nombre = campos[1]; //el segundo el nombre
+                    int edad = Integer.parseInt(campos[2]); //el tercero la edad
+                    int hash = Integer.parseInt(campos[3]); //el cuarto el hash
+                    Usuario usuario = new Usuario(email, nombre, edad); //se crea el usuario con la info recibida
+                    usuario.setHash(hash); //se modifica el hash para que coincida
+                    usuarios.insertaMejorado(usuario); //se inserta el usuario en la lista
+                }//final if
+            }//final while
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+            e.printStackTrace(); //en caso de un error
+        }//final catch
+    }//final del metodo cargarUsuariosDesdeCSV
 
     private static void guardarPostDeUsuarios(ListaDobleCircular usuarios, String nombreArchivo) {
+        //de igual manera se obtiene la lista de usuarios y la ruta del archivo donde se guardaran
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo))) {
-            NodoListaDobleCircular auxiliar = usuarios.getCabeza();
-            Usuario usuario = auxiliar.getDato();
-            Pila pilaPosts = usuario.getPilaPosts();
-            if (!pilaPosts.esVacia()) {
-                NodoPila nodoPost = pilaPosts.getCima();
-                while (nodoPost != null) {
-                    NodoArbol post = nodoPost.getArbol().getRoot();
-                    String linea = usuario.getEmail() + "," + post.getMensaje().getMsj() + "," + post.getMensaje().getFecha();
-                    if (post.getIzquierdo() != null) {
-                        linea = linea + "," + post.getIzquierdo().getMensaje().getUser() + "," + post.getIzquierdo().getMensaje().getMsj() + "," + post.getIzquierdo().getMensaje().getFecha();
+            //el BufferedWriter es más eficiente a la hora de escribir en el documento
+            NodoListaDobleCircular auxiliar = usuarios.getCabeza(); //se obtiene la cabeza
+            Usuario usuario = auxiliar.getDato(); //se obtiene el usuario del nodo
+            Pila pilaPosts = usuario.getPilaPosts(); //se obtiene la pila con los post del usuario
+            if (!pilaPosts.esVacia()) { //si no esta vacia
+                NodoPila nodoPost = pilaPosts.getCima(); //se obtiene la cima
+                while (nodoPost != null) { //mientras que el nodo no sea null
+                    NodoArbol post = nodoPost.getArbol().getRoot(); //se obtiene el nodo del arbol
+                    String linea = usuario.getEmail() + "," //la linea contendra todos los datos del post
+                            + post.getMensaje().getMsj() //el email, el mensaje
+                            + "," + post.getMensaje().getFecha(); // y la feccha
+                    if (post.getIzquierdo() != null) { //en caso de haber una respuesta en el nodo izquierdo
+                        linea = linea + "," //se agregara a la linea los datos de este
+                                + post.getIzquierdo().getMensaje().getUser() //el usuario
+                                + "," + post.getIzquierdo().getMensaje().getMsj() + "," //el mensaje
+                                + post.getIzquierdo().getMensaje().getFecha(); //la fecha de publicacion
                     }//final if
-                    if (post.getDerecho() != null) {
-                        linea = linea + "," + post.getDerecho().getMensaje().getUser() + "," + post.getDerecho().getMensaje().getMsj() + "," + post.getDerecho().getMensaje().getFecha();
+                    if (post.getDerecho() != null) { // en caso de tambien haver una respuesta
+                        linea = linea + "," //en el nodo derecho del arbol, se agrega a la linea 
+                                + post.getDerecho().getMensaje().getUser() //el usario
+                                + "," + post.getDerecho().getMensaje().getMsj() + "," //mensaje
+                                + post.getDerecho().getMensaje().getFecha(); //y fecha
                     }//final if
-                    writer.write(linea);
-                    writer.newLine();
-                    nodoPost = nodoPost.getSiguiente();
-                }
-            }
-            auxiliar = auxiliar.getSiguiente();
-            while (auxiliar != usuarios.getCabeza()) {
-                usuario = auxiliar.getDato();
-                pilaPosts = usuario.getPilaPosts();
-                if (!pilaPosts.esVacia()) {
-                    NodoPila nodoPost = pilaPosts.getCima();
-                    while (nodoPost != null) {
-                        NodoArbol post = nodoPost.getArbol().getRoot();
-                        String linea = usuario.getEmail() + "," + post.getMensaje().getMsj() + "," + post.getMensaje().getFecha();
-                        if (post.getIzquierdo() != null) {
-                            linea = linea + "," + post.getIzquierdo().getMensaje().getUser()+ "," + post.getIzquierdo().getMensaje().getMsj() + "," + post.getIzquierdo().getMensaje().getFecha();
+                    writer.write(linea); //se escribe la linea en el archivo plano
+                    writer.newLine(); //se salta de linea para el siguiente arbol del usario
+                    nodoPost = nodoPost.getSiguiente(); //se avanza en la pila
+                }//final while
+            }//final if
+            auxiliar = auxiliar.getSiguiente(); //ahora con el resto de usuarios
+            while (auxiliar != usuarios.getCabeza()) { //mientras que no sea cabeza otra vez
+                usuario = auxiliar.getDato(); //se obtiene al usuario
+                pilaPosts = usuario.getPilaPosts(); //se obtiene la pila del usuario
+                if (!pilaPosts.esVacia()) { //si no es vacia 
+                    NodoPila nodoPost = pilaPosts.getCima(); //se obtiene el nodo cima
+                    while (nodoPost != null) { //mientras que el nodo no sea null
+                        NodoArbol post = nodoPost.getArbol().getRoot(); //se obtiene el nodo del arbol
+                        String linea = usuario.getEmail() //la linea contiene el email 
+                                + "," + post.getMensaje().getMsj() + "," //el mensaje
+                                + post.getMensaje().getFecha(); //la fecha
+                        if (post.getIzquierdo() != null) { //en caso de tener respuesta izquierda
+                            linea = linea + "," //la linea tambien contendra
+                                    + post.getIzquierdo().getMensaje().getUser() //usuario que responde 
+                                    + "," + post.getIzquierdo().getMensaje().getMsj() //el mensaje
+                                    + "," + post.getIzquierdo().getMensaje().getFecha(); //la fecha
                         }//final if
-                        if (post.getDerecho() != null) {
-                            linea = linea + "," + post.getDerecho().getMensaje().getUser() + "," + post.getDerecho().getMensaje().getMsj() + "," + post.getDerecho().getMensaje().getFecha();
+                        if (post.getDerecho() != null) { //en caso de tener respuesta izquierda
+                            linea = linea + "," //la linea tambien contendra
+                                    + post.getDerecho().getMensaje().getUser() //usuario que responde 
+                                    + "," + post.getDerecho().getMensaje().getMsj() //el mensaje
+                                    + "," + post.getDerecho().getMensaje().getFecha();//la fecha
                         }//final if
-                        writer.write(linea);
-                        writer.newLine();
-                        nodoPost = nodoPost.getSiguiente();
-                    }
-                }
-                auxiliar = auxiliar.getSiguiente();
-            }
+                        writer.write(linea); //se escribe la linea en el documento
+                        writer.newLine(); //se salta de linea para el siguiente post
+                        nodoPost = nodoPost.getSiguiente(); //se obtiene el siguiente post
+                    }//final while
+                }//final if
+                auxiliar = auxiliar.getSiguiente(); //se sigue con el siguiente nodo de la lista
+            }//final while
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+            e.printStackTrace(); //en caso de errores
+        }//final catch
+    }//final del metodo guardarPostDeUsuarios
 
     private static void cargarPostDeUsuarios(ListaDobleCircular usuarios, String nombreArchivo) {
+        //para cargar los post de los usuarios se obtiene la lista de estos
         try (BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo))) {
-            String linea;
-            while ((linea = reader.readLine()) != null) {
-                String[] datos = linea.split(",");
-                if (datos.length >= 3) {
-                    String email = datos[0];
-                    String mensaje = datos[1];
-                    String fecha = datos[2];
-                    Usuario usuario = usuarios.buscarUsuarioPorCorreo(email);
-                    if (usuario != null) {
-                        Arbol arbol = new Arbol();
-                        Post post = new Post(mensaje, usuario);
-                        post.setFecha(fecha);
-                        arbol.agregar(post);
-                        if (datos.length >= 6) {
-                            Usuario r1 = usuarios.buscarUsuarioPorCorreo(datos[3]);
+            //el BufferedReader es más eficiente a la hora de leer el archivo con los datos
+            String linea; //la linea es la que contiene la informacion de los post
+            while ((linea = reader.readLine()) != null) { //en caso de que no sea null
+                String[] datos = linea.split(","); //se divide la info por la coma ","
+                //esta ya fue definida en el guardarPost
+                if (datos.length >= 3) { //en caso de tener un post
+                    String email = datos[0]; //el campo 1 es el email
+                    String mensaje = datos[1]; //el segndo es el mensaje
+                    String fecha = datos[2]; //el tercero la fecha
+                    Usuario usuario = usuarios.buscarUsuarioPorCorreo(email); //buscamos al usuario
+                    //en la lista para verificar que existe
+                    if (usuario != null) { //si existe
+                        Arbol arbol = new Arbol(); //se crea el arbol
+                        Post post = new Post(mensaje, usuario); //se crea el post segun la info
+                        post.setFecha(fecha); //se cambia la fecha por la de la info
+                        arbol.agregar(post); //se agrega el post al arbol
+                        if (datos.length >= 6) { //en caso de tener una respuesta
+                            Usuario r1 = usuarios.buscarUsuarioPorCorreo(datos[3]); //se obtiene el email del cuarto campo
                             arbol.responder(r1, usuario, arbol.getRoot(), datos[4], datos[5]);
+                            //se agrega la respuesta al arbol segun la info del aarchivo
                         }//final if
-                        if (datos.length == 9) {
-                            Usuario r2 = usuarios.buscarUsuarioPorCorreo(datos[6]);
+                        if (datos.length == 9) { //en caso de tener 2 respuestas
+                            Usuario r2 = usuarios.buscarUsuarioPorCorreo(datos[6]); //el setimo dato seria el correo del usuario
                             arbol.responder(r2, usuario, arbol.getRoot(), datos[7], datos[8]);
+                            //se agrega la respuesta al arbol segun la info del aarchivo
                         }//final if
-                        usuario.getPilaPosts().apilar(arbol);
+                        usuario.getPilaPosts().apilar(arbol); //se apila el arbol en la pila del usuario
                     } else {
                         System.out.println("No se encontró un usuario con el email: " + email);
-                    }
+                    }//final else
                 } else {
                     System.out.println("Formato incorrecto en la línea del archivo CSV: " + linea);
-                }
-            }
+                }//final else
+            }//final while
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+            e.printStackTrace(); //en caso de errores
+        }//final catch
+    }//final del metodo cargarPostDeUsuarios
 
     private static void guardarSeguidoresCSV(ListaDobleCircular usuarios, String nombreArchivo) {
+        //se obtiene la lista de usuarios para guardar a quienes sigue en el archivo plano
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo))) {
-            NodoListaDobleCircular auxiliar = usuarios.getCabeza();
-            Usuario usuario = auxiliar.getDato();
-            String linea = usuario.getEmail();
-            AuxiliarListaSimple listaSeguidores = usuario.getSeguidores();
-            if (listaSeguidores != null) {
-                AuxiliarNodoListaSimple nodoSeguidor = listaSeguidores.getCabeza();
-                while (nodoSeguidor != null) {
-                    linea += "," + nodoSeguidor.getCorreo();
-                    nodoSeguidor = nodoSeguidor.getSiguiente();
-                }
-            }
-            writer.write(linea);
-            writer.newLine();
-            auxiliar = auxiliar.getSiguiente();
-            while (auxiliar != usuarios.getCabeza()) {
-                usuario = auxiliar.getDato();
-                linea = usuario.getEmail();
-                listaSeguidores = usuario.getSeguidores();
-                if (listaSeguidores != null) {
-                    AuxiliarNodoListaSimple nodoSeguidor = listaSeguidores.getCabeza();
-                    while (nodoSeguidor != null) {
-                        linea += "," + nodoSeguidor.getCorreo();
-                        nodoSeguidor = nodoSeguidor.getSiguiente();
-                    }
-                }
-                writer.write(linea);
-                writer.newLine();
-                auxiliar = auxiliar.getSiguiente();
-            }
+            //el BufferedWriter escribe de manera más eficiente en el archivo
+            NodoListaDobleCircular auxiliar = usuarios.getCabeza(); //se obtiene la cabeza
+            Usuario usuario = auxiliar.getDato(); //se obtiene el usuario del nodo 
+            String linea = usuario.getEmail(); //el primer dato es el usuario que le pertenece la lista
+            //esto para facilitar la asignacion de esta lista al momento de cargar el archivo
+            AuxiliarListaSimple listaSeguidores = usuario.getSeguidores(); //se obtiene la lista de seguidores del usuario
+            if (listaSeguidores != null) { //si no es null 
+                AuxiliarNodoListaSimple nodoSeguidor = listaSeguidores.getCabeza(); //se obtiene la cabeza
+                while (nodoSeguidor != null) { //mientras que no sea null
+                    linea += "," + nodoSeguidor.getCorreo(); //escribe el correo 
+                    nodoSeguidor = nodoSeguidor.getSiguiente(); //pasa al siguiente nodo
+                }//final while
+            }//final if
+            writer.write(linea); //escribe la linea en el documento
+            writer.newLine(); //se salta de linea para la siguiente lista
+            auxiliar = auxiliar.getSiguiente(); //se obtiene el siguiente usuario
+            while (auxiliar != usuarios.getCabeza()) { //mientras que no sea cabeza otra vez
+                usuario = auxiliar.getDato(); //obtiene el usuario
+                linea = usuario.getEmail(); //la linea sera el correo del mismo usuario
+                //ya se menciono el porque más arriba en este metodo
+                listaSeguidores = usuario.getSeguidores(); //se obtiene la lista de seguidores del usuario
+                if (listaSeguidores != null) { //mientras que no sea null
+                    AuxiliarNodoListaSimple nodoSeguidor = listaSeguidores.getCabeza(); //se obtiene la cabeza de la lista
+                    while (nodoSeguidor != null) { //mientras no sea null
+                        linea += "," + nodoSeguidor.getCorreo(); //obtiene el correo del nodo
+                        nodoSeguidor = nodoSeguidor.getSiguiente(); //avanza al siguiente
+                    }//final while 
+                }//final if
+                writer.write(linea); //escribe la lista en formato plano en el archivo 
+                writer.newLine(); //salta de linea para la siguiente lista
+                auxiliar = auxiliar.getSiguiente(); //se obtiene el siguiente usuario
+            }//final while
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+            e.printStackTrace(); //en caso de errores
+        }//final catch
+    }//final del metodo guardarSeguidoresCSV
 
     private static void cargarSeguidoresDesdeCSV(ListaDobleCircular usuarios, String nombreArchivo) {
+        //se obtiene la lista de usuarios y la ruta del archivo con los datos de la lista de seguidores
         try (BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo))) {
-            String linea;
-            while ((linea = reader.readLine()) != null) {
-                String[] datos = linea.split(",");
-                if (datos.length >= 1) {
-                    String email = datos[0];
-                    Usuario usuario = usuarios.buscarUsuarioPorCorreo(email);
-                    if (usuario != null) {
-                        AuxiliarListaSimple listaSeguidores = new AuxiliarListaSimple();
-                        for (int i = 1; i < datos.length; i++) {
-                            listaSeguidores.insertarSeguidor(new Usuario(datos[i], "", 0)); // Crear un usuario temporal con el correo
-                        }
-                        usuario.setSeguidores(listaSeguidores);
+            //el BufferedReader es más eficiente a la hora de leer el archivo 
+            String linea; //la linea contendra la informacion de la lista
+            while ((linea = reader.readLine()) != null) { //mientras que la linea no sea null
+                String[] datos = linea.split(","); //se divide la info por la coma ","
+                if (datos.length >= 1) { //en caso de tener 1 o más datos
+                    String email = datos[0]; //el primer dato sea a quien le pertenece la lista
+                    Usuario usuario = usuarios.buscarUsuarioPorCorreo(email); //se busca al usuario por el correo
+                    if (usuario != null) { //en caso de existir
+                        AuxiliarListaSimple listaSeguidores = new AuxiliarListaSimple(); //se crea su lista
+                        for (int i = 1; i < datos.length; i++) { //se recorre los demás datos
+                            Usuario user = usuarios.buscarUsuarioPorCorreo(datos[i]); //se busca al usuario
+                            if (user != null) { // en caso de existor
+                                listaSeguidores.insertarSeguidor(user); // inserta al usuario a la lista
+                            }//final if
+                        }//final for
+                        usuario.setSeguidores(listaSeguidores); //se le asigna la lista al usuario correspondiente
                     } else {
                         System.out.println("No se encontró un usuario con el email: " + email);
-                    }
+                    }//final else
                 } else {
                     System.out.println("Formato incorrecto en la línea del archivo CSV: " + linea);
-                }
-            }
+                }//final else
+            }//final while
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
+        }//final catch
+    }//final del metodo cargarSeguidoresDesdeCSV
 
-    public static void cargarDatos() {
+    public static void cargarDatos() { //solo llama a las funciones que cargan los datos
         try {
             Grafo.cargarUsuariosDesdeCSV(usuarios, "data/UsuariosTwitter.csv");
             Grafo.cargarPostDeUsuarios(usuarios, "data/PostTwitter.csv");
             Grafo.cargarSeguidoresDesdeCSV(usuarios, "data/SeguidoresTwitter.csv");
         } catch (Exception e) {
             System.out.println("Error al cargar datos: " + e.getMessage());
-        }
+        }//final catch
     }//final del metodo cargarDatos
 
-    public static void guardarDatos() {
+    public static void guardarDatos() { //llamma a las funciones encargadas de guardar la info
         try {
             Grafo.guardarUsuariosCSV(usuarios, "data/UsuariosTwitter.csv");
             Grafo.guardarPostDeUsuarios(usuarios, "data/PostTwitter.csv");
@@ -240,5 +287,6 @@ public class Grafo {
         } catch (Exception e) {
             System.out.println("Error al guardar datos: " + e.getMessage());
         }//final catch
-    }
-}
+    }//final del metodo guardarDatos
+
+}//final de la clase
