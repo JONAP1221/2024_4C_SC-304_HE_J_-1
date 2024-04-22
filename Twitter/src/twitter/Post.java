@@ -12,12 +12,12 @@ public class Post {
 
     //atributos de la clase
     private String msj;
-    private Usuario user;
+    private String user;
     private String fecha;
 
     public Post(String msj, Usuario user) {
         this.msj = msj;
-        this.user = user;
+        this.user = user.getEmail();
         this.fecha = obtenerFecha();
     }//final constructor lleno
 
@@ -33,12 +33,12 @@ public class Post {
         this.msj = msj;
     }
 
-    public Usuario getUser() {
+    public String getUser() {
         return user;
     }
 
     public void setUser(Usuario user) {
-        this.user = user;
+        this.user = user.getEmail();
     }
 
     public String getFecha() {
@@ -71,8 +71,19 @@ public class Post {
         } else {
             return new Post(respuesta, user);
         }
-
     }//final del metodo newPost
+    
+    public static Post respuesta(Usuario user, Usuario original, String respuesta) {
+        int charCount = respuesta.replaceAll("\\s", "").length(); // Contar caracteres excluyendo los espacios
+
+        if (charCount > 5) {
+            JOptionPane.showMessageDialog(null, "Has excedido el límite de 100 caracteres.");
+            return null; // Retorna null para indicar que no se creó el post
+        } else {
+            return new Post(respuesta, user);
+        }
+    }//final del metodo newPost
+    
 
     public void deletePost(Usuario user, Post post) {
 
@@ -100,7 +111,7 @@ public class Post {
 
     @Override
     public String toString() {
-        return user.getName() + "          " + fecha + "\n" + msj + "\n\n";
+        return user + "          " + fecha + "\n" + msj + "\n\n";
     }//final metodo toString
 
 }//final de la clase

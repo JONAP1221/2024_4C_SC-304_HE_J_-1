@@ -84,8 +84,14 @@ public class Grafo {
             if (!pilaPosts.esVacia()) {
                 NodoPila nodoPost = pilaPosts.getCima();
                 while (nodoPost != null) {
-                    Post post = nodoPost.getArbol().getRoot().getMensaje();
-                    String linea = usuario.getEmail() + "," + post.getMsj() + "," + post.getFecha();
+                    NodoArbol post = nodoPost.getArbol().getRoot();
+                    String linea = usuario.getEmail() + "," + post.getMensaje().getMsj() + "," + post.getMensaje().getFecha();
+                    if (post.getIzquierdo() != null) {
+                        linea = linea + "," + post.getIzquierdo().getMensaje().getUser() + "," + post.getIzquierdo().getMensaje().getMsj() + "," + post.getIzquierdo().getMensaje().getFecha();
+                    }//final if
+                    if (post.getDerecho() != null) {
+                        linea = linea + "," + post.getDerecho().getMensaje().getUser() + "," + post.getDerecho().getMensaje().getMsj() + "," + post.getDerecho().getMensaje().getFecha();
+                    }//final if
                     writer.write(linea);
                     writer.newLine();
                     nodoPost = nodoPost.getSiguiente();
@@ -98,8 +104,14 @@ public class Grafo {
                 if (!pilaPosts.esVacia()) {
                     NodoPila nodoPost = pilaPosts.getCima();
                     while (nodoPost != null) {
-                        Post post = nodoPost.getArbol().getRoot().getMensaje();
-                        String linea = usuario.getEmail() + "," + post.getMsj() + "," + post.getFecha();
+                        NodoArbol post = nodoPost.getArbol().getRoot();
+                        String linea = usuario.getEmail() + "," + post.getMensaje().getMsj() + "," + post.getMensaje().getFecha();
+                        if (post.getIzquierdo() != null) {
+                            linea = linea + "," + post.getIzquierdo().getMensaje().getUser()+ "," + post.getIzquierdo().getMensaje().getMsj() + "," + post.getIzquierdo().getMensaje().getFecha();
+                        }//final if
+                        if (post.getDerecho() != null) {
+                            linea = linea + "," + post.getDerecho().getMensaje().getUser() + "," + post.getDerecho().getMensaje().getMsj() + "," + post.getDerecho().getMensaje().getFecha();
+                        }//final if
                         writer.write(linea);
                         writer.newLine();
                         nodoPost = nodoPost.getSiguiente();
@@ -117,7 +129,7 @@ public class Grafo {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                if (datos.length == 3) {
+                if (datos.length >= 3) {
                     String email = datos[0];
                     String mensaje = datos[1];
                     String fecha = datos[2];
@@ -127,6 +139,14 @@ public class Grafo {
                         Post post = new Post(mensaje, usuario);
                         post.setFecha(fecha);
                         arbol.agregar(post);
+                        if (datos.length >= 6) {
+                            Usuario r1 = usuarios.buscarUsuarioPorCorreo(datos[3]);
+                            arbol.responder(r1, usuario, arbol.getRoot(), datos[4], datos[5]);
+                        }//final if
+                        if (datos.length == 9) {
+                            Usuario r2 = usuarios.buscarUsuarioPorCorreo(datos[6]);
+                            arbol.responder(r2, usuario, arbol.getRoot(), datos[7], datos[8]);
+                        }//final if
                         usuario.getPilaPosts().apilar(arbol);
                     } else {
                         System.out.println("No se encontró un usuario con el email: " + email);

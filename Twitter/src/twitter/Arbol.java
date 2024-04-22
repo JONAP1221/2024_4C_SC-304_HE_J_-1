@@ -38,9 +38,37 @@ public class Arbol {
     }//final metodo agregar
 
     public void responder(Usuario user, Usuario post, NodoArbol root) {
-        Post mensaje = Post.respuesta(user, root.getMensaje().getUser());
+        Usuario usuario = Twitter.usuarios.buscarUsuarioPorCorreo(root.getMensaje().getUser());
+        Post mensaje = Post.respuesta(user, usuario);
         NodoArbol nuevo = new NodoArbol(mensaje); //se establece una variable para la respuesta (Post)
         nuevo.getMensaje().setMsj("      " + nuevo.getMensaje().getMsj());
+        NodoArbol aux = root; //este esta conectado al mensaje principal
+        NodoArbol padre; // otra variable de apoyo para la respuesta a la respuesta
+        while (true) {
+            padre = aux;  //igualamos ambas variables
+            if (padre.getIzquierdo() == null) {
+                aux = aux.getIzquierdo();
+                if (aux == null) {
+                    padre.setIzquierdo(nuevo);
+                    return;
+                }//Final if
+            }//final if
+            else {
+                aux = aux.getDerecho();
+                if (aux == null) {
+                    padre.setDerecho(nuevo);
+                    return;
+                }//final if
+            }//final else
+        }//final while
+    }//final else
+
+    public void responder(Usuario user, Usuario post, NodoArbol root, String respuesta, String fecha) {
+        Usuario usuario = Twitter.usuarios.buscarUsuarioPorCorreo(root.getMensaje().getUser());
+        Post mensaje = Post.respuesta(user, usuario, respuesta);
+        mensaje.setFecha(fecha);
+        NodoArbol nuevo = new NodoArbol(mensaje); //se establece una variable para la respuesta (Post)
+        nuevo.getMensaje().setMsj(nuevo.getMensaje().getMsj());
         NodoArbol aux = root; //este esta conectado al mensaje principal
         NodoArbol padre; // otra variable de apoyo para la respuesta a la respuesta
         while (true) {
@@ -77,7 +105,8 @@ public class Arbol {
                             JOptionPane.showMessageDialog(null, "A continuacion, seleccione el usuario que esta respondiendo.");
                             Usuario usuarioa = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
                             if (usuarioa != null) {// de haberlo
-                                arbol.responder(usuarioa, arbol.getRoot().getMensaje().getUser(), root);
+                                Usuario usuario = Twitter.usuarios.buscarUsuarioPorCorreo(root.getMensaje().getUser());
+                                arbol.responder(usuarioa, usuario, root);
                                 mostrar(arbol);
                             }//final if
                             else {
@@ -140,7 +169,7 @@ public class Arbol {
     }//final del metodo inOrderR
 
     private boolean comparar(NodoArbol post) {
-        Usuario usuario = post.getMensaje().getUser();
+        Usuario usuario = Twitter.usuarios.buscarUsuarioPorCorreo(post.getMensaje().getUser());
         boolean x = false;
         NodoListaDobleCircular cabeza = usuarios.getCabeza();
         if (cabeza != null) {
@@ -161,7 +190,7 @@ public class Arbol {
 
     @Override
     public String toString() {
-        return root.getMensaje().getUser().getName() + root;
+        return root.getMensaje().getUser() + root;
     }
 
 }//Final de la clase
