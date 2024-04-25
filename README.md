@@ -7,7 +7,6 @@ Este proyecto tiene como objetivo desarrollar una página web similar a Twitter,
 
 - Camerún Zuñiga Jimenez (https://github.com/Camerunzj)
 - Jonathan López Garcia (https://github.com/JONAP1221)
-- Joshtine Masis Fuentes (https://github.com/Joshmasis16)
 - Brandon Vargas Moreira (https://github.com/Vargas0421)
 
 
@@ -65,3 +64,4 @@ java.util.ArrayList: Esta librería proporciona la implementación de la interfa
 java.time.LocalDateTime: Esta librería proporciona la funcionalidad para representar una fecha y hora local sin referencia a una zona horaria específica. La clase LocalDateTime permite trabajar con fechas y horas en un contexto local, sin considerar los ajustes de zona horaria o los desplazamientos.
 
 java.time.format.DateTimeFormatter: Esta librería proporciona la funcionalidad para formatear y analizar fechas y horas en Java. La clase DateTimeFormatter permite crear objetos que definen patrones de formato para formatear instancias de LocalDateTime en cadenas de texto, así como analizar cadenas de texto en instancias de LocalDateTime.
+
