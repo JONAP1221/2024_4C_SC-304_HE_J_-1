@@ -3,10 +3,6 @@ package twitter;
 import javax.swing.JOptionPane;
 import static twitter.Twitter.usuarios;
 
-/**
- *
- * @author Jonathan
- */
 public class Arbol {
 
     //atributos de la clase

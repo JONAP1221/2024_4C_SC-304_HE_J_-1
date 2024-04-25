@@ -33,29 +33,30 @@ public class ListaSimple {
         }
     }
 
-    public void insertarPost(Arbol p) {
-        if (cabeza == null) {
-            cabeza = new NodoListaSimple(p);
+    public void insertarPost(Arbol p) {// metodo para insertar un post
+        if (cabeza == null) {// en caso de que la caeza este vacia se anade aca 
+            cabeza = new NodoListaSimple(p);// se refresca el puntero como la nueva cabeza 
         } else {
-            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");// creamos una variable tipo SimpleDateFormat para psignarla al post y de esta manera poder compararlos 
 
             try {
                 Date fechaNueva = formato.parse(p.getRoot().getMensaje().getFecha());
 
-                if (fechaNueva.before(formato.parse(cabeza.getPost().getRoot().getMensaje().getFecha()))) {
-                    NodoListaSimple nuevoNodo = new NodoListaSimple(p);
-                    nuevoNodo.setSiguiente(cabeza);
-                    cabeza = nuevoNodo;
+                if (fechaNueva.before(formato.parse(cabeza.getPost().getRoot().getMensaje().getFecha()))) {// se la fehha del post esta antes es decir la nueva cabeza
+                    NodoListaSimple nuevoNodo = new NodoListaSimple(p);//sec rea un nuevo nodo con el post inresa el cual es recibido como parametro 
+                    nuevoNodo.setSiguiente(cabeza);// se setea que el sigueinte del mismo es la antigua cabeza
+                    cabeza = nuevoNodo;// se setea el nuevo nodo como la nueva cabeza 
                 } else {
-                    NodoListaSimple actual = cabeza;
+                    NodoListaSimple actual = cabeza;// se crea una variable actual la cuel es caeza
                     while (actual.getSiguiente() != null && formato.parse(actual.getSiguiente().getPost().getRoot().getMensaje().getFecha()).compareTo(fechaNueva) < 0) {
-                        actual = actual.getSiguiente();
+                     // si se hay algo despues de la cabeza y la fecha es antigua mediante una funcion matematica la cual las compara y luego compara que sea neor a )
+                        actual = actual.getSiguiente();// se acanza hasta donde se desea 
                     }
-                    NodoListaSimple nuevoNodo = new NodoListaSimple(p);
-                    nuevoNodo.setSiguiente(actual.getSiguiente());
-                    actual.setSiguiente(nuevoNodo);
+                    NodoListaSimple nuevoNodo = new NodoListaSimple(p);// se crea el nuevo nodo 
+                    nuevoNodo.setSiguiente(actual.getSiguiente());// se seteea como sigueinte el actual 
+                    actual.setSiguiente(nuevoNodo);// se setea el sigueinte com el nuevo nodo 
                 }
-            } catch (ParseException e) {
+            } catch (ParseException e) {// un cath para el while de la fecha 
                 e.printStackTrace();
             }
         }

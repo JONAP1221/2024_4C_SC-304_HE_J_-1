@@ -22,19 +22,19 @@ public class Cola {
         NodoCola nuevoNodo = new NodoCola(p);
         if (esVacia()) {//si esta vacia se agrega
             primero = nuevoNodo;// se crea un nuevo nodo con el valor de cabeza
-            ultimo = nuevoNodo;
+            ultimo = nuevoNodo;// se crea un se crea un nodo con el valor del ultimos, ambos son el mismo ya que es lo primero que se anade a la red
         }//final if 
         else {//si ya tenia un elemento antes lo pone de ultimo
-            ultimo.setSiguiente(nuevoNodo);
-            ultimo = nuevoNodo;
+            ultimo.setSiguiente(nuevoNodo);// recordar que en una cola se anade desde atras, por ello se setea com el siguiente del que ya estaba 
+            ultimo = nuevoNodo;// refrescamos el puntero del ultimo a el nuevo nodo que metimos 
         }//final else
     }//final metodo encolar
 
-    public void desencolar() {
-        if (!esVacia()) {
-            while (primero != null) {
-                primero.getPost().mostrar(primero.getPost());
-                primero = primero.getSiguiente();
+    public void desencolar() {// funcion de desencolar
+        if (!esVacia()) {// en caso de que no este vacia y esto se verifica mediante !esVacia
+            while (primero != null) {// si tenemos algo en el primer nodo 
+                primero.getPost().mostrar(primero.getPost());// se muestra el post de dicho modo 
+                primero = primero.getSiguiente();// se vanza al sigueinte nodo 
             }//final while
         }//final if 
     }//final del metodo desencolar
