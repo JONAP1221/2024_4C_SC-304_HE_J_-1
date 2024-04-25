@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 
 import static twitter.Twitter.usuarios;
 
@@ -49,14 +50,16 @@ public class Grafo {
             NodoListaDobleCircular auxiliar = usuarios.getCabeza(); //se obtiene laa cabeza de la lista
             Usuario usuario = auxiliar.getDato(); //obtenemos el usuario
             String linea = usuario.getEmail() + "," + usuario.getName() //y la linea sera
-                    + "," + usuario.getAge() + "," + usuario.getHash(); //a info del usuario
+                    + "," + usuario.getAge() + "," + usuario.getHash() //a info del usuario
+                    + "," + usuario.getFechaRegistro();
             writer.write(linea); //se escribe la linea en el archivo
             writer.newLine(); //se salta de linea para dividir la info del siguiente usuario
             auxiliar = auxiliar.getSiguiente(); //se obtiene el siguiente usuario
             while (auxiliar != usuarios.getCabeza()) { //ahora recorremos la lista doble completa
                 usuario = auxiliar.getDato(); //y obtenemos lo mismo que con cabeza
                 linea = usuario.getEmail() + "," + usuario.getName() //para el resto de los nodos de la lista
-                        + "," + usuario.getAge() + "," + usuario.getHash();
+                        + "," + usuario.getAge() + "," + usuario.getHash()
+                        + "," + usuario.getFechaRegistro();
                 writer.write(linea);
                 writer.newLine();
                 auxiliar = auxiliar.getSiguiente();
@@ -75,13 +78,15 @@ public class Grafo {
             while ((linea = reader.readLine()) != null) { //mientras que la linea no sea null
                 String[] campos = linea.split(","); //los campos se dividen por las comas ",", ya definidas 
                 //a la hora de guardar la informacion de los usuarios
-                if (campos.length == 4) { //mientras que los campos esten completamente llenos
+                if (campos.length == 5) { //mientras que los campos esten completamente llenos
                     String email = campos[0]; //el primer valor de el campo es el email
                     String nombre = campos[1]; //el segundo el nombre
                     int edad = Integer.parseInt(campos[2]); //el tercero la edad
                     int hash = Integer.parseInt(campos[3]); //el cuarto el hash
+                    String fechaRegistro = (campos[4]);
                     Usuario usuario = new Usuario(email, nombre, edad); //se crea el usuario con la info recibida
                     usuario.setHash(hash); //se modifica el hash para que coincida
+                    usuario.setFechaRegistro(fechaRegistro);
                     usuarios.insertaMejorado(usuario); //se inserta el usuario en la lista
                 }//final if
             }//final while
@@ -186,12 +191,8 @@ public class Grafo {
                             //se agrega la respuesta al arbol segun la info del aarchivo
                         }//final if
                         usuario.getPilaPosts().apilar(arbol); //se apila el arbol en la pila del usuario
-                    } else {
-                        System.out.println("No se encontró un usuario con el email: " + email);
-                    }//final else
-                } else {
-                    System.out.println("Formato incorrecto en la línea del archivo CSV: " + linea);
-                }//final else
+                    }//final if
+                }//final if
             }//final while
         } catch (IOException e) {
             e.printStackTrace(); //en caso de errores
@@ -257,12 +258,8 @@ public class Grafo {
                             }//final if
                         }//final for
                         usuario.setSeguidores(listaSeguidores); //se le asigna la lista al usuario correspondiente
-                    } else {
-                        System.out.println("No se encontró un usuario con el email: " + email);
-                    }//final else
-                } else {
-                    System.out.println("Formato incorrecto en la línea del archivo CSV: " + linea);
-                }//final else
+                    }//final if
+                }//final if
             }//final while
         } catch (IOException e) {
             e.printStackTrace();

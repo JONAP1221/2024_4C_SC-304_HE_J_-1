@@ -1,6 +1,7 @@
 package twitter;
 
 //import java.util.ArrayList;
+import java.time.LocalDate;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import static twitter.Twitter.usuarios;
@@ -13,6 +14,7 @@ public class Usuario {
     private int hash;
     private ListaSimple seguidores;
     private Pila pilaPosts; // Agregar atributo para la pila de posts
+    private String fechaRegistro;
 
     public Usuario(String email, String name, int age) {
         this.email = email;
@@ -21,6 +23,15 @@ public class Usuario {
         this.hash = Math.abs(this.email.hashCode());
         this.seguidores = new ListaSimple(); // Inicializamos la lista de seguidores
         this.pilaPosts = new Pila(); // Inicializamos la pila de posts
+        this.fechaRegistro = Post.obtenerFecha();
+    }
+
+    public String getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(String fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
     }
 
     public Pila getPilaPosts() {
@@ -98,12 +109,13 @@ public class Usuario {
                     StringBuilder seguidoresTexto = new StringBuilder();
                     seguidoresTexto.append("El usuario ").append(base.getName()).append(" sigue a las personas:\n");
                     while (cabezaSeguidores != null) {
+                        Usuario seguidor = usuarios.buscarUsuarioPorCorreo(cabezaSeguidores.getCorreo());
                         if (comparar(cabezaSeguidores)) {
-                            Usuario seguidor = usuarios.buscarUsuarioPorCorreo(cabezaSeguidores.getCorreo());
+
                             seguidoresTexto.append("- ").append(seguidor.getName()).append("\n");
                         }//final if
                         else {
-                            base.getSeguidores().eliminarSeguidor(cabezaSeguidores.getUsuario());
+                            base.getSeguidores().eliminarSeguidor(seguidor);
                         }//final else
                         cabezaSeguidores = cabezaSeguidores.getSiguiente();
                     }
@@ -209,9 +221,9 @@ public class Usuario {
                 NodoListaSimple aux = listaFeed.getCabeza();
                 while (aux != null) {
                     colaPost.encolar(aux.getPost());
-                    
+
                     aux = aux.getSiguiente();
-                    
+
                 }
 
             }
@@ -264,25 +276,28 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return " El usuario con el correo :" + email + ", se llama:" + name + ", y tiene una edad de:" + age + ", el id del usuario es:" + hash;
+        return "Nombre: " + name + "| Edad: " + age + "| Correo: " + email + "| Fecha registro: " + fechaRegistro;
     }
 
     public static String dropdown() { //para seleccionar a un usuario
         JComboBox<String> usuariosDropdown = new JComboBox<>(); //el JComboBox nos permite agupar valores y mostrarlos en el JoptionPane
         NodoListaDobleCircular auxiliar = usuarios.getCabeza(); //se recorre la lista de usuarios
-        Usuario usuario = auxiliar.getDato(); // un obtenemos el usuario del nodo aux
-        usuariosDropdown.addItem(usuario.getEmail()); //agregamos al dropdown unicamente el correo del usuario
-        auxiliar = auxiliar.getSiguiente(); //vamos al siguiente nodo
-        // Agregar el correo de cada usuario al JComboBox
-        while (auxiliar != usuarios.getCabeza()) { //mientras sea diferente de cabeza (ya que es circular)
-            usuario = auxiliar.getDato(); //lo mismo que la cabeza, obtenemos el dato
-            usuariosDropdown.addItem(usuario.getEmail()); //insertamos el emaiñ
-            auxiliar = auxiliar.getSiguiente(); //avanzamos
-        }//final while
+        if (usuarios.getCabeza() != null) {
+            Usuario usuario = auxiliar.getDato(); // un obtenemos el usuario del nodo aux
+            usuariosDropdown.addItem(usuario.getEmail()); //agregamos al dropdown unicamente el correo del usuario
+            auxiliar = auxiliar.getSiguiente(); //vamos al siguiente nodo
+            // Agregar el correo de cada usuario al JComboBox
+            while (auxiliar != usuarios.getCabeza()) { //mientras sea diferente de cabeza (ya que es circular)
+                usuario = auxiliar.getDato(); //lo mismo que la cabeza, obtenemos el dato
+                usuariosDropdown.addItem(usuario.getEmail()); //insertamos el emaiñ
+                auxiliar = auxiliar.getSiguiente(); //avanzamos
+            }//final while
 
-        JOptionPane.showMessageDialog(null, usuariosDropdown, "Seleccione un usuario", JOptionPane.QUESTION_MESSAGE); // se muestra el JComboBox con los correos
-        String correoSeleccionado = (String) usuariosDropdown.getSelectedItem(); //cuando se da a Ok, se obtiene el correo
-        return correoSeleccionado; //se devuelve el correo para hacer las otras opciones
+            JOptionPane.showMessageDialog(null, usuariosDropdown, "Seleccione un usuario", JOptionPane.QUESTION_MESSAGE); // se muestra el JComboBox con los correos
+            String correoSeleccionado = (String) usuariosDropdown.getSelectedItem(); //cuando se da a Ok, se obtiene el correo
+            return correoSeleccionado; //se devuelve el correo para hacer las otras opciones
+        }
+        return "";
     }//final del metodo dropdown
 
 }//final de la clase

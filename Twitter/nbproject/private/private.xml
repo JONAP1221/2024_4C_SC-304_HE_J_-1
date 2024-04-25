@@ -2,9 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="Group 20240330-02:24:15"/>
         <group>
             <file>file:/C:/Users/Brandon%20VM/Documents/GitHub/2024_4C_SC-304_HE_J_-1/Twitter/src/twitter/Twitter.java</file>
+        </group>
+        <group name="Group 20240330-02:24:15">
+            <file>file:/C:/Projectos/2024_4C_SC-304_HE_J_-1/Twitter/src/twitter/AuxiliarNodoListaSimple.java</file>
+            <file>file:/C:/Projectos/2024_4C_SC-304_HE_J_-1/Twitter/src/twitter/Usuario.java</file>
+            <file>file:/C:/Projectos/2024_4C_SC-304_HE_J_-1/Twitter/src/twitter/ListaSimple.java</file>
         </group>
     </open-files>
 </project-private>

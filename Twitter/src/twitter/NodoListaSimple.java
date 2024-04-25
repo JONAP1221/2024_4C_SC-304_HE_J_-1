@@ -2,21 +2,17 @@ package twitter;
 
 public class NodoListaSimple {
 
-    private Usuario usuario;
     private NodoListaSimple siguiente;
     private Arbol post;
     private String correo;
 
     public NodoListaSimple(Usuario usuario) {
-        this.usuario = usuario;
+        this.correo = usuario.getEmail();
         this.siguiente = null;
     }
- public String getCorreo() {
-        return correo;
-    }
 
-    public NodoListaSimple(String correo) {
-        this.correo = correo;
+    public String getCorreo() {
+        return correo;
     }
 
     public NodoListaSimple(NodoListaSimple siguiente, String correo) {
@@ -37,9 +33,6 @@ public class NodoListaSimple {
         this.post = post;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
 
     public NodoListaSimple getSiguiente() {
         return siguiente;

@@ -53,7 +53,7 @@ public class Post {
         String userInput = JOptionPane.showInputDialog("Qué estás pensando, " + user.getName() + "?");
         int charCount = userInput.replaceAll("\\s", "").length(); // Contar caracteres excluyendo los espacios
 
-        if (charCount > 5) {
+        if (charCount > 100) {
             JOptionPane.showMessageDialog(null, "Has excedido el límite de 100 caracteres.");
             return null; // Retorna null para indicar que no se creó el post
         } else {
@@ -65,7 +65,7 @@ public class Post {
         String respuesta = JOptionPane.showInputDialog("Respondiendo al post de " + original.getName() + ".");
         int charCount = respuesta.replaceAll("\\s", "").length(); // Contar caracteres excluyendo los espacios
 
-        if (charCount > 5) {
+        if (charCount > 100) {
             JOptionPane.showMessageDialog(null, "Has excedido el límite de 100 caracteres.");
             return null; // Retorna null para indicar que no se creó el post
         } else {
@@ -76,7 +76,7 @@ public class Post {
     public static Post respuesta(Usuario user, Usuario original, String respuesta) {
         int charCount = respuesta.replaceAll("\\s", "").length(); // Contar caracteres excluyendo los espacios
 
-        if (charCount > 5) {
+        if (charCount > 100) {
             JOptionPane.showMessageDialog(null, "Has excedido el límite de 100 caracteres.");
             return null; // Retorna null para indicar que no se creó el post
         } else {
