@@ -43,7 +43,7 @@ public class Twitter {
                         case 10 -> user.eliminarPost(Grafo.seleccionarUsuario());
                         case 11 -> user.mostrarPost(Grafo.seleccionarUsuario());
                         case 12 -> user.mostrarFeedlista(Grafo.seleccionarUsuario());
-                        case 0 -> continuar = false;
+                        case 0 -> continuar = Grafo.salirDelPrograma();
                         default -> JOptionPane.showMessageDialog(null, "Opción inválida. Por favor, seleccione una opción válida.");
                     }
                 }

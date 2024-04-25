@@ -1,5 +1,6 @@
 package twitter;
 
+import java.awt.Image;
 import javax.swing.JOptionPane;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -7,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
+import javax.swing.ImageIcon;
 
 import static twitter.Twitter.usuarios;
 
@@ -285,5 +287,20 @@ public class Grafo {
             System.out.println("Error al guardar datos: " + e.getMessage());
         }//final catch
     }//final del metodo guardarDatos
+
+    public static boolean salirDelPrograma() {
+
+        // Cargar la imagen
+        ImageIcon originalIcon = new ImageIcon("data/elmae.jpg");
+
+        // Redimensionar la imagen
+        Image img = originalIcon.getImage();
+        Image scaledImg = img.getScaledInstance(600, 600, Image.SCALE_SMOOTH); // Cambia 200, 200 a las dimensiones deseadas
+        ImageIcon scaledIcon = new ImageIcon(scaledImg);
+
+        // Mostrar la imagen redimensionada en el cuadro de diálogo
+        JOptionPane.showMessageDialog(null, "", "Saliendo de la app", JOptionPane.PLAIN_MESSAGE, scaledIcon);
+        return false;
+    }//final del metodo salirDelPrograma
 
 }//final de la clase
