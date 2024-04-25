@@ -276,7 +276,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Nombre: " + name + " | Edad: " + age + " | Correo: " + email + " | Fecha registro: " + fechaRegistro;
+        return "Nombre: " + name + " | Edad: " + age + " | Correo: " + email + " | Fecha registro: " + fechaRegistro+"\n";
     }
 
     public static String dropdown() { //para seleccionar a un usuario
