@@ -206,9 +206,9 @@ public class Grafo {
             Usuario usuario = auxiliar.getDato(); //se obtiene el usuario del nodo 
             String linea = usuario.getEmail(); //el primer dato es el usuario que le pertenece la lista
             //esto para facilitar la asignacion de esta lista al momento de cargar el archivo
-            AuxiliarListaSimple listaSeguidores = usuario.getSeguidores(); //se obtiene la lista de seguidores del usuario
+            ListaSimple listaSeguidores = usuario.getSeguidores(); //se obtiene la lista de seguidores del usuario
             if (listaSeguidores != null) { //si no es null 
-                AuxiliarNodoListaSimple nodoSeguidor = listaSeguidores.getCabeza(); //se obtiene la cabeza
+                NodoListaSimple nodoSeguidor = listaSeguidores.getCabeza(); //se obtiene la cabeza
                 while (nodoSeguidor != null) { //mientras que no sea null
                     linea += "," + nodoSeguidor.getCorreo(); //escribe el correo 
                     nodoSeguidor = nodoSeguidor.getSiguiente(); //pasa al siguiente nodo
@@ -223,7 +223,7 @@ public class Grafo {
                 //ya se menciono el porque más arriba en este metodo
                 listaSeguidores = usuario.getSeguidores(); //se obtiene la lista de seguidores del usuario
                 if (listaSeguidores != null) { //mientras que no sea null
-                    AuxiliarNodoListaSimple nodoSeguidor = listaSeguidores.getCabeza(); //se obtiene la cabeza de la lista
+                    NodoListaSimple nodoSeguidor = listaSeguidores.getCabeza(); //se obtiene la cabeza de la lista
                     while (nodoSeguidor != null) { //mientras no sea null
                         linea += "," + nodoSeguidor.getCorreo(); //obtiene el correo del nodo
                         nodoSeguidor = nodoSeguidor.getSiguiente(); //avanza al siguiente
@@ -249,7 +249,7 @@ public class Grafo {
                     String email = datos[0]; //el primer dato sea a quien le pertenece la lista
                     Usuario usuario = usuarios.buscarUsuarioPorCorreo(email); //se busca al usuario por el correo
                     if (usuario != null) { //en caso de existir
-                        AuxiliarListaSimple listaSeguidores = new AuxiliarListaSimple(); //se crea su lista
+                        ListaSimple listaSeguidores = new ListaSimple(); //se crea su lista
                         for (int i = 1; i < datos.length; i++) { //se recorre los demás datos
                             Usuario user = usuarios.buscarUsuarioPorCorreo(datos[i]); //se busca al usuario
                             if (user != null) { // en caso de existor

@@ -11,7 +11,7 @@ public class Usuario {
     private String name;
     private int age;
     private int hash;
-    private AuxiliarListaSimple seguidores;
+    private ListaSimple seguidores;
     private Pila pilaPosts; // Agregar atributo para la pila de posts
 
     public Usuario(String email, String name, int age) {
@@ -19,7 +19,7 @@ public class Usuario {
         this.name = name;
         this.age = age;
         this.hash = Math.abs(this.email.hashCode());
-        this.seguidores = new AuxiliarListaSimple(); // Inicializamos la lista de seguidores
+        this.seguidores = new ListaSimple(); // Inicializamos la lista de seguidores
         this.pilaPosts = new Pila(); // Inicializamos la pila de posts
     }
 
@@ -59,14 +59,14 @@ public class Usuario {
         this.hash = hash;
     }
 
-    public AuxiliarListaSimple getSeguidores() {
+    public ListaSimple getSeguidores() {
         return seguidores;
     }
 
     public Usuario() {
     }
 
-    public void setSeguidores(AuxiliarListaSimple seguidores) {
+    public void setSeguidores(ListaSimple seguidores) {
         this.seguidores = seguidores;
     }
 
@@ -91,9 +91,9 @@ public class Usuario {
 
     public void verSeguidores(Usuario base) {
         if (base != null) {
-            AuxiliarListaSimple seguidoresUsuario = base.getSeguidores();
+            ListaSimple seguidoresUsuario = base.getSeguidores();
             if (seguidoresUsuario != null) {
-                AuxiliarNodoListaSimple cabezaSeguidores = seguidoresUsuario.getCabeza();
+                NodoListaSimple cabezaSeguidores = seguidoresUsuario.getCabeza();
                 if (cabezaSeguidores != null) {
                     StringBuilder seguidoresTexto = new StringBuilder();
                     seguidoresTexto.append("El usuario ").append(base.getName()).append(" sigue a las personas:\n");
@@ -103,7 +103,7 @@ public class Usuario {
                             seguidoresTexto.append("- ").append(seguidor.getName()).append("\n");
                         }//final if
                         else {
-                            base.getSeguidores().eliminarSeguidor(cabezaSeguidores.getCorreo());
+                            base.getSeguidores().eliminarSeguidor(cabezaSeguidores.getUsuario());
                         }//final else
                         cabezaSeguidores = cabezaSeguidores.getSiguiente();
                     }
@@ -119,7 +119,7 @@ public class Usuario {
         }
     }//final del emtodo verSeguidores
 
-    private boolean comparar(AuxiliarNodoListaSimple nodoSeguidor) {
+    private boolean comparar(NodoListaSimple nodoSeguidor) {
         boolean x = false;
         NodoListaDobleCircular cabeza = usuarios.getCabeza();
         if (cabeza != null) {
@@ -144,7 +144,7 @@ public class Usuario {
         } else if (base.getSeguidores().noExisteSeguidor(destino)) {
             JOptionPane.showMessageDialog(null, "No sigues a este usuario");
         } else if (base.getSeguidores().existeSeguidor(destino)) {
-            base.getSeguidores().eliminarSeguidor(destino.getEmail());
+            base.getSeguidores().eliminarSeguidor(destino);
             JOptionPane.showMessageDialog(null, "Ya no sigues al usuario" + destino.getEmail());
         }
     }//final del metodo actualizarListaSeguidores
@@ -196,9 +196,9 @@ public class Usuario {
         ListaSimple listaFeed = new ListaSimple();
         Pila pilaPostsUsuario = base.getPilaPosts();
         listaFeed = pilaPostsUsuario.obtener(listaFeed);
-        AuxiliarListaSimple seguidoresUsuarioConsulta = base.getSeguidores();
+        ListaSimple seguidoresUsuarioConsulta = base.getSeguidores();
         if (seguidoresUsuarioConsulta != null) {
-            AuxiliarNodoListaSimple nodoSeguidor = seguidoresUsuarioConsulta.getCabeza();
+            NodoListaSimple nodoSeguidor = seguidoresUsuarioConsulta.getCabeza();
             while (nodoSeguidor != null) {
                 Usuario seguidor = Twitter.usuarios.buscarUsuarioPorCorreo(nodoSeguidor.getCorreo());
                 Pila pilaPostsSeguidor = seguidor.getPilaPosts();
