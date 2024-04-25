@@ -288,9 +288,9 @@ public class Grafo {
     public static boolean salirDelPrograma() {
 
         // Cargar la imagen
-        ImageIcon originalIcon = new ImageIcon("data/elmae.jpg"); //establece la ruta de donde se obtiene la imagen
+        ImageIcon originalIcon = new ImageIcon("data/us.jpg"); //establece la ruta de donde se obtiene la imagen
         Image img = originalIcon.getImage(); //obtiene la imagen de la ruta establecida
-        Image scaledImg = img.getScaledInstance(700, 700, Image.SCALE_SMOOTH); // Cambia la escala a la imagen
+        Image scaledImg = img.getScaledInstance(1000, 700, Image.SCALE_SMOOTH); // Cambia la escala a la imagen
         ImageIcon scaledIcon = new ImageIcon(scaledImg); //es la escala a la que se muestra la imagen
         JOptionPane.showMessageDialog(null, "", "Saliendo de la app", JOptionPane.PLAIN_MESSAGE, scaledIcon); //muestra la imagen con los parametros antes definidos
         return false;
