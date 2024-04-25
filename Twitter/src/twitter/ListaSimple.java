@@ -42,10 +42,8 @@ public class ListaSimple {
             cabeza = new NodoListaSimple(p);// se refresca el puntero como la nueva cabeza 
         } else {
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");// creamos una variable tipo SimpleDateFormat para psignarla al post y de esta manera poder compararlos 
-
             try {
                 Date fechaNueva = formato.parse(p.getRoot().getMensaje().getFecha());
-
                 if (fechaNueva.before(formato.parse(cabeza.getPost().getRoot().getMensaje().getFecha()))) {// se la fehha del post esta antes es decir la nueva cabeza
                     NodoListaSimple nuevoNodo = new NodoListaSimple(p);//sec rea un nuevo nodo con el post inresa el cual es recibido como parametro 
                     nuevoNodo.setSiguiente(cabeza);// se setea que el sigueinte del mismo es la antigua cabeza
@@ -70,9 +68,7 @@ public class ListaSimple {
         NodoListaSimple actual = cabeza;// se crea una referencia como cabeza
         NodoListaSimple anterior = null;// se crea una referencia como null para eliminar el espacion
         while (actual != null) {// si se tiene algo osea si se sigue a alguien 
-            
             if (actual.getCorreo() == u.getEmail()) {// se busca el usuario
-                
                 if (actual == cabeza) {// si el que se borra es la cabeza 
                     cabeza = cabeza.getSiguiente();// se refresca la cabeza al sisguiente seguidor 
                     actual.setSiguiente(null);// se elimina la referencia del que fue la cabeza
