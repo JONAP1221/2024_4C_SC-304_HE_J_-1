@@ -8,11 +8,11 @@ public class ListaSimple {
 
     private NodoListaSimple cabeza;
 
-    public void insertarSeguidor(Usuario u) {
+    public void insertarSeguidor(Usuario u, ListaDobleCircular usuarios) {
         if (cabeza == null) {// en caos de que la lista esta vacia 
             cabeza = new NodoListaSimple(u);//se crea el primer nodo como la cabeza
         } else {// en caso de querer meter algo antes que la cabeza
-            Usuario usuario = Twitter.usuarios.buscarUsuarioPorCorreo(cabeza.getCorreo());
+            Usuario usuario = usuarios.buscarUsuarioPorCorreo(cabeza.getCorreo());
             if (usuario != null && u.getHash() < usuario.getHash()) {// se verifica que sea el caso mediante la comparacion de lo hash
                 NodoListaSimple nuevoNodo = new NodoListaSimple(u);// se settea que el nuevo nodo pasa a aser la cabeza 
                 nuevoNodo.setSiguiente(cabeza);// se rfresca la referencia del nodo
@@ -24,7 +24,7 @@ public class ListaSimple {
                 } else {// en caos de necesitar insertar en el centro 
                     NodoListaSimple actual = cabeza;// se crea un nodo para empezar por la cabeza 
                     while (actual.getSiguiente() != null) {// si se esta en la posicion corecta 
-                        usuario = Twitter.usuarios.buscarUsuarioPorCorreo(actual.getSiguiente().getCorreo());
+                        usuario = usuarios.buscarUsuarioPorCorreo(actual.getSiguiente().getCorreo());
                         if (usuario.getHash() < u.getHash()) {
                             actual = actual.getSiguiente();// se pide la referencia del actual al siguiente 
                         }//final if

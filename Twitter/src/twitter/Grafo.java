@@ -7,20 +7,17 @@ import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
 import javax.swing.ImageIcon;
-
-import static twitter.Twitter.usuarios;
 
 public class Grafo {
 
-    public void agregarUsusario() {// se se desea crear un ususario se instacia el mismo medinate preguntas para obtener los datos 
+    public void agregarUsuario(ListaDobleCircular usuarios) {// se se desea crear un ususario se instacia el mismo medinate preguntas para obtener los datos 
         usuarios.insertaMejorado(new Usuario(JOptionPane.showInputDialog("Ingrese su Correo"),
                 JOptionPane.showInputDialog("Ingrese su nombre"),
                 Integer.parseInt(JOptionPane.showInputDialog("Ingrese su edad"))));
     }//final del metodo agregarUsuario
 
-    public void eliminarUsuario(Usuario u) {// para eiliminar un ususario de la lista doble circ 
+    public void eliminarUsuario(Usuario u, ListaDobleCircular usuarios) {// para eiliminar un ususario de la lista doble circ 
         if (usuarios.existe(u)) {// si el usuario existe en la lista doble 
             usuarios.eliminar(u);// se elimina el usuario de la lista doble 
             JOptionPane.showMessageDialog(null, "El ususario con el correo: "
@@ -31,16 +28,16 @@ public class Grafo {
         }//final else
     }//final del metofo eliminarUsuario
 
-    public void cambiarNombre(Usuario u) {// funcion para cambiar nombre
+    public void cambiarNombre(Usuario u, ListaDobleCircular usuarios) {// funcion para cambiar nombre
         usuarios.modificaNombre(u);// se modifica el nombre
     }//final del metodo cambiarNombre
 
-    public void cambiarEdad(Usuario u) {// funcino para cambiar la edad
+    public void cambiarEdad(Usuario u, ListaDobleCircular usuarios) {// funcino para cambiar la edad
         usuarios.modificaEdad(u);// se modifica la edad
     }//final del metodo cambiarEdad
 
-    public static Usuario seleccionarUsuario() { //se muestra un dropdown con los usuario
-        return usuarios.buscarUsuarioPorCorreo(Usuario.dropdown()); //de la lista circularDoble
+    public static Usuario seleccionarUsuario(ListaDobleCircular usuarios) { //se muestra un dropdown con los usuario
+        return usuarios.buscarUsuarioPorCorreo(Usuario.dropdown(usuarios)); //de la lista circularDoble
     }//final del metodo seleccionarUsuario
 
     private static void guardarUsuariosCSV(ListaDobleCircular usuarios, String nombreArchivo) {
@@ -184,12 +181,12 @@ public class Grafo {
                         arbol.agregar(post); //se agrega el post al arbol
                         if (datos.length >= 6) { //en caso de tener una respuesta
                             Usuario r1 = usuarios.buscarUsuarioPorCorreo(datos[3]); //se obtiene el email del cuarto campo
-                            arbol.responder(r1, usuario, arbol.getRoot(), datos[4], datos[5]);
+                            arbol.responder(r1, usuario, arbol.getRoot(), datos[4], datos[5], usuarios);
                             //se agrega la respuesta al arbol segun la info del aarchivo
                         }//final if
                         if (datos.length == 9) { //en caso de tener 2 respuestas
                             Usuario r2 = usuarios.buscarUsuarioPorCorreo(datos[6]); //el setimo dato seria el correo del usuario
-                            arbol.responder(r2, usuario, arbol.getRoot(), datos[7], datos[8]);
+                            arbol.responder(r2, usuario, arbol.getRoot(), datos[7], datos[8], usuarios);
                             //se agrega la respuesta al arbol segun la info del aarchivo
                         }//final if
                         usuario.getPilaPosts().apilar(arbol); //se apila el arbol en la pila del usuario
@@ -256,7 +253,7 @@ public class Grafo {
                         for (int i = 1; i < datos.length; i++) { //se recorre los demás datos
                             Usuario user = usuarios.buscarUsuarioPorCorreo(datos[i]); //se busca al usuario
                             if (user != null) { // en caso de existor
-                                listaSeguidores.insertarSeguidor(user); // inserta al usuario a la lista
+                                listaSeguidores.insertarSeguidor(user, usuarios); // inserta al usuario a la lista
                             }//final if
                         }//final for
                         usuario.setSeguidores(listaSeguidores); //se le asigna la lista al usuario correspondiente
@@ -268,21 +265,21 @@ public class Grafo {
         }//final catch
     }//final del metodo cargarSeguidoresDesdeCSV
 
-    public static void cargarDatos() { //solo llama a las funciones que cargan los datos
+    public static void cargarDatos(ListaDobleCircular listaUsuarios) { //solo llama a las funciones que cargan los datos
         try {
-            Grafo.cargarUsuariosDesdeCSV(usuarios, "data/UsuariosTwitter.csv");
-            Grafo.cargarPostDeUsuarios(usuarios, "data/PostTwitter.csv");
-            Grafo.cargarSeguidoresDesdeCSV(usuarios, "data/SeguidoresTwitter.csv");
+            Grafo.cargarUsuariosDesdeCSV(listaUsuarios, "data/UsuariosTwitter.csv");
+            Grafo.cargarPostDeUsuarios(listaUsuarios, "data/PostTwitter.csv");
+            Grafo.cargarSeguidoresDesdeCSV(listaUsuarios, "data/SeguidoresTwitter.csv");
         } catch (Exception e) {
             System.out.println("Error al cargar datos: " + e.getMessage());
         }//final catch
     }//final del metodo cargarDatos
 
-    public static void guardarDatos() { //llamma a las funciones encargadas de guardar la info
+    public static void guardarDatos(ListaDobleCircular listaUsuarios) { //llamma a las funciones encargadas de guardar la info
         try {
-            Grafo.guardarUsuariosCSV(usuarios, "data/UsuariosTwitter.csv");
-            Grafo.guardarPostDeUsuarios(usuarios, "data/PostTwitter.csv");
-            Grafo.guardarSeguidoresCSV(usuarios, "data/SeguidoresTwitter.csv");
+            Grafo.guardarUsuariosCSV(listaUsuarios, "data/UsuariosTwitter.csv");
+            Grafo.guardarPostDeUsuarios(listaUsuarios, "data/PostTwitter.csv");
+            Grafo.guardarSeguidoresCSV(listaUsuarios, "data/SeguidoresTwitter.csv");
         } catch (Exception e) {
             System.out.println("Error al guardar datos: " + e.getMessage());
         }//final catch
@@ -298,5 +295,52 @@ public class Grafo {
         JOptionPane.showMessageDialog(null, "", "Saliendo de la app", JOptionPane.PLAIN_MESSAGE, scaledIcon); //muestra la imagen con los parametros antes definidos
         return false;
     }//final del metodo salirDelPrograma
+    
+    public static void start(){ //para ver el menu principal
+        ListaDobleCircular listaUsuarios = new ListaDobleCircular(); //esta lista contendra a los usuarios del programa
+        Grafo g = new Grafo(); //inicializamos el grafo
+        Grafo.cargarDatos(listaUsuarios); //cargamos los datos del archivo csv
+        boolean continuar = true; //esta variable es para mostrar el menu (switch)
+        while (continuar) { //mientras sea true
+            try { //para evitar errores de diferentes formatos
+                String opcion = JOptionPane.showInputDialog("Opciones de ingreso \n"
+                        + "1: Agregar usuario \n"
+                        + "2: Modificar nombre de un usuario \n"
+                        + "3: Modificar edad de un usuario \n"
+                        + "4: Eliminar un usuario \n"
+                        + "5: Mostrar usuarios  \n"
+                        + "6: Agregar seguidor \n"
+                        + "7: Eliminar un seguidor \n"
+                        + "8: Mostrar a quien sigue el usuario xxx \n"
+                        + "9: Publicar un post \n"
+                        + "10: Eliminar un post \n"
+                        + "11: Mostrar los post de un usuario \n"
+                        + "12: Mostrar el feed de un usuario \n"
+                        + "0: salir \n"); //las diferentes opciones para ver
+                if (opcion != null && !opcion.isEmpty()) { // Verificar si la cadena no está vacía
+                    int numero = Integer.parseInt(opcion); //pasa el string a int
+                    switch (numero) { //accede a la opcion ingresada
+                        case 1 -> g.agregarUsuario(listaUsuarios);
+                        case 2 -> g.cambiarNombre(Grafo.seleccionarUsuario(listaUsuarios), listaUsuarios);
+                        case 3 -> g.cambiarEdad(Grafo.seleccionarUsuario(listaUsuarios), listaUsuarios);
+                        case 4 -> g.eliminarUsuario(Grafo.seleccionarUsuario(listaUsuarios),listaUsuarios);
+                        case 5 -> JOptionPane.showMessageDialog(null, listaUsuarios);
+                        case 6 -> Usuario.insertarSeguidor(Grafo.seleccionarUsuario(listaUsuarios), Grafo.seleccionarUsuario(listaUsuarios), listaUsuarios);
+                        case 7 -> Usuario.eliminarSeguidor(Grafo.seleccionarUsuario(listaUsuarios), Grafo.seleccionarUsuario(listaUsuarios));
+                        case 8 -> Usuario.verSeguidores(Grafo.seleccionarUsuario(listaUsuarios),listaUsuarios);
+                        case 9 -> Usuario.crearPost(Grafo.seleccionarUsuario(listaUsuarios));
+                        case 10 -> Usuario.eliminarPost(Grafo.seleccionarUsuario(listaUsuarios),listaUsuarios);
+                        case 11 -> Usuario.mostrarPost(Grafo.seleccionarUsuario(listaUsuarios),listaUsuarios);
+                        case 12 -> Usuario.mostrarFeedlista(Grafo.seleccionarUsuario(listaUsuarios),listaUsuarios);
+                        case 0 -> continuar = Grafo.salirDelPrograma();
+                        default -> JOptionPane.showMessageDialog(null, "Opción inválida. Por favor, seleccione una opción válida.");
+                    }//final switch
+                }//final if
+            } catch (Exception e) {
+                System.out.println("Error capa 8: " + e.getMessage());
+            }//final catch
+        }//final while
+        Grafo.guardarDatos(listaUsuarios); //guarda la informacion nueva en el archivo csv corresondiente al finalizar el programa
+    }//final del metodo start
 
 }//final de la clase

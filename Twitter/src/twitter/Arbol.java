@@ -1,7 +1,6 @@
 package twitter;
 
 import javax.swing.JOptionPane;
-import static twitter.Twitter.usuarios;
 
 public class Arbol {
 
@@ -33,8 +32,8 @@ public class Arbol {
         }//final if 
     }//final metodo agregar
 
-    public void responder(Usuario user, Usuario post, NodoArbol root) {
-        Usuario usuario = Twitter.usuarios.buscarUsuarioPorCorreo(root.getMensaje().getUser());
+    public void responder(Usuario user, Usuario post, NodoArbol root, ListaDobleCircular usuarios) {
+        Usuario usuario = usuarios.buscarUsuarioPorCorreo(root.getMensaje().getUser());
         Post mensaje = Post.respuesta(user, usuario);
         NodoArbol nuevo = new NodoArbol(mensaje); //se establece una variable para la respuesta (Post)
         nuevo.getMensaje().setMsj("      " + nuevo.getMensaje().getMsj());
@@ -59,8 +58,8 @@ public class Arbol {
         }//final while
     }//final else
 
-    public void responder(Usuario user, Usuario post, NodoArbol root, String respuesta, String fecha) {
-        Usuario usuario = Twitter.usuarios.buscarUsuarioPorCorreo(root.getMensaje().getUser());
+    public void responder(Usuario user, Usuario post, NodoArbol root, String respuesta, String fecha, ListaDobleCircular usuarios) {
+        Usuario usuario = usuarios.buscarUsuarioPorCorreo(root.getMensaje().getUser());
         Post mensaje = Post.respuesta(user, usuario, respuesta);
         mensaje.setFecha(fecha);
         NodoArbol nuevo = new NodoArbol(mensaje); //se establece una variable para la respuesta (Post)
@@ -86,24 +85,24 @@ public class Arbol {
         }//final while
     }//final else
 
-    public void mostrar(Arbol arbol) {
+    public void mostrar(Arbol arbol, ListaDobleCircular usuarios) {
         if (!esVacio()) { //si no es vacio
-            String post = inOrdenR(root);
+            String post = inOrdenR(root, usuarios);
             if (post != "") {
                 int opcion = Integer.parseInt(JOptionPane.showInputDialog(post + "\n\n 1- Responder     2- Siguiente"));//mostrar el inOrder Recursivo
                 switch (opcion) {
                     case 1:
                         if (root.getDerecho() != null && root.getIzquierdo() != null) {
                             JOptionPane.showMessageDialog(null, "Se ha alcanzado el numero de respuestas máximo");
-                            mostrar(arbol);
+                            mostrar(arbol, usuarios);
                         }//final if
                         else {
                             JOptionPane.showMessageDialog(null, "A continuacion, seleccione el usuario que esta respondiendo.");
-                            Usuario usuarioa = Grafo.seleccionarUsuario();// se busca en la lista doble mediante la funcion 
+                            Usuario usuarioa = Grafo.seleccionarUsuario(usuarios);// se busca en la lista doble mediante la funcion 
                             if (usuarioa != null) {// de haberlo
-                                Usuario usuario = Twitter.usuarios.buscarUsuarioPorCorreo(root.getMensaje().getUser());
-                                arbol.responder(usuarioa, usuario, root);
-                                mostrar(arbol);
+                                Usuario usuario = usuarios.buscarUsuarioPorCorreo(root.getMensaje().getUser());
+                                arbol.responder(usuarioa, usuario, root, usuarios);
+                                mostrar(arbol, usuarios);
                             }//final if
                             else {
                                 JOptionPane.showMessageDialog(null, "No se ha encontrado al usuario");
@@ -122,10 +121,10 @@ public class Arbol {
         }//final else
     }//final del metodo mostrar
 
-    public Arbol eliminarPost(Arbol arbol, Usuario usuarioa) {
+    public Arbol eliminarPost(Arbol arbol, Usuario usuarioa, ListaDobleCircular usuarios) {
         Arbol post = null;
         if (!esVacio()) { //si no es vacio
-            int opcion = Integer.parseInt(JOptionPane.showInputDialog(inOrdenR(root) + "\n\n 1- Eliminar Post     2- Siguiente"));//mostrar el inOrder Recursivo
+            int opcion = Integer.parseInt(JOptionPane.showInputDialog(inOrdenR(root, usuarios) + "\n\n 1- Eliminar Post     2- Siguiente"));//mostrar el inOrder Recursivo
             switch (opcion) {
                 case 1:
                     if (usuarioa != null) {// de haberlo
@@ -148,24 +147,24 @@ public class Arbol {
         return post;
     }//final del metodo mostrar
 
-    public String inOrdenR(NodoArbol root) {
+    public String inOrdenR(NodoArbol root, ListaDobleCircular usuarios) {
         String resultado = "";
-        if (root != null && comparar(root)) {
+        if (root != null && comparar(root, usuarios)) {
             resultado += root.getMensaje();
-            if (root.getIzquierdo() != null && comparar(root.getIzquierdo())) {
+            if (root.getIzquierdo() != null && comparar(root.getIzquierdo(), usuarios)) {
                 resultado += "------";
             }//final if
-            resultado += inOrdenR(root.getIzquierdo());
-            if (root.getDerecho() != null && comparar(root.getDerecho())) {
+            resultado += inOrdenR(root.getIzquierdo(), usuarios);
+            if (root.getDerecho() != null && comparar(root.getDerecho(), usuarios)) {
                 resultado += "------";
             }//Final if
-            resultado += inOrdenR(root.getDerecho());
+            resultado += inOrdenR(root.getDerecho(), usuarios);
         }//final if
         return resultado;
     }//final del metodo inOrderR
 
-    private boolean comparar(NodoArbol post) {
-        Usuario usuario = Twitter.usuarios.buscarUsuarioPorCorreo(post.getMensaje().getUser());
+    private boolean comparar(NodoArbol post, ListaDobleCircular usuarios) {
+        Usuario usuario = usuarios.buscarUsuarioPorCorreo(post.getMensaje().getUser());
         boolean x = false;
         NodoListaDobleCircular cabeza = usuarios.getCabeza();
         if (cabeza != null) {

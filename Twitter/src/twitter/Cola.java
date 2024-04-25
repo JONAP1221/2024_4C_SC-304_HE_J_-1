@@ -1,7 +1,5 @@
 package twitter;
 
-import javax.swing.JOptionPane;
-
 public class Cola {
 
     //atributos de la clase
@@ -30,10 +28,10 @@ public class Cola {
         }//final else
     }//final metodo encolar
 
-    public void desencolar() {// funcion de desencolar
+    public void desencolar(ListaDobleCircular usuarios) {// funcion de desencolar
         if (!esVacia()) {// en caso de que no este vacia y esto se verifica mediante !esVacia
             while (primero != null) {// si tenemos algo en el primer nodo 
-                primero.getPost().mostrar(primero.getPost());// se muestra el post de dicho modo 
+                primero.getPost().mostrar(primero.getPost(), usuarios);// se muestra el post de dicho modo 
                 primero = primero.getSiguiente();// se vanza al sigueinte nodo 
             }//final while
         }//final if 

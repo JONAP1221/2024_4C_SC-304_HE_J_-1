@@ -1,6 +1,5 @@
 package twitter;
 
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -44,19 +43,19 @@ public class Pila {
         }
     }
 
-    public void mostrarPilaConMensajes() {// para mostar el mensaje 
+    public void mostrarPilaConMensajes(ListaDobleCircular usuarios) {// para mostar el mensaje 
         NodoPila nodoActual = cima;// se crea un puntero como la cima de la pila 
         while (nodoActual != null) {// siempre y cuando esta no este vacia 
-            nodoActual.getArbol().mostrar(nodoActual.getArbol());// se muesta dicho mensaje del nodo 
+            nodoActual.getArbol().mostrar(nodoActual.getArbol(), usuarios);// se muesta dicho mensaje del nodo 
             nodoActual = nodoActual.getSiguiente();// se avanza al siguente nodo 
         }
     }
 
-    public void eliminarPilaConMensajes(Usuario a) {// funcion para eliminar la pila de mensajes 
+    public void eliminarPilaConMensajes(Usuario a, ListaDobleCircular usuarios) {// funcion para eliminar la pila de mensajes 
         NodoPila nodoActual = cima;// se crea una variable como la cima de la pila 
         Arbol elimina = null;// se crea una variable como null
         while (nodoActual != null) {// siempre y cuando la pila no este vacia
-            elimina = nodoActual.getArbol().eliminarPost(nodoActual.getArbol(), a);// eilimana la cual es la varibale es igual a se setea como el valro de ciha variabe
+            elimina = nodoActual.getArbol().eliminarPost(nodoActual.getArbol(), a, usuarios);// eilimana la cual es la varibale es igual a se setea como el valro de ciha variabe
             if (elimina != null) {// si esta varibale es distinta de nulla
                 desapilar(elimina);// se despaila dicha variable o nodo
             }//final if

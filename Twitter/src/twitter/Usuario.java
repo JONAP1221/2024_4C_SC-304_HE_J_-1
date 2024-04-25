@@ -1,10 +1,7 @@
 package twitter;
 
-//import java.util.ArrayList;
-import java.time.LocalDate;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import static twitter.Twitter.usuarios;
 
 public class Usuario {
 
@@ -81,7 +78,7 @@ public class Usuario {
         this.seguidores = seguidores;
     }
 
-    public void insertarSeguidor(Usuario base, Usuario destino) {// funcion para insertar un seguidor mediante el correo 
+    public static void insertarSeguidor(Usuario base, Usuario destino, ListaDobleCircular usuarios) {// funcion para insertar un seguidor mediante el correo 
         if (base == null || destino == null) {// ambos ususarios deben de tener iformacion 
             JOptionPane.showMessageDialog(null, "Uno o ambos usuarios no existen.");
         } else if (base.getEmail().equals(destino.getEmail())) {// si es el mimso se muestra el menaje de errror ya que no te puedes seguir a ti mismo 
@@ -90,7 +87,7 @@ public class Usuario {
             JOptionPane.showMessageDialog(null, "Este usuario ya sigue a " + destino.getEmail());// se muestra en mensaje de errror 
         } else {// estpo es asi ya qeu 
             if (!destino.getPilaPosts().esVacia()) {// si la pila no esta vacia de post no se puede seguir a una persona 
-                base.getSeguidores().insertarSeguidor(destino);//se anade el correo del usuario a la lista de seguidores
+                base.getSeguidores().insertarSeguidor(destino, usuarios);//se anade el correo del usuario a la lista de seguidores
                 JOptionPane.showMessageDialog(null, "Usuario " + base.getEmail() + " ahora sigue a " + destino.getEmail());
             } else {
                 JOptionPane.showMessageDialog(null, "No puedes seguir a un usuario si no tiene post. ");
@@ -99,7 +96,7 @@ public class Usuario {
         }
     }
 
-    public void verSeguidores(Usuario base) {// func para ver los seguidores de un ususario 
+    public static void verSeguidores(Usuario base, ListaDobleCircular usuarios) {// func para ver los seguidores de un ususario 
         if (base != null) {// si la base osea el usuario no es null 
             ListaSimple seguidoresUsuario = base.getSeguidores();// se crea una variable sipo lista simple 
             if (seguidoresUsuario != null) {// si la lista no esta vacia 
@@ -109,7 +106,7 @@ public class Usuario {
                     seguidoresTexto.append("El usuario ").append(base.getName()).append(" sigue a las personas:\n");
                     while (cabezaSeguidores != null) {// si la variable no es vacia ni null
                         Usuario seguidor = usuarios.buscarUsuarioPorCorreo(cabezaSeguidores.getCorreo());// se busca el ususario ,mediante el correo 
-                        if (comparar(cabezaSeguidores)) {
+                        if (comparar(cabezaSeguidores, usuarios)) {
                             seguidoresTexto.append("- ").append(seguidor.getName()).append("\n");// se anade el seguidor para ser mostrado 
                         }//final if
                         else {
@@ -129,7 +126,7 @@ public class Usuario {
         }
     }//final del emtodo verSeguidores
 
-    private boolean comparar(NodoListaSimple nodoSeguidor) {// se compara el nodo 
+    private static boolean comparar(NodoListaSimple nodoSeguidor, ListaDobleCircular usuarios) {// se compara el nodo 
         boolean x = false;// se crea una variable booleana instanciada falsa
         NodoListaDobleCircular cabeza = usuarios.getCabeza();//se crea una variable cabeza 
         if (cabeza != null) {// si la cabeza no esta vacia 
@@ -148,7 +145,7 @@ public class Usuario {
         return x;
     }//final del metodo actualizarListaSeguidores
 
-    public void eliminarSeguidor(Usuario base, Usuario destino) {// para eliminar un seguidor 
+    public static void eliminarSeguidor(Usuario base, Usuario destino) {// para eliminar un seguidor 
         if (base.getEmail().equals(destino.getEmail())) {// si el correo no es el mismo, 
             JOptionPane.showMessageDialog(null, "no te sigues a ti mismo por lo tanto no te puedes eliminar");
         } else if (base.getSeguidores().noExisteSeguidor(destino)) {// si no se sigue a el ususario 
@@ -159,7 +156,7 @@ public class Usuario {
         }
     }//final del metodo actualizarListaSeguidores
 
-    public void crearPost(Usuario base) {
+    public static void crearPost(Usuario base) {
         if (base != null) {// si el ususario existe  
             Arbol nuevoArbol = new Arbol();// se crea un arbol 
             Post x = Post.newPost(base);// se crea una variable post con la info del ususario
@@ -173,12 +170,12 @@ public class Usuario {
         }
     }
 
-    public void mostrarPost(Usuario base) {
+    public static void mostrarPost(Usuario base, ListaDobleCircular usuarios) {
         if (base != null) {// de haberlo
             Pila pilaPostUsuario = base.getPilaPosts();// de la pila se saca un post
             if (!pilaPostUsuario.esVacia()) {// si hay algo en ese nodo // es un tipo de metodo recursivo
                 JOptionPane.showMessageDialog(null, "Posts de " + base.getName() + ":");//se muestran los post
-                pilaPostUsuario.mostrarPilaConMensajes(); // se muestran los post 
+                pilaPostUsuario.mostrarPilaConMensajes(usuarios); // se muestran los post 
             } else {
                 JOptionPane.showMessageDialog(null, "El usuario no tiene posts.");// en caso de == null ser verdad se notifica 
             }
@@ -187,12 +184,12 @@ public class Usuario {
         }
     }
 
-    public void eliminarPost(Usuario base) {
+    public static void eliminarPost(Usuario base, ListaDobleCircular usuarios) {
         if (base != null) {// de haberlo
             Pila pilaPosts = base.getPilaPosts();// de la pila se saca un post
             if (!pilaPosts.esVacia()) {// si hay algo en ese nodo // es un tipo de metodo recursivo
                 JOptionPane.showMessageDialog(null, "Cargando post de " + base.getName() + "...");//se muestran los post
-                pilaPosts.eliminarPilaConMensajes(base);// se muestran los post 
+                pilaPosts.eliminarPilaConMensajes(base, usuarios);// se muestran los post 
             } else {
                 JOptionPane.showMessageDialog(null, "El usuario no tiene posts.");// en caso de == null ser verdad se notifica 
             }
@@ -201,7 +198,7 @@ public class Usuario {
         }
     }
 
-    public void mostrarFeedlista(Usuario base) {//funcion para ostrar el feed osea el de todo los ususarios que sigue y el 
+    public static void mostrarFeedlista(Usuario base, ListaDobleCircular usuarios) {//funcion para ostrar el feed osea el de todo los ususarios que sigue y el 
         Cola colaPost = new Cola();// se crea una variable de tipo cola para implementar los post 
         ListaSimple listaFeed = new ListaSimple();;//se crea una lista simple para implementar los post 
         Pila pilaPostsUsuario = base.getPilaPosts();// de la pila se optionene los post del usuario base 
@@ -210,7 +207,7 @@ public class Usuario {
         if (seguidoresUsuarioConsulta != null) {// si el seguidoresUsuarioConsulta no es null 
             NodoListaSimple nodoSeguidor = seguidoresUsuarioConsulta.getCabeza();// se optiene la cabeza de la lista 
             while (nodoSeguidor != null) {// si este no es null
-                Usuario seguidor = Twitter.usuarios.buscarUsuarioPorCorreo(nodoSeguidor.getCorreo());// se busca el ususario por el correo 
+                Usuario seguidor = usuarios.buscarUsuarioPorCorreo(nodoSeguidor.getCorreo());// se busca el ususario por el correo 
                 Pila pilaPostsSeguidor = seguidor.getPilaPosts();//de la pila se optionee lso post de lso seguidores de dicho ussuarios 
                 listaFeed = pilaPostsSeguidor.obtener(listaFeed);// se anadena a lista simple 
                 nodoSeguidor = nodoSeguidor.getSiguiente();// SE AVANZA 
@@ -225,7 +222,7 @@ public class Usuario {
         }
         if (!colaPost.esVacia()) {// si no es vacia se mutesrta 
             JOptionPane.showMessageDialog(null, "Posts de " + base.getName() + " y usuarios seguidos:");
-            colaPost.desencolar();
+            colaPost.desencolar(usuarios);
         } else {// de no haber post se muestra eso 
             JOptionPane.showMessageDialog(null, "No hay posts para mostrar.");
         }
@@ -246,7 +243,7 @@ public class Usuario {
         return "Nombre: " + name + " | Edad: " + age + " | Correo: " + email + " | Fecha registro: " + fechaRegistro+"\n";
     }
 
-    public static String dropdown() { //para seleccionar a un usuario
+    public static String dropdown(ListaDobleCircular usuarios) { //para seleccionar a un usuario
         JComboBox<String> usuariosDropdown = new JComboBox<>(); //el JComboBox nos permite agupar valores y mostrarlos en el JoptionPane
         NodoListaDobleCircular auxiliar = usuarios.getCabeza(); //se recorre la lista de usuarios
         if (usuarios.getCabeza() != null) {
