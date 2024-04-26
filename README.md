@@ -65,3 +65,22 @@ java.time.LocalDateTime: Esta librería proporciona la funcionalidad para repres
 
 java.time.format.DateTimeFormatter: Esta librería proporciona la funcionalidad para formatear y analizar fechas y horas en Java. La clase DateTimeFormatter permite crear objetos que definen patrones de formato para formatear instancias de LocalDateTime en cadenas de texto, así como analizar cadenas de texto en instancias de LocalDateTime.
 
+java.io.BufferedWriter: Esta librería proporciona clases para escribir texto en un flujo de salida de manera eficiente, especialmente cuando se necesita escribir grandes cantidades de datos de forma secuencial. El BufferedWriter en particular ayuda a mejorar el rendimiento al almacenar temporalmente los datos en un búfer antes de escribirlos en el flujo subyacente.
+
+java.io.FileWriter: Esta clase permite escribir caracteres en un archivo de texto. Es útil cuando necesitas escribir datos de texto en un archivo de manera sencilla.
+
+java.io.BufferedReader: Proporciona una forma eficiente de leer texto de un flujo de entrada, como un archivo de texto. Al igual que BufferedWriter, BufferedReader ayuda a mejorar el rendimiento al almacenar temporalmente los datos leídos en un búfer, lo que reduce el número de accesos al sistema de archivos.
+
+java.io.FileReader: Esta clase se utiliza para leer caracteres desde un archivo. Es una forma sencilla de leer datos de texto de un archivo de manera eficiente.
+
+java.awt.Image: Esta clase representa una imagen en Java. Proporciona funcionalidades para cargar y manipular imágenes en aplicaciones de Java, especialmente en el contexto de interfaces gráficas de usuario (GUI) donde se necesitan imágenes para elementos visuales como botones, fondos, etc.
+
+javax.swing.ImageIcon: Esta clase proporciona una forma conveniente de cargar imágenes desde varios tipos de recursos, como archivos en el sistema de archivos, URL o arrays de bytes. Es especialmente útil en aplicaciones de GUI Swing para mostrar imágenes en componentes como JLabel, JButton, etc.
+
+java.text.ParseException: Esta excepción se utiliza para indicar que se ha producido un error durante el análisis (parsing) de una cadena en un formato específico. Es comúnmente utilizada con las clases de formato de fecha y hora en Java para manejar errores al convertir cadenas de texto en objetos Date u otros tipos de datos formateados.
+
+java.text.SimpleDateFormat: Esta clase se utiliza para formatear y analizar fechas y horas según un patrón específico. Permite convertir objetos Date en cadenas de texto con un formato definido por el usuario, y viceversa. Es útil cuando necesitas trabajar con fechas y horas en diferentes formatos, como en aplicaciones de gestión de eventos, calendarios, etc.
+
+java.util.Date: Esta clase representa un punto en el tiempo, con una precisión de milisegundos. Se utiliza para almacenar y manipular fechas y horas en Java. Sin embargo, esta clase ha sido reemplazada en gran medida por las clases del paquete java.time introducidas en Java 8, ya que ofrece una API más moderna y mejorada para el manejo de fechas y horas.
+
+javax.swing.JComboBox: Es una clase específica dentro de javax.swing que representa un componente desplegable en una interfaz de usuario. Permite al usuario seleccionar una opción de una lista desplegable de elementos. Es útil para ofrecer opciones en forma de lista desplegable en aplicaciones Java.
